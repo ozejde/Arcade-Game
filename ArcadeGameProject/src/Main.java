@@ -27,6 +27,8 @@ public class Main {
 			
 			System.out.println("before open");
 			scan = new Scanner(file);
+			String words = scan.nextLine();
+			System.out.println(words);
 			System.out.println("end of reading");
 			scan.close();
 		} catch (FileNotFoundException exception) {
