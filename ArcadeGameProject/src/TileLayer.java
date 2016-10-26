@@ -9,15 +9,21 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
+
 public class TileLayer extends JComponent {
 
 	private int[][] map;
 	private BufferedImage tileSheet;
 	ArrayList<Tile> tiles = new ArrayList<>();
+	private Thread repainterThread;
 
 	public TileLayer(int width, int height) {
 		this.map = new int[height][width];
-		this.addKeyListener(new GameKeyListener());
+		
+		// Creates thread to update animation
+		Runnable r = new Repainter(60);
+		this.repainterThread = new Thread(r);
+		this.repainterThread.start();
 	}
 
 	public static TileLayer FromFile(String fileName) {
@@ -102,9 +108,25 @@ public class TileLayer extends JComponent {
 	}
 
 	@Override
-	public void paintComponent(Graphics g) {
-		for (int ctr = 0; ctr < this.tiles.size(); ctr++) {
-			this.tiles.get(ctr).drawTile();
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		for (Tile t : this.tiles) {
+			t.drawTile();
+		}
+	}
+	
+	private class Repainter implements Runnable {
+		private final int fps;
+		
+		public Repainter(int fps) {
+			this.fps = fps;
+		}
+
+		@Override
+		public void run() {
+			while (true) {
+				TileLayer.this.repaint();
+			}
 		}
 	}
 }
