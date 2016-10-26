@@ -18,12 +18,14 @@ public class GameKeyListener implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		this.keys[e.getKeyCode()] = true;
+		System.out.println("Test Press");
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		this.keys[e.getKeyCode()] = false;
-		System.out.println("Test");
+		System.out.println("Test Release");
 	}
 
 	@Override
