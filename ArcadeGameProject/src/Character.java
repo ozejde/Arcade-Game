@@ -1,7 +1,4 @@
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-
-abstract class Character extends Tile implements Runnable {
+abstract class Character implements Runnable {
 
 	private int ulhx = 0;
 	private int ulhy = 0;
@@ -10,22 +7,9 @@ abstract class Character extends Tile implements Runnable {
 	private static final int SIZE = 48;
 	private boolean distructable = false;
 	private boolean passable = false;
-	protected Graphics g;
-	private BufferedImage tileSheet;
 	private int indexX;
 	private int indexY;
 
-	public Character(int x1, int y1, int x2, int y2, Graphics g, BufferedImage tileSheet, int x, int y) {
-		super(x1, y1, x2, y2, g, tileSheet, x, y);
-		this.ulhx = x1;
-		this.ulhy = y1;
-		this.lrhx = x2;
-		this.lrhy = y2;
-		this.g = g;
-		this.tileSheet = tileSheet;
-		this.indexX = x;
-		this.indexY = y;
-	}
 
 	public Character() {
 		super();
