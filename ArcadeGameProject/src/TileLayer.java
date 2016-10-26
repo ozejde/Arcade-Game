@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
-public class TileLayer extends JComponent{
+public class TileLayer extends JComponent {
 
 	private int[][] map;
 	private BufferedImage tileSheet;
@@ -17,7 +17,7 @@ public class TileLayer extends JComponent{
 
 	public TileLayer(int width, int height) {
 		this.map = new int[height][width];
-		addKeyListener(new GameKeyListener());
+		this.addKeyListener(new GameKeyListener());
 	}
 
 	public static TileLayer FromFile(String fileName) {
@@ -72,8 +72,7 @@ public class TileLayer extends JComponent{
 		return img;
 	}
 
-	@Override
-	public void paintComponent(Graphics g) {
+	public void createTiles(Graphics g) {
 		for (int y = 0; y < this.map.length; y++) {
 			for (int x = 0; x < this.map[y].length; x++) {
 				int index = this.map[y][x];
@@ -98,9 +97,14 @@ public class TileLayer extends JComponent{
 							(index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, g, this.tileSheet, x, y));
 				}
-					this.tiles.get(this.tiles.size()-1).drawTile();
 			}
 		}
 	}
 
+	@Override
+	public void paintComponent(Graphics g) {
+		for (int ctr = 0; ctr < this.tiles.size(); ctr++) {
+			this.tiles.get(ctr).drawTile();
+		}
+	}
 }

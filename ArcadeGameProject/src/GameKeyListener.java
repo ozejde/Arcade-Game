@@ -18,7 +18,7 @@ public class GameKeyListener implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		this.keys[e.getKeyCode()] = true;
-		System.out.println("Key Pressed");
+		System.out.println("Key: " + e.getKeyCode()+" Pressed");
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-public abstract class Tile {
+public abstract class Tile implements Runnable{
 	private int ulhx = 0;
 	private int ulhy = 0;
 	private int lrhx = 0;
