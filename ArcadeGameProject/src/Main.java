@@ -1,6 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import javax.swing.JFrame;
 
 /**
  * The main class for your arcade game.
@@ -13,27 +11,17 @@ import java.util.Scanner;
  * @author Buffalo
  *
  */
+
 public class Main {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-		System.out.println("Write your cool arcade game here!");
-		
-		File file = new File("Level1");
-		Scanner scan = null;
-		try {
-			
-			System.out.println("before open");
-			scan = new Scanner(file);
-			String words = scan.nextLine();
-			System.out.println(words);
-			System.out.println("end of reading");
-			scan.close();
-		} catch (FileNotFoundException exception) {
-			System.out.println("File not found. Try again.");
-		}
+		JFrame frame = new JFrame("BomberMan Test");
+		DrawPanel panel = new DrawPanel();
+		frame.setContentPane(panel);
+		frame.setSize(834, 688);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		frame.setResizable(false);
 		
 	}
 
