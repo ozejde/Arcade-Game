@@ -10,7 +10,7 @@ abstract class Character extends Tile implements Runnable {
 	private static final int SIZE = 48;
 	private boolean distructable = false;
 	private boolean passable = false;
-	private Graphics g;
+	protected Graphics g;
 	private BufferedImage tileSheet;
 	private int indexX;
 	private int indexY;
@@ -27,14 +27,9 @@ abstract class Character extends Tile implements Runnable {
 		this.indexY = y;
 	}
 
-	public void drawTile() {
-		this.g.drawImage(this.tileSheet, this.indexX * Engine.TILE_WIDTH, this.indexY * Engine.TILE_HIEGHT,
-				(this.indexX * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
-				(this.indexY * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.ulhx, this.ulhy, this.lrhx, this.lrhy,
-				null);
+	public Character() {
+		super();
 	}
-	
-
 
 	public boolean isDistructable() {
 		return this.distructable;
