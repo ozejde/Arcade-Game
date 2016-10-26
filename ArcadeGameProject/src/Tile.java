@@ -1,7 +1,7 @@
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-public abstract class Tile implements Runnable{
+public abstract class Tile{
 	private int ulhx = 0;
 	private int ulhy = 0;
 	private int lrhx = 0;
@@ -39,6 +39,10 @@ public abstract class Tile implements Runnable{
 		this.tileSheet = tileSheet;
 		this.indexX = x;
 		this.indexY = y;
+	}
+
+	public Tile() {
+		// TODO Auto-generated constructor stub.
 	}
 
 	public void drawTile() {

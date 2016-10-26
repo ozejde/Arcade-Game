@@ -9,10 +9,8 @@ public class Wall extends Tile {
 		super.setPassable(false);
 	}
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub.
-		
+	public Wall() {
+		super();
 	}
 
 }

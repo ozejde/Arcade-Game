@@ -15,7 +15,9 @@ public class TileLayer extends JComponent {
 	private int[][] map;
 	private BufferedImage tileSheet;
 	ArrayList<Tile> tiles = new ArrayList<>();
+	ArrayList<Character> characters = new ArrayList<>();
 	private Thread repainterThread;
+	private GameKeyListener keyLis;
 
 	public TileLayer(int width, int height) {
 		this.map = new int[height][width];
@@ -66,6 +68,14 @@ public class TileLayer extends JComponent {
 		return layer;
 	}
 
+	public GameKeyListener getKeyLis() {
+		return this.keyLis;
+	}
+
+	public void setKeyLis(GameKeyListener keyLis) {
+		this.keyLis = keyLis;
+	}
+
 	public BufferedImage LoadTileSheet(String fileName) {
 		BufferedImage img = null;
 
@@ -103,6 +113,11 @@ public class TileLayer extends JComponent {
 							(index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, g, this.tileSheet, x, y));
 				}
+				if (index == 6) {
+					this.characters.add(new Hero(index * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							(index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, g, this.tileSheet, x, y, this.keyLis));
+				}
 			}
 		}
 	}
@@ -112,6 +127,9 @@ public class TileLayer extends JComponent {
 		super.paintComponent(g);
 		for (Tile t : this.tiles) {
 			t.drawTile();
+		}
+		for (Character c : this.characters) {
+			c.drawTile();
 		}
 	}
 	
