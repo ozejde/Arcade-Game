@@ -9,4 +9,10 @@ public class GroundTile extends Tile {
 		super.setPassable(true);
 	}
 
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub.
+		
+	}
+
 }

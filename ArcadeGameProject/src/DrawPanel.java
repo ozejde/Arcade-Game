@@ -9,10 +9,12 @@ public class DrawPanel extends JPanel implements Runnable
 	
 	public DrawPanel(){
 		this.layer = TileLayer.FromFile("LevelOne.txt");
+
 	}
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		this.layer.createTiles(g);
 		this.layer.paintComponent(g);
 	}
 	@Override
