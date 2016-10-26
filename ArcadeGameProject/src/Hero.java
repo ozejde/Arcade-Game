@@ -12,11 +12,9 @@ public class Hero extends Character{
 		this.y1 = j - 24;
 		this.x2 = i + 24;
 		this.y2 = j + 24;
-		this.keyLis = keyLis;
 	}
 	
-	@Override
-	public void drawTile(Graphics g){
+	public void drawCharacter(Graphics g){
 		g.setColor(Color.CYAN);
 		g.fillRect(this.x1, this.y1, 48, 48);
 		
@@ -57,6 +55,11 @@ public class Hero extends Character{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub.
+		
+	}
+
+	public void move() {
+		System.out.println("Hero is moving now!! YAY!!");
 		
 	}
 }

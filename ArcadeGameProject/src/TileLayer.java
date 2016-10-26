@@ -123,11 +123,13 @@ public class TileLayer extends JComponent {
 		for (Tile t : this.tiles) {
 			t.drawTile(g);
 		}
-			this.hero.drawTile(g);
+			this.hero.drawCharacter(g);
 	}
 	
 	private void checkMoveHero(){
-		
+		if(this.keyLis.up || this.keyLis.down || this.keyLis.right || this.keyLis.left){
+			this.hero.move();
+		}
 	}
 	
 	private class Repainter implements Runnable {
