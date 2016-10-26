@@ -5,11 +5,13 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class DrawPanel extends JPanel implements Runnable 
 {
-	private TileLayer layer;
+	protected TileLayer layer;
+	private GameKeyListener keyLis;
 	
-	public DrawPanel(){
+	public DrawPanel(GameKeyListener keyLis){
 		this.layer = TileLayer.FromFile("LevelOne.txt");
-
+		this.layer.setKeyLis(keyLis);
+		this.keyLis = keyLis;
 	}
 	@Override
 	public void paintComponent(Graphics g){
