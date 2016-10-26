@@ -15,13 +15,13 @@ public class TileLayer extends JComponent {
 	private int[][] map;
 	private BufferedImage tileSheet;
 	ArrayList<Tile> tiles = new ArrayList<>();
-	ArrayList<Character> characters = new ArrayList<>();
+	Hero hero;
 	private Thread repainterThread;
 	private GameKeyListener keyLis;
 
 	public TileLayer(int width, int height) {
 		this.map = new int[height][width];
-		
+		this.hero = new Hero(408, 350, this.keyLis);
 		// Creates thread to update animation
 		Runnable r = new Repainter(60);
 		this.repainterThread = new Thread(r);
@@ -113,11 +113,6 @@ public class TileLayer extends JComponent {
 							(index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, g, this.tileSheet, x, y));
 				}
-				if (index == 6) {
-					this.characters.add(new Hero(index * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
-							(index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
-							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, g, this.tileSheet, x, y, this.keyLis));
-				}
 			}
 		}
 	}
@@ -126,11 +121,13 @@ public class TileLayer extends JComponent {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		for (Tile t : this.tiles) {
-			t.drawTile();
+			t.drawTile(g);
 		}
-		for (Character c : this.characters) {
-			c.drawTile();
-		}
+			this.hero.drawTile(g);
+	}
+	
+	private void checkMoveHero(){
+		
 	}
 	
 	private class Repainter implements Runnable {

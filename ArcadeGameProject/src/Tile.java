@@ -45,8 +45,8 @@ public abstract class Tile{
 		// TODO Auto-generated constructor stub.
 	}
 
-	public void drawTile() {
-		this.g.drawImage(this.tileSheet, this.indexX * Engine.TILE_WIDTH, this.indexY * Engine.TILE_HIEGHT,
+	public void drawTile(Graphics g) {
+		g.drawImage(this.tileSheet, this.indexX * Engine.TILE_WIDTH, this.indexY * Engine.TILE_HIEGHT,
 				(this.indexX * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 				(this.indexY * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.ulhx,
 				this.ulhy, this.lrhx,

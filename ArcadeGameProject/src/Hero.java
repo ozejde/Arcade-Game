@@ -1,12 +1,57 @@
+import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 
-public class Hero extends Character implements Runnable{
+public class Hero extends Character{
 	private GameKeyListener keyLis;
+	private int x1, x2, y1, y2;
 
-	public Hero(int x1, int x2, int y1, int y2, Graphics g, BufferedImage tileSheet, int x, int y, GameKeyListener keyLis) {
-		super(x1, y1, x2, y2, g, tileSheet, x, y);
+
+	public Hero(int i, int j, GameKeyListener keyLis) {
+		super();
+		this.x1 = i - 24;
+		this.y1 = j - 24;
+		this.x2 = i + 24;
+		this.y2 = j + 24;
 		this.keyLis = keyLis;
+	}
+	
+	@Override
+	public void drawTile(Graphics g){
+		g.setColor(Color.CYAN);
+		g.fillRect(this.x1, this.y1, 48, 48);
+		
+	}
+
+	public int getX1() {
+		return this.x1;
+	}
+
+	public void setX1(int x1) {
+		this.x1 = x1;
+	}
+
+	public int getX2() {
+		return this.x2;
+	}
+
+	public void setX2(int x2) {
+		this.x2 = x2;
+	}
+
+	public int getY1() {
+		return this.y1;
+	}
+
+	public void setY1(int y1) {
+		this.y1 = y1;
+	}
+
+	public int getY2() {
+		return this.y2;
+	}
+
+	public void setY2(int y2) {
+		this.y2 = y2;
 	}
 
 	@Override
