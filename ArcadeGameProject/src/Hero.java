@@ -12,44 +12,13 @@ public class Hero extends Character{
 		this.y1 = j - 24;
 		this.x2 = i + 24;
 		this.y2 = j + 24;
+		this.keyLis = keyLis;
 	}
 	
-	public void drawCharacter(Graphics g){
+	public void drawHero(Graphics g){
 		g.setColor(Color.CYAN);
 		g.fillRect(this.x1, this.y1, 48, 48);
 		
-	}
-
-	public int getX1() {
-		return this.x1;
-	}
-
-	public void setX1(int x1) {
-		this.x1 = x1;
-	}
-
-	public int getX2() {
-		return this.x2;
-	}
-
-	public void setX2(int x2) {
-		this.x2 = x2;
-	}
-
-	public int getY1() {
-		return this.y1;
-	}
-
-	public void setY1(int y1) {
-		this.y1 = y1;
-	}
-
-	public int getY2() {
-		return this.y2;
-	}
-
-	public void setY2(int y2) {
-		this.y2 = y2;
 	}
 
 	@Override
@@ -60,6 +29,25 @@ public class Hero extends Character{
 
 	public void move() {
 		System.out.println("Hero is moving now!! YAY!!");
+		if(this.keyLis.up){
+			this.y1 -= 5;
+			this.y2 -= 5;
+		}
+		if(this.keyLis.down){
+			this.y1 += 5;
+			this.y2 += 5;
+		}
+		
+		if(this.keyLis.left){
+			this.x1 -= 5;
+			this.x2 -= 5;
+		}
+		
+		if(this.keyLis.right){
+			this.x1 += 5;
+			this.x2 += 5;
+		}
+		
 		
 	}
 }
