@@ -84,6 +84,6 @@ public class Hero extends Character {
 	}
 
 	public void dropBomb() {
-		this.bombs.add(new Bomb(this.x1,this.y1));
+		this.bombs.add(new Bomb((this.x1+12),this.y1+12));
 	}
 }
