@@ -1,8 +1,11 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 public class Hero extends Character {
 	private int x1, x2, y1, y2;
+	private ArrayList<Bomb> bombs;
+	
 
 	public Hero(int i, int j) {
 		super();
@@ -10,11 +13,17 @@ public class Hero extends Character {
 		this.y1 = j - 24;
 		this.x2 = i + 24;
 		this.y2 = j + 24;
+		this.bombs = new ArrayList<>();
 	}
 
 	public void drawCharacter(Graphics g) {
 		g.setColor(Color.CYAN);
 		g.fillRect(this.x1, this.y1, 48, 48);
+		if (this.bombs!=null){
+			for(Bomb bomb:bombs){
+				bomb.drawCharacter(g);
+			}
+		}
 	}
 
 	public int getX1() {
@@ -72,5 +81,9 @@ public class Hero extends Character {
 	public void run() {
 		// TODO Auto-generated method stub.
 		
+	}
+
+	public void dropBomb() {
+		this.bombs.add(new Bomb(this.x1,this.y1));
 	}
 }
