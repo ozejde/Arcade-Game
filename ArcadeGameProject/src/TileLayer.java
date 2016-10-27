@@ -24,7 +24,7 @@ public class TileLayer extends JComponent {
 		this.keyLis = keyLis;
 		this.hero = new Hero(408, 350, this.keyLis);
 		// Creates thread to update animation
-		Runnable r = new Repainter(60);
+		Runnable r = new Repainter(65);
 		this.repainterThread = new Thread(r);
 		this.repainterThread.start();
 	}
@@ -120,14 +120,6 @@ public class TileLayer extends JComponent {
 			this.hero.drawHero(g);
 	}
 	
-	void checkMoveHero(){
-		if(this.keyLis.up || this.keyLis.down || this.keyLis.right || this.keyLis.left){
-			this.hero.move();
-		}
-		else{
-			System.out.println("Not Moving Yet");
-		}
-	}
 	
 	private class Repainter implements Runnable {
 		private final int fps;
@@ -139,7 +131,7 @@ public class TileLayer extends JComponent {
 		@Override
 		public void run() {
 			while (true) {
-				checkMoveHero();
+				TileLayer.this.hero.checkMoveHero();
 				TileLayer.this.repaint();
 			}
 		}
