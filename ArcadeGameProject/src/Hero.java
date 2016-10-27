@@ -13,7 +13,6 @@ public class Hero extends Character {
 	}
 
 	public void drawCharacter(Graphics g) {
-		System.out.println("We're printing Hero");
 		g.setColor(Color.CYAN);
 		g.fillRect(this.x1, this.y1, 48, 48);
 	}
@@ -52,24 +51,19 @@ public class Hero extends Character {
 
 
 	public void move(String direction) {
-		System.out.println("Hero is moving now!! YAY!!");
 
 		switch (direction) {
 		case "up":
-			this.setY1(getY1() + 10);
-			System.out.println("Y1 is " + this.getY1());
+			this.setY1(getY1() - 1);
 			break;
 		case "down":
-			this.setY1(getY1() - 10);
-			System.out.println("Y1 is " + this.getY1());
+			this.setY1(getY1() + 1);
 			break;
 		case "left":
-			this.setX1(getX1() - 10);
-			System.out.println("X1 is " + this.getX1());
+			this.setX1(getX1() - 1);
 			break;
 		case "right":
-			this.setX1(getX1() + 10);
-			System.out.println("X1 is " + this.getX1());
+			this.setX1(getX1() + 1);
 			break;
 	}
 }

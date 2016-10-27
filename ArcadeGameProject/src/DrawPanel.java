@@ -22,8 +22,7 @@ public class DrawPanel extends JPanel implements Runnable
 				// Periodically asks Java to repaint this component
 				try {
 					while (true) {
-						System.out.println("loop running");
-						Thread.sleep(10);
+						Thread.sleep(1);
 						DrawPanel.this.repaint();
 					
 					}
@@ -37,9 +36,8 @@ public class DrawPanel extends JPanel implements Runnable
 	}
 	@Override
 	public void paintComponent(Graphics g){
-		System.out.println("DrawPanel drawing");
 		super.paintComponent(g);
-		this.layer.createTiles(g);
+		this.layer.createTiles();
 		this.layer.paintComponent(g);
 	}
 	@Override

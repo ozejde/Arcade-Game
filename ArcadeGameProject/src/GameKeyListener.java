@@ -39,6 +39,7 @@ public class GameKeyListener implements KeyListener {
 		case KeyEvent.VK_RIGHT:
 			this.hero.move("right");
 			break;
+		case KeyEvent.
 		}
 		update();
 
@@ -47,7 +48,6 @@ public class GameKeyListener implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		this.keys[e.getKeyCode()] = false;
-		System.out.println("Test Release");
 		update();
 	}
 
