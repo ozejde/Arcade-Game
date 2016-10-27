@@ -3,7 +3,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class DrawPanel extends JPanel implements Runnable 
+public class DrawPanel extends JPanel 
 {
 	protected TileLayer layer;
 	private GameKeyListener keyLis;
@@ -39,10 +39,6 @@ public class DrawPanel extends JPanel implements Runnable
 		super.paintComponent(g);
 		this.layer.createTiles();
 		this.layer.paintComponent(g);
-		
-	}
-	@Override
-	public void run() {
 		
 	}
 }

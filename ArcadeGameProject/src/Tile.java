@@ -9,7 +9,8 @@ public abstract class Tile{
 	private static final int SIZE = 48;
 	private boolean distructable = false;
 	private boolean passable = false;
-	private Graphics g;
+	private boolean hasChanged = false;
+	
 	private BufferedImage tileSheet;
 	public boolean isDistructable() {
 		return this.distructable;

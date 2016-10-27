@@ -9,26 +9,30 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
-
 public class TileLayer extends JComponent {
 
 	private int[][] map;
 	private BufferedImage tileSheet;
 	ArrayList<Tile> tiles = new ArrayList<>();
 	Hero hero;
-	private Thread repainterThread;
 	private GameKeyListener keyLis;
+	boolean hasChanged = false;
 
-	public TileLayer(int width, int height,Hero hero) {
-		this.map = new int[height][width];
-		this.hero=hero;
-		// Creates thread to update animation
-		Runnable r = new Repainter(65);
-		this.repainterThread = new Thread(r);
-		this.repainterThread.start();
+	public boolean isHasChanged() {
+		return this.hasChanged;
 	}
 
-	public static TileLayer FromFile(String fileName,Hero hero) {
+	public void setHasChanged(boolean hasChanged) {
+		this.hasChanged = hasChanged;
+	}
+
+	public TileLayer(int width, int height, Hero hero) {
+		this.map = new int[height][width];
+		this.hero = hero;
+		// Creates thread to update animation
+	}
+
+	public static TileLayer FromFile(String fileName, Hero hero) {
 		TileLayer layer = null;
 		ArrayList<ArrayList<Integer>> tempLayout = new ArrayList<>();
 
@@ -57,7 +61,7 @@ public class TileLayer extends JComponent {
 
 		int width = tempLayout.get(0).size();
 		int height = tempLayout.size();
-		layer = new TileLayer(width, height,hero);
+		layer = new TileLayer(width, height, hero);
 
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
@@ -123,22 +127,7 @@ public class TileLayer extends JComponent {
 		for (Tile t : this.tiles) {
 			t.drawTile(g);
 		}
-			this.hero.drawCharacter(g);
+		this.hero.drawCharacter(g);
 	}
-	
-	
-	private class Repainter implements Runnable {
-		private final int fps;
-		
-		public Repainter(int fps) {
-			this.fps = fps;
-		}
 
-		@Override
-		public void run() {
-			while (true) {
-				TileLayer.this.repaint();
-			}
-		}
-	}
 }
