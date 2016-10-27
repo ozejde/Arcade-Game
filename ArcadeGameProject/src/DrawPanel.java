@@ -15,9 +15,29 @@ public class DrawPanel extends JPanel implements Runnable
 		this.layer.setKeyLis(this.keyLis);
 		this.addKeyListener(this.keyLis);
 		this.setFocusable(true);
+		
+		new Thread (new Runnable() {
+			@Override
+			public void run() {
+				// Periodically asks Java to repaint this component
+				try {
+					while (true) {
+						System.out.println("loop running");
+						Thread.sleep(10);
+						DrawPanel.this.repaint();
+					
+					}
+				} catch (InterruptedException exception) {
+					// Stop when interrupted
+				}
+			}
+		}).start();
+		
+		
 	}
 	@Override
 	public void paintComponent(Graphics g){
+		System.out.println("DrawPanel drawing");
 		super.paintComponent(g);
 		this.layer.createTiles(g);
 		this.layer.paintComponent(g);

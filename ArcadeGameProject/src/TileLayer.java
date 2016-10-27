@@ -121,6 +121,7 @@ public class TileLayer extends JComponent {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		for (Tile t : this.tiles) {
+			System.out.println("Draw Tiles");
 			t.drawTile(g);
 		}
 			this.hero.drawCharacter(g);

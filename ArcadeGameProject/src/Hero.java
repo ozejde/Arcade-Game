@@ -13,6 +13,7 @@ public class Hero extends Character {
 	}
 
 	public void drawCharacter(Graphics g) {
+		System.out.println("We're printing Hero");
 		g.setColor(Color.CYAN);
 		g.fillRect(this.x1, this.y1, 48, 48);
 	}
