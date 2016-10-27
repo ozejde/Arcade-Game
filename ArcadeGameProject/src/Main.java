@@ -16,8 +16,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("BomberMan Test");
-		frame.setFocusable(true);
-		DrawPanel panel = new DrawPanel(keyLis);		
+		
+		DrawPanel panel = new DrawPanel();		
 		
 		frame.add(panel);
 		frame.setSize(834, 688);
