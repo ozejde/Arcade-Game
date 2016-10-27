@@ -18,7 +18,6 @@ public class Hero extends Character{
 	public void drawHero(Graphics g){
 		g.setColor(Color.CYAN);
 		g.fillRect(this.x1, this.y1, 48, 48);
-		
 	}
 
 	@Override
@@ -26,26 +25,35 @@ public class Hero extends Character{
 		// TODO Auto-generated method stub.
 		
 	}
+	void checkMoveHero(){
+		if(this.keyLis.up || this.keyLis.down || this.keyLis.right || this.keyLis.left){
+			move();
+		}
+		else{
+			System.out.println("Not Moving Yet");
+		}
+	}
 
 	public void move() {
 		System.out.println("Hero is moving now!! YAY!!");
 		if(this.keyLis.up){
-			this.y1 -= 5;
-			this.y2 -= 5;
+			this.y1 -= 1;
+			this.y2 -= 1;
+			
 		}
 		if(this.keyLis.down){
-			this.y1 += 5;
-			this.y2 += 5;
+			this.y1 += 1;
+			this.y2 += 1;
 		}
 		
 		if(this.keyLis.left){
-			this.x1 -= 5;
-			this.x2 -= 5;
+			this.x1 -= 1;
+			this.x2 -= 1;
 		}
 		
 		if(this.keyLis.right){
-			this.x1 += 5;
-			this.x2 += 5;
+			this.x1 += 1;
+			this.x2 += 1;
 		}
 		
 		

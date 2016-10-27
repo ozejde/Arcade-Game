@@ -8,9 +8,9 @@ public class DrawPanel extends JPanel
 	protected TileLayer layer;
 	protected GameKeyListener keyLis;
 	
-	public DrawPanel(GameKeyListener keyLis){
+	public DrawPanel(){
 		this.keyLis = keyLis;
-		this.layer = TileLayer.FromFile("LevelOne.txt", this.keyLis);
+		this.layer = TileLayer.FromFile("Level3.txt", this.keyLis);
 	}
 	@Override
 	public void paintComponent(Graphics g){

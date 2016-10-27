@@ -16,8 +16,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("BomberMan Test");
-		GameKeyListener keyLis = new GameKeyListener();
-		frame.addKeyListener(keyLis);
 		frame.setFocusable(true);
 		DrawPanel panel = new DrawPanel(keyLis);		
 		
