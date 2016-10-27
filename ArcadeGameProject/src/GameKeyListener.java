@@ -8,20 +8,38 @@ public class GameKeyListener implements KeyListener {
 	public boolean down = false;
 	public  boolean left = false;
 	public boolean right = false;
-	
+	private Hero hero;
+
+	public GameKeyListener(Hero hero) {
+		this.hero = hero;
+	}
+
 	public void update() {
-		this.up = this.keys[KeyEvent.VK_UP] || this.keys[KeyEvent.VK_W];
-		this.down = this.keys[KeyEvent.VK_DOWN] || this.keys[KeyEvent.VK_S];
-		this.left = this.keys[KeyEvent.VK_LEFT] || this.keys[KeyEvent.VK_A];
-		this.right = this.keys[KeyEvent.VK_RIGHT] || this.keys[KeyEvent.VK_D];
+		this.up = this.keys[KeyEvent.VK_UP];
+		this.down = this.keys[KeyEvent.VK_DOWN];
+		this.left = this.keys[KeyEvent.VK_LEFT];
+		this.right = this.keys[KeyEvent.VK_RIGHT];
 //		this.space = this.keys[KeyEvent.VK_SPACE];
 //		this.enter = this.keys[KeyEvent.VK_ENTER];
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		this.keys[e.getKeyCode()] = true;
-		System.out.println("Test Press");
+		int keyCode = e.getKeyCode();
+		switch (keyCode) {
+		case KeyEvent.VK_UP:
+			this.hero.move("up");
+			break;
+		case KeyEvent.VK_DOWN:
+			this.hero.move("down");
+			break;
+		case KeyEvent.VK_LEFT:
+			this.hero.move("left");
+			break;
+		case KeyEvent.VK_RIGHT:
+			this.hero.move("right");
+			break;
+		}
 		update();
 
 	}
@@ -35,7 +53,7 @@ public class GameKeyListener implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
+
 	}
 
 }

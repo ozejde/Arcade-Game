@@ -19,17 +19,16 @@ public class TileLayer extends JComponent {
 	private Thread repainterThread;
 	private GameKeyListener keyLis;
 
-	public TileLayer(int width, int height, GameKeyListener keyLis) {
+	public TileLayer(int width, int height,Hero hero) {
 		this.map = new int[height][width];
-		this.keyLis = keyLis;
-		this.hero = new Hero(408, 350, this.keyLis);
+		this.hero=hero;
 		// Creates thread to update animation
 		Runnable r = new Repainter(65);
 		this.repainterThread = new Thread(r);
 		this.repainterThread.start();
 	}
 
-	public static TileLayer FromFile(String fileName, GameKeyListener keyLis) {
+	public static TileLayer FromFile(String fileName,Hero hero) {
 		TileLayer layer = null;
 		ArrayList<ArrayList<Integer>> tempLayout = new ArrayList<>();
 
@@ -58,7 +57,7 @@ public class TileLayer extends JComponent {
 
 		int width = tempLayout.get(0).size();
 		int height = tempLayout.size();
-		layer = new TileLayer(width, height, keyLis);
+		layer = new TileLayer(width, height,hero);
 
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
@@ -69,6 +68,13 @@ public class TileLayer extends JComponent {
 		return layer;
 	}
 
+	public GameKeyListener getKeyLis() {
+		return this.keyLis;
+	}
+
+	public void setKeyLis(GameKeyListener keyLis) {
+		this.keyLis = keyLis;
+	}
 
 	public BufferedImage LoadTileSheet(String fileName) {
 		BufferedImage img = null;
@@ -117,7 +123,7 @@ public class TileLayer extends JComponent {
 		for (Tile t : this.tiles) {
 			t.drawTile(g);
 		}
-			this.hero.drawHero(g);
+			this.hero.drawCharacter(g);
 	}
 	
 	
@@ -131,7 +137,6 @@ public class TileLayer extends JComponent {
 		@Override
 		public void run() {
 			while (true) {
-				TileLayer.this.hero.checkMoveHero();
 				TileLayer.this.repaint();
 			}
 		}
