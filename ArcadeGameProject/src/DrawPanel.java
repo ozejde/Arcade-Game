@@ -39,6 +39,7 @@ public class DrawPanel extends JPanel implements Runnable
 		super.paintComponent(g);
 		this.layer.createTiles();
 		this.layer.paintComponent(g);
+		
 	}
 	@Override
 	public void run() {
