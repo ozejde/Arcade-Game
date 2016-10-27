@@ -15,6 +15,7 @@ public class DrawPanel extends JPanel
 		this.layer.setKeyLis(this.keyLis);
 		this.addKeyListener(this.keyLis);
 		this.setFocusable(true);
+		this.layer.createTiles();
 		
 		new Thread (new Runnable() {
 			@Override
@@ -37,7 +38,6 @@ public class DrawPanel extends JPanel
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		this.layer.createTiles();
 		this.layer.paintComponent(g);
 		
 	}

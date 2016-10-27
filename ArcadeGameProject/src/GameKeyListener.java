@@ -40,7 +40,6 @@ public class GameKeyListener implements KeyListener {
 			this.hero.move("right");
 			break;
 		case KeyEvent.VK_B:
-			System.out.println("B pressed");
 			this.hero.dropBomb();
 		}
 		update();
