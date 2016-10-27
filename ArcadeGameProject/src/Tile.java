@@ -30,20 +30,16 @@ public abstract class Tile{
 	private int indexX;
 	private int indexY;
 
-	public Tile(int x1, int y1, int x2, int y2, Graphics g, BufferedImage tileSheet, int x, int y) {
+	public Tile(int x1, int y1, int x2, int y2, BufferedImage tileSheet, int x, int y) {
 		this.ulhx = x1;
 		this.ulhy = y1;
 		this.lrhx = x2;
 		this.lrhy = y2;
-		this.g = g;
 		this.tileSheet = tileSheet;
 		this.indexX = x;
 		this.indexY = y;
 	}
 
-	public Tile() {
-		// TODO Auto-generated constructor stub.
-	}
 
 	public void drawTile(Graphics g) {
 		g.drawImage(this.tileSheet, this.indexX * Engine.TILE_WIDTH, this.indexY * Engine.TILE_HIEGHT,

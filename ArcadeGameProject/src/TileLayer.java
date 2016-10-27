@@ -88,7 +88,7 @@ public class TileLayer extends JComponent {
 		return img;
 	}
 
-	public void createTiles(Graphics g) {
+	public void createTiles() {
 		for (int y = 0; y < this.map.length; y++) {
 			for (int x = 0; x < this.map[y].length; x++) {
 				int index = this.map[y][x];
@@ -101,17 +101,17 @@ public class TileLayer extends JComponent {
 				if (index == 0) {
 					this.tiles.add(new GroundTile(index * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
 							(index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
-							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, g, this.tileSheet, x, y));
+							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
 				}
 				if (index == 1) {
 					this.tiles.add(new Wall(index * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
 							(index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
-							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, g, this.tileSheet, x, y));
+							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
 				}
 				if (index == 5) {
 					this.tiles.add(new BrickWall(index * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
 							(index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
-							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, g, this.tileSheet, x, y));
+							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
 				}
 			}
 		}
@@ -121,7 +121,6 @@ public class TileLayer extends JComponent {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		for (Tile t : this.tiles) {
-			System.out.println("Draw Tiles");
 			t.drawTile(g);
 		}
 			this.hero.drawCharacter(g);
