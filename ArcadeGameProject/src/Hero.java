@@ -17,13 +17,13 @@ public class Hero extends Character {
 	}
 
 	public void drawCharacter(Graphics g) {
-		g.setColor(Color.CYAN);
-		g.fillRect(this.x1, this.y1, 36, 36);
 		if (this.bombs != null) {
 			for (Bomb bomb : this.bombs) {
 				bomb.drawCharacter(g);
 			}
 		}
+		g.setColor(Color.CYAN);
+		g.fillRect(this.x1, this.y1, 36, 36);	
 	}
 
 	public int getX1() {
