@@ -21,6 +21,8 @@ public class DrawPanel extends JPanel
 		this.addKeyListener(this.keyLis);
 		this.setFocusable(true);
 		this.layer.createTiles();
+
+
 		
 		new Thread (new Runnable() {
 			@Override

@@ -12,17 +12,16 @@ public class GameKeyListener implements KeyListener {
 	public boolean d = false;
 	private Hero hero;
 	private DrawPanel drawPanel;
-
+	
+	public GameKeyListener(Hero hero, DrawPanel drawPanel) {
+		this.hero = hero;
+		this.drawPanel = drawPanel;
+	}
 	public boolean getU(){
 		return u;
 	}
 	public boolean getD(){
 		return d;
-	}
-	
-	public GameKeyListener(Hero hero, DrawPanel drawPanel) {
-		this.hero = hero;
-		this.drawPanel = drawPanel;
 	}
 
 	public void update() {
