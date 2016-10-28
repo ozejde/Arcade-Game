@@ -1,0 +1,21 @@
+Cycle 1 Status Report 
+Met on Monday night, Wednesday night, and Thursday afternoon and night
+Met with a tutor on Thursday afternoon and thursday night
+
+Changing coordinates of hero/getting KeyListener properly implemented: 
+3 hours 
+
+Refreshing the screen so that hero could move:
+Met with tutor for 2 hours about this issue, and finally solved it with them in the end 
+
+Creating and dropping bombs:
+30 minutes 
+
+Removing lag:
+45 minutes
+
+Changing levels with U and D:
+2 hours
+
+Making walls "solid":
+2.5 hours
