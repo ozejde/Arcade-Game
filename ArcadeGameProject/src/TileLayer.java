@@ -13,8 +13,8 @@ public class TileLayer extends JComponent {
 
 	private int[][] map;
 	private BufferedImage tileSheet;
-	ArrayList<Tile> tiles = new ArrayList<>();
-	Hero hero;
+	protected ArrayList<Tile> tiles = new ArrayList<>();
+	protected Hero hero;
 	private GameKeyListener keyLis;
 	boolean hasChanged = false;
 
@@ -119,6 +119,7 @@ public class TileLayer extends JComponent {
 				}
 			}
 		}
+		this.hero.setTiles(this.tiles);
 	}
 
 	@Override
