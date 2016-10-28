@@ -6,12 +6,23 @@ public class GameKeyListener implements KeyListener {
 	private boolean[] keys = new boolean[120];
 	public boolean up = false;
 	public boolean down = false;
-	public  boolean left = false;
+	public boolean left = false;
 	public boolean right = false;
+	public boolean u = false;
+	public boolean d = false;
 	private Hero hero;
+	private DrawPanel drawPanel;
 
-	public GameKeyListener(Hero hero) {
+	public boolean getU(){
+		return u;
+	}
+	public boolean getD(){
+		return d;
+	}
+	
+	public GameKeyListener(Hero hero, DrawPanel drawPanel) {
 		this.hero = hero;
+		this.drawPanel = drawPanel;
 	}
 
 	public void update() {
@@ -21,6 +32,8 @@ public class GameKeyListener implements KeyListener {
 		this.right = this.keys[KeyEvent.VK_RIGHT];
 //		this.space = this.keys[KeyEvent.VK_SPACE];
 //		this.enter = this.keys[KeyEvent.VK_ENTER];
+		this.u = this.keys[KeyEvent.VK_U];
+		this.d = this.keys[KeyEvent.VK_D];
 	}
 
 	@Override
@@ -41,6 +54,13 @@ public class GameKeyListener implements KeyListener {
 			break;
 		case KeyEvent.VK_B:
 			this.hero.dropBomb();
+			break;
+		case KeyEvent.VK_U:
+			this.drawPanel.levelUp();
+			break;
+		case KeyEvent.VK_D:
+			this.drawPanel.levelDown();
+			break;
 		}
 		update();
 
@@ -54,7 +74,6 @@ public class GameKeyListener implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-
 	}
 
 }
