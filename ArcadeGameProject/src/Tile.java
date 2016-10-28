@@ -1,6 +1,12 @@
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-
+/**
+ * 
+ * Abstract class that creates Tiles
+ *
+ * @author ejdeoz.
+ *         Created Oct 27, 2016.
+ */
 public abstract class Tile {
 	private int ulhx = 0;
 	private int ulhy = 0;
@@ -13,6 +19,12 @@ public abstract class Tile {
 
 	private BufferedImage tileSheet;
 
+	/**
+	 * 
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @return
+	 */
 	public boolean isDistructable() {
 		return this.distructable;
 	}
