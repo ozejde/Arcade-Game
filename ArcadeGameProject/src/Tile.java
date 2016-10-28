@@ -95,10 +95,6 @@ public abstract class Tile {
 		this.y1 = (this.indexY * Engine.TILE_HIEGHT);
 		this.x2 = ((this.indexX * Engine.TILE_WIDTH) + Engine.TILE_WIDTH);
 		this.y2 = ((this.indexY * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT);
-		System.out.println((this.indexX * Engine.TILE_WIDTH) + " " + (this.indexY * Engine.TILE_HIEGHT));
-		System.out.println(((this.indexX * Engine.TILE_WIDTH) + Engine.TILE_WIDTH) + " "
-				+ ((this.indexY * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT));
-		System.out.println();
 	}
 
 	/**

@@ -144,42 +144,42 @@ public class Hero extends Character {
 
 		switch (direction) {
 		case "up":
-			this.setY1(getY1() - 1);
-			this.setY2(getY2() - 1);
+			this.setY1(getY1() - 3);
+			this.setY2(getY2() - 3);
 			System.out.println("Moved up");
 			if (!this.checkMove()) {
-				this.setY1(getY1() + 1);
-				this.setY2(getY2() + 1);
+				this.setY1(getY1() + 3);
+				this.setY2(getY2() + 3);
 				System.out.println("false");
 			}
 			break;
 		case "down":
-			this.setY1(getY1() + 1);
-			this.setY2(getY2() + 1);
+			this.setY1(getY1() + 3);
+			this.setY2(getY2() + 3);
 			System.out.println("Moved down");
 			if (!this.checkMove()) {
-				this.setY1(getY1() - 1);
-				this.setY2(getY2() - 1);
+				this.setY1(getY1() - 3);
+				this.setY2(getY2() - 3);
 				System.out.println("false");
 			}
 			break;
 		case "left":
-			this.setX1(getX1() - 1);
-			this.setX2(getX2() - 1);
+			this.setX1(getX1() - 3);
+			this.setX2(getX2() - 3);
 			System.out.println("Moved left");
 			if (!this.checkMove()) {
-				this.setX1(getX1() + 1);
-				this.setX2(getX2() + 1);
+				this.setX1(getX1() + 3);
+				this.setX2(getX2() + 3);
 				System.out.println("false");
 			}
 			break;
 		case "right":
-			this.setX1(getX1() + 1);
-			this.setX2(getX2() + 1);
+			this.setX1(getX1() + 3);
+			this.setX2(getX2() + 3);
 			System.out.println("Moved right");
 			if (!this.checkMove()) {
-				this.setX1(getX1() - 1);
-				this.setX2(getX2() - 1);
+				this.setX1(getX1() - 3);
+				this.setX2(getX2() - 3);
 				System.out.println("false");
 			}
 			break;
