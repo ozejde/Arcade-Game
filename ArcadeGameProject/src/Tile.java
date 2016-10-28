@@ -13,7 +13,7 @@ public abstract class Tile {
 	private int lrhx = 0;
 	private int lrhy = 0;
 	private static final int SIZE = 48;
-	private boolean distructable = false;
+	private boolean destructible = false;
 	private boolean passable = false;
 	private boolean hasChanged = false;
 
@@ -21,16 +21,17 @@ public abstract class Tile {
 
 	/**
 	 * 
-	 * TODO Put here a description of what this method does.
+	 * Returns if tile is destructible
 	 *
 	 * @return
+	 * distructible 
 	 */
-	public boolean isDistructable() {
-		return this.distructable;
+	public boolean isDestructible() {
+		return this.destructible;
 	}
 
-	public void setDistructable(boolean distructable) {
-		this.distructable = distructable;
+	public void setDestructible(boolean destructible) {
+		this.destructible = destructible;
 	}
 
 	public boolean isPassable() {
