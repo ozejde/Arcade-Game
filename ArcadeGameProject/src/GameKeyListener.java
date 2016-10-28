@@ -1,6 +1,12 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * 
+ * KeyListener subclass that handles keyboard input
+ *
+ * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
+ */
 public class GameKeyListener implements KeyListener {
 
 	private boolean[] keys = new boolean[120];
@@ -12,29 +18,60 @@ public class GameKeyListener implements KeyListener {
 	public boolean d = false;
 	private Hero hero;
 	private DrawPanel drawPanel;
-	
+
+	/**
+	 * 
+	 * Takes in parameters and sets them as fields
+	 *
+	 * @param hero
+	 *            Hero of the game
+	 * @param drawPanel
+	 *            DrawPanel of the game
+	 */
 	public GameKeyListener(Hero hero, DrawPanel drawPanel) {
 		this.hero = hero;
 		this.drawPanel = drawPanel;
 	}
-	public boolean getU(){
+
+	/**
+	 * 
+	 * Outputs whether U is pressed or not
+	 *
+	 * @return Boolean if U is pressed
+	 */
+	public boolean getU() {
 		return u;
 	}
-	public boolean getD(){
+
+	/**
+	 * 
+	 * Outputs whether D is pressed or not
+	 *
+	 * @return Boolean if D is pressed
+	 */
+	public boolean getD() {
 		return d;
 	}
 
+	/**
+	 * 
+	 * updates the Boolean pressed statuses of all keys
+	 *
+	 */
 	public void update() {
 		this.up = this.keys[KeyEvent.VK_UP];
 		this.down = this.keys[KeyEvent.VK_DOWN];
 		this.left = this.keys[KeyEvent.VK_LEFT];
 		this.right = this.keys[KeyEvent.VK_RIGHT];
-//		this.space = this.keys[KeyEvent.VK_SPACE];
-//		this.enter = this.keys[KeyEvent.VK_ENTER];
+		// this.space = this.keys[KeyEvent.VK_SPACE];
+		// this.enter = this.keys[KeyEvent.VK_ENTER];
 		this.u = this.keys[KeyEvent.VK_U];
 		this.d = this.keys[KeyEvent.VK_D];
 	}
 
+	/**
+	 * Handles the event in which a certain key is pressed
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
@@ -65,6 +102,9 @@ public class GameKeyListener implements KeyListener {
 
 	}
 
+	/**
+	 * Changes key Boolean to false to represent the button not being pressed
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
 		this.keys[e.getKeyCode()] = false;
