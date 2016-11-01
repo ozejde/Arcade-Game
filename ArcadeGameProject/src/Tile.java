@@ -152,14 +152,12 @@ public abstract class Tile {
 				null);
 	}
 
-//	public Tile createNewGroundTile() {
-//		return new GroundTile(this.getX1(), this.getY1(), this.getX2(), this.getY2(), this.tileSheet, 0, 0);
-//	}
 	public void createNewGroundTile() {
 		this.ulhx = 0;
 		this.ulhy = 0;
 		this.lrhx = 48;
 		this.lrhy = 48;
+		this.setPassable(true);
 	}
 
 }
