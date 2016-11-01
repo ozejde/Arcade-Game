@@ -30,7 +30,7 @@ public class Hero extends Character {
 		this.setSize(this.heroSize);
 		this.lives = 3;
 		this.monsters = m;
-		this.setOffset(3);
+		this.setOffset(2);
 	}
 
 	/**
