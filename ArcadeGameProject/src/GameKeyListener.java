@@ -63,8 +63,6 @@ public class GameKeyListener implements KeyListener {
 		this.down = this.keys[KeyEvent.VK_DOWN];
 		this.left = this.keys[KeyEvent.VK_LEFT];
 		this.right = this.keys[KeyEvent.VK_RIGHT];
-		// this.space = this.keys[KeyEvent.VK_SPACE];
-		// this.enter = this.keys[KeyEvent.VK_ENTER];
 		this.u = this.keys[KeyEvent.VK_U];
 		this.d = this.keys[KeyEvent.VK_D];
 	}

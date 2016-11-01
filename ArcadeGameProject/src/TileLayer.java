@@ -16,23 +16,17 @@ public class TileLayer extends JComponent {
 	protected ArrayList<Tile> tiles = new ArrayList<>();
 	protected Hero hero;
 	private GameKeyListener keyLis;
-	boolean hasChanged = false;
+	private ArrayList<Monster> m1 = new ArrayList<>();
 
-	public boolean isHasChanged() {
-		return this.hasChanged;
-	}
 
-	public void setHasChanged(boolean hasChanged) {
-		this.hasChanged = hasChanged;
-	}
-
-	public TileLayer(int width, int height, Hero hero) {
+	public TileLayer(int width, int height, Hero hero, ArrayList<Monster> m12) {
 		this.map = new int[height][width];
 		this.hero = hero;
+		this.m1 = m12;
 		// Creates thread to update animation
 	}
 
-	public static TileLayer FromFile(String fileName, Hero hero) {
+	public static TileLayer FromFile(String fileName, Hero hero, ArrayList<Monster> m12) {
 		TileLayer layer = null;
 		ArrayList<ArrayList<Integer>> tempLayout = new ArrayList<>();
 
@@ -61,7 +55,7 @@ public class TileLayer extends JComponent {
 
 		int width = tempLayout.get(0).size();
 		int height = tempLayout.size();
-		layer = new TileLayer(width, height, hero);
+		layer = new TileLayer(width, height, hero, m12);
 
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
@@ -120,6 +114,10 @@ public class TileLayer extends JComponent {
 			}
 		}
 		this.hero.setTiles(this.tiles);
+		
+		for (Monster m : this.m1) {
+			m.setTiles(this.tiles);
+		}
 	}
 
 	@Override
@@ -127,6 +125,9 @@ public class TileLayer extends JComponent {
 		super.paintComponent(g);
 		for (Tile t : this.tiles) {
 			t.drawTile(g);
+		}
+		for (Monster m : this.m1) {
+			m.drawMonster(g);
 		}
 		this.hero.drawCharacter(g);
 	}
