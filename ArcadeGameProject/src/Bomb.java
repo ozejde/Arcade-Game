@@ -69,10 +69,10 @@ public class Bomb {
 		
 		
 		Tile bombTile = null;
-		ArrayList<Tile> surroundingTiles = null;
+		ArrayList<Tile> surroundingTiles = new ArrayList<>();
 		
 		
-		for (Tile tile: tiles){
+		for (Tile tile: this.tiles){
 			if (tile.getX1()<=this.x&&tile.getX2()>=this.x&&tile.getY1()<=this.y&&tile.getY2()>=this.y){
 				bombTile = tile;
 				surroundingTiles.add(bombTile);
@@ -93,7 +93,7 @@ public class Bomb {
 		Tile tileLeft = null;
 		Tile tileDown = null;
 		
-		for(Tile tile: tiles){
+		for(Tile tile: this.tiles){
 			if (tile.getX1()<=ux&&tile.getX2()>=ux&&tile.getY1()<=uy&&tile.getY2()>=uy){
 				tileUp = tile;
 				surroundingTiles.add(tileUp);
@@ -104,7 +104,7 @@ public class Bomb {
 			}
 			else if (tile.getX1()<=lx&&tile.getX2()>=lx&&tile.getY1()<=ly&&tile.getY2()>=ly){
 				tileLeft = tile;
-				surroundingTiles.add(tileLeft	);
+				surroundingTiles.add(tileLeft);
 			}
 			else if (tile.getX1()<=dx&&tile.getX2()>=dx&&tile.getY1()<=dy&&tile.getY2()>=dy){
 				tileDown = tile;
