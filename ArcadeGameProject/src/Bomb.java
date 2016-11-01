@@ -3,6 +3,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -22,6 +23,7 @@ public class Bomb {
 	private ArrayList<Monster> monsters;
 	private ArrayList<Tile> surroundingTiles = new ArrayList<>();
 	protected Tile bombTile = null;
+	private boolean removed;
 
 	/**
 	 * 
@@ -37,6 +39,7 @@ public class Bomb {
 		this.x = d;
 		this.y = e;
 		this.tiles = tiles;
+		this.removed = false;
 		Timer timer = new Timer();
 		timer.schedule(new Task(), 5000);
 		Timer leave = new Timer();
@@ -46,6 +49,8 @@ public class Bomb {
 		this.setRange(1);
 		this.monsters = monsters;
 		Bomb.this.setBombTile();
+		
+
 	}
 	
 	class LeaveTimer extends TimerTask{
@@ -59,12 +64,14 @@ public class Bomb {
 
 		@Override
 		public void run() {
-			System.out.println(Bomb.this.hero.bombs.toString());
+			
+			if (!removed){
+			Bomb.this.hero.bombs.remove(0);
+			}
+			
 			Bomb.this.explode();
-			System.out.println("Bomb has exploded");
-			
-			
-			System.out.println(Bomb.this.hero.bombs.toString());
+		
+			Bomb.this.bombTile.setPassable(true);
 			
 		}
 	}
@@ -89,6 +96,10 @@ public class Bomb {
 		Ellipse2D.Double bomb = new Ellipse2D.Double(this.x, this.y, this.size, this.size);
 		gCast.fill(bomb);
 	}
+	
+	public void setRemoved(){
+		this.removed = true;
+	}
 
 	public void explode() {
 		// remove bomb from screen
@@ -98,6 +109,7 @@ public class Bomb {
 
 		// remove bomb from arraylist of bombs
 		// remove graphic of bomb from screen
+		
 		
 
 		int ux = this.bombTile.getX1() + 24;
@@ -141,14 +153,17 @@ public class Bomb {
 		this.destroyCharacters();
 		// if bomb is in surroundingTiles, explode bomb
 		
+		
 	
-		Bomb.this.hero.bombs.remove(0);
-		Bomb.this.bombTile.setPassable(true);
+		
 		this.destroyBombs();
 	}
 
 	private void destroyBombs() {
-		for (Bomb bomb:Bomb.this.hero.bombs){
+		Iterator<Bomb> bombIterator = Bomb.this.hero.bombs.iterator();
+		
+		while (bombIterator.hasNext()){
+			Bomb bomb = bombIterator.next();
 			if(!bomb.equals(this)){
 				for(Tile tile: surroundingTiles){
 					int tileX = tile.getX1();
@@ -158,6 +173,8 @@ public class Bomb {
 					
 					if(tileX==bombX&&tileY==bombY){
 						bomb.explode();
+						bomb.setRemoved();
+						bombIterator.remove();
 					}
 				}
 			}
