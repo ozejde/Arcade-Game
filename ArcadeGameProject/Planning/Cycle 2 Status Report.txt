@@ -1,9 +1,18 @@
 Cycle 2 status report
+Met Sunday evening, Monday evening, Tuesday during and after class
 
 NOTE: Bombs are sticky, so if Hero is standing on bomb 2 seconds after drop, Hero will be trapped
 
-Worked on how to explode bombs:
-2 hours
+All objectives have been reached
 
+Bomb logic
+8 hours
 
+Monster logic
+1.5 hours
 
+Hero getting stuck inside bomb
+3 hours
+
+Bomb interactions with other objects
+3 hours
