@@ -18,7 +18,6 @@ public class TileLayer extends JComponent {
 	private GameKeyListener keyLis;
 	private ArrayList<Monster> m1 = new ArrayList<>();
 
-
 	public TileLayer(int width, int height, Hero hero, ArrayList<Monster> m12) {
 		this.map = new int[height][width];
 		this.hero = hero;
@@ -114,7 +113,7 @@ public class TileLayer extends JComponent {
 			}
 		}
 		this.hero.setTiles(this.tiles);
-		
+
 		for (Monster m : this.m1) {
 			m.setTiles(this.tiles);
 		}
@@ -128,6 +127,11 @@ public class TileLayer extends JComponent {
 		}
 		for (Monster m : this.m1) {
 			m.drawMonster(g);
+		}
+		if (this.hero.bombs.size() != 0) {
+			for (Bomb bomb : this.hero.bombs) {
+				bomb.drawCharacter(g);
+			}
 		}
 		this.hero.drawCharacter(g);
 	}

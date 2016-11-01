@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
  */
 public class Hero extends Character {
-	private ArrayList<Bomb> bombs;
+	protected ArrayList<Bomb> bombs;
 	private int heroSize = 34;
 	private int lives;
 	private ArrayList<Monster> monsters;
@@ -41,11 +41,6 @@ public class Hero extends Character {
 	 *            Graphics object used to draw Hero and Bomb
 	 */
 	public void drawCharacter(Graphics g) {
-		if (this.bombs != null) {
-			for (Bomb bomb : this.bombs) {
-				bomb.drawCharacter(g);
-			}
-		}
 		g.setColor(Color.CYAN);
 		g.fillRect((int) this.x1, (int) this.y1, this.size, this.size);
 	}
@@ -101,9 +96,17 @@ public class Hero extends Character {
 	 * Drops bomb at center of Hero's current location
 	 *
 	 */
+	@SuppressWarnings("null")
 	public void dropBomb() {
-		this.bombs.add(new Bomb((this.x1 + 12), this.y1 + 12, this.tiles));
-
+		Tile tempTile = null;
+		for (Tile tile : this.tiles) {
+			if (this.checkIfInTile(tile)) {
+				tempTile = tile;
+				continue;
+			}
+		}
+		this.bombs.add(new Bomb((tempTile.getX1()), tempTile.getY1(), this.tiles, this, this.monsters));
+		this.bombs.get(this.bombs.size() - 1).bombTile.setPassable(false);
 	}
 
 	public void addLife() {
@@ -113,6 +116,7 @@ public class Hero extends Character {
 	public void subtractLife() {
 		this.lives--;
 	}
+
 	public int getLives() {
 		return this.lives;
 	}
