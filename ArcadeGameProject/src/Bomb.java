@@ -63,9 +63,9 @@ public class Bomb {
 			Bomb.this.explode();
 			System.out.println("Bomb has exploded");
 			
-			Bomb.this.hero.bombs.remove(0);
+			
 			System.out.println(Bomb.this.hero.bombs.toString());
-			Bomb.this.bombTile.setPassable(true);
+			
 		}
 	}
 	
@@ -98,6 +98,7 @@ public class Bomb {
 
 		// remove bomb from arraylist of bombs
 		// remove graphic of bomb from screen
+		
 
 		int ux = this.bombTile.getX1() + 24;
 		int uy = this.bombTile.getY1() - 24;
@@ -139,6 +140,29 @@ public class Bomb {
 		// if hero is in surroundingTiles, hero.death
 		this.destroyCharacters();
 		// if bomb is in surroundingTiles, explode bomb
+		
+	
+		Bomb.this.hero.bombs.remove(0);
+		Bomb.this.bombTile.setPassable(true);
+		this.destroyBombs();
+	}
+
+	private void destroyBombs() {
+		for (Bomb bomb:Bomb.this.hero.bombs){
+			if(!bomb.equals(this)){
+				for(Tile tile: surroundingTiles){
+					int tileX = tile.getX1();
+					int tileY = tile.getY2();
+					int bombX = bomb.getBombTile().getX1();
+					int bombY = bomb.getBombTile().getY2();
+					
+					if(tileX==bombX&&tileY==bombY){
+						bomb.explode();
+					}
+				}
+			}
+		}
+		
 	}
 
 	public void destroyCharacters() {
@@ -171,6 +195,9 @@ public class Bomb {
 				this.bombTile.setPassable(true);
 			}
 		}
+	}
+	public Tile getBombTile(){
+		return this.bombTile;
 	}
 
 }
