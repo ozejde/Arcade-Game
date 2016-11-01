@@ -137,7 +137,7 @@ public class Bomb {
 		for (Monster m : this.monsters) {
 			for (Tile tile : this.surroundingTiles) {
 				if (m.checkIfInTile(tile)) {
-					System.out.println("Monster Died");
+					this.monsters.remove(m);
 				}
 			}
 		}
