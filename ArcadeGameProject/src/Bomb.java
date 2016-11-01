@@ -39,12 +39,20 @@ public class Bomb {
 		this.tiles = tiles;
 		Timer timer = new Timer();
 		timer.schedule(new Task(), 5000);
+		Timer leave = new Timer();
+		timer.schedule(new LeaveTimer(), 2000);
 		this.size = 48;
 		this.hero = hero;
 		this.setRange(1);
 		this.monsters = monsters;
 		Bomb.this.setBombTile();
-		Bomb.this.bombTile.setPassable(false);
+	}
+	
+	class LeaveTimer extends TimerTask{
+		@Override
+		public void run() {
+			Bomb.this.bombTile.setPassable(false);
+		}
 	}
 
 	class Task extends TimerTask {
@@ -157,6 +165,7 @@ public class Bomb {
 			if (this.x == tile.getX1() && this.y == tile.getY1()) {
 				this.bombTile = tile;
 				this.surroundingTiles.add(this.bombTile);
+				this.bombTile.setPassable(true);
 			}
 		}
 	}

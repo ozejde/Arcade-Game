@@ -1,8 +1,9 @@
 Cycle 2 status report
 
+NOTE: Bombs are sticky, so if Hero is standing on bomb 2 seconds after drop, Hero will be trapped
+
 Worked on how to explode bombs:
 2 hours
 
-TODO 
-find out how to remove bomb
-dont get hero stuck in bomb tile
+
+
