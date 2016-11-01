@@ -138,7 +138,7 @@ public class Hero extends Character {
 	 * Moves Hero in desired direction
 	 *
 	 * @param direction
-	 * String of direction Hero will move in
+	 *            String of direction Hero will move in
 	 */
 	public void move(String direction) {
 
@@ -188,10 +188,9 @@ public class Hero extends Character {
 
 	/**
 	 * 
-	 *Checks if moving is possible
+	 * Checks if moving is possible
 	 *
-	 * @return
-	 * Boolean of if move is possible
+	 * @return Boolean of if move is possible
 	 */
 	private boolean checkMove() {
 		for (Tile tile : this.tiles) {
@@ -227,12 +226,11 @@ public class Hero extends Character {
 
 	/**
 	 * 
-	 *Drops bomb at center of Hero's current location
+	 * Drops bomb at center of Hero's current location
 	 *
 	 */
 	public void dropBomb() {
-		this.bombs.add(new Bomb((this.x1 + 12), this.y1 + 12));
-
+		this.bombs.add(new Bomb((this.x1 + 12), this.y1 + 12, this.tiles));
 	}
 
 	/**
@@ -240,7 +238,7 @@ public class Hero extends Character {
 	 * Gets list of Tiles
 	 *
 	 * @param tiles
-	 * Arraylist of Tiles in the game 
+	 *            Arraylist of Tiles in the game
 	 */
 	public void setTiles(ArrayList<Tile> tiles) {
 		this.tiles = tiles;
