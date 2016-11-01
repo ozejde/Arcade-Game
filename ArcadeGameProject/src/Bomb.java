@@ -51,11 +51,20 @@ public class Bomb {
 
 		@Override
 		public void run() {
+			System.out.println(Bomb.this.hero.bombs.toString());
 			Bomb.this.explode();
 			System.out.println("Bomb has exploded");
-			Bomb.this.hero.bombs.remove(this);
+			
+			Bomb.this.hero.bombs.remove(0);
+			System.out.println(Bomb.this.hero.bombs.toString());
 			Bomb.this.bombTile.setPassable(true);
 		}
+	}
+	
+	@Override
+	public String toString() {
+		
+		return "Bomb at " + this.x +", "+this.y;
 	}
 
 	/**
@@ -84,10 +93,13 @@ public class Bomb {
 
 		int ux = this.bombTile.getX1() + 24;
 		int uy = this.bombTile.getY1() - 24;
-		int lx = this.bombTile.getX2() + 24;
-		int ly = this.bombTile.getY2() + 24;
-		int rx = this.bombTile.getX1() - 24;
-		int ry = this.bombTile.getY1() + 24;
+		
+		int lx = this.bombTile.getX1() - 24;
+		int ly = this.bombTile.getY1() + 24;
+		
+		int rx = this.bombTile.getX2() + 24;
+		int ry = this.bombTile.getY2() -24;
+		
 		int dx = this.bombTile.getX1() + 24;
 		int dy = this.bombTile.getY2() + 24;
 
