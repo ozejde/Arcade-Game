@@ -13,22 +13,22 @@ import java.util.TimerTask;
  * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
  */
 public class Bomb {
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	private ArrayList<Tile> tiles;
 
 	/**
 	 * 
 	 * Sets the coordinates of Bomb
 	 *
-	 * @param x
+	 * @param d
 	 *            x-coordinate
-	 * @param y
+	 * @param e
 	 *            y-coordinate
 	 */
-	public Bomb(int x, int y, ArrayList<Tile> tiles) {
-		this.x = x;
-		this.y = y;
+	public Bomb(double d, double e, ArrayList<Tile> tiles) {
+		this.x = d;
+		this.y = e;
 		this.tiles = tiles;
 		Timer timer = new Timer();
 		timer.schedule(new Task(), 5000);
