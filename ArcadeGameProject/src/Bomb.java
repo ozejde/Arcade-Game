@@ -33,7 +33,12 @@ public class Bomb {
 	 *            x-coordinate
 	 * @param e
 	 *            y-coordinate
+	 * @param tiles
+	 * 
+	 * @param hero
+	 * 
 	 * @param monsters
+	 * 
 	 */
 	public Bomb(double d, double e, ArrayList<Tile> tiles, Hero hero, ArrayList<Monster> monsters) {
 		this.x = d;
@@ -101,27 +106,32 @@ public class Bomb {
 		this.removed = true;
 	}
 
+	/**
+	 * 
+	 * Simulates the explosion of a bomb by destroying the brick walls, killing any character(s), and
+	 * exploding any bomb(s) within the blast radius of the bomb.
+	 * 
+	 */
 	public void explode() {
-		// remove bomb from screen
-		// find tile that bomb is in
-		// use tile coordinates to find 4 tiles/characters surrounding it
-		// determine if objects are destructible, if so remove them from screen.
 
-		// remove bomb from arraylist of bombs
-		// remove graphic of bomb from screen
-		
-		
-
-		int ux = this.bombTile.getX1() + 24;
+		//x coordinate of the center of the tile above the tile containing the bomb
+		int ux = this.bombTile.getX1() + 24; 
+		//y coordinate of the center of the tile above the tile containing the bomb
 		int uy = this.bombTile.getY1() - 24;
-		
+				
+		//x coordinate of the center of the tile to the left the tile containing the bomb
 		int lx = this.bombTile.getX1() - 24;
+		//y coordinate of the center of the tile to the left the tile containing the bomb
 		int ly = this.bombTile.getY1() + 24;
 		
+		//x coordinate of the center of the tile to the right the tile containing the bomb
 		int rx = this.bombTile.getX2() + 24;
+		//y coordinate of the center of the tile to the right the tile containing the bomb
 		int ry = this.bombTile.getY2() -24;
-		
+				
+		//x coordinate of the center of the tile below the tile containing the bomb
 		int dx = this.bombTile.getX1() + 24;
+		//y coordinate of the center of the tile below the tile containing the bomb
 		int dy = this.bombTile.getY2() + 24;
 
 		Tile tileUp = null;
@@ -129,6 +139,7 @@ public class Bomb {
 		Tile tileLeft = null;
 		Tile tileDown = null;
 
+		//finds the tiles above, below, to the right, and to the left of the tile containing the bomb
 		for (Tile tile : this.tiles) {
 			if (tile.getX1() <= ux && tile.getX2() >= ux && tile.getY1() <= uy && tile.getY2() >= uy) {
 				tileUp = tile;
@@ -144,21 +155,25 @@ public class Bomb {
 				this.surroundingTiles.add(tileDown);
 			}
 		}
+		
+		//blows up the tiles which can be destroyed
 		for (Tile tile : this.surroundingTiles) {
 			if (tile.isDestructible()) {
 				tile.createNewGroundTile();
 			}
 		}
-		// if hero is in surroundingTiles, hero.death
+		
+		//blows up the characters in the blast radius of the bomb
 		this.destroyCharacters();
-		// if bomb is in surroundingTiles, explode bomb
-		
-		
-	
-		
+		//blows up any bombs in the blast radius of the bomb		
 		this.destroyBombs();
 	}
 
+	/**
+	 * 
+	 * Blows up any bombs within the blast radius of the bomb.
+	 * 
+	 */
 	private void destroyBombs() {
 		Iterator<Bomb> bombIterator = Bomb.this.hero.bombs.iterator();
 		
@@ -179,9 +194,13 @@ public class Bomb {
 				}
 			}
 		}
-		
 	}
 
+	/**
+	 * 
+	 * Blows up any characters within the blast radius of the bomb.
+	 * 
+	 */
 	public void destroyCharacters() {
 		for (Monster m : this.monsters) {
 			for (Tile tile : this.surroundingTiles) {
@@ -196,14 +215,33 @@ public class Bomb {
 		}
 	}
 
+	/**
+	 * 
+	 * Returns the range of the bomb's blast radius.
+	 *
+	 * @return double
+	 *            The range of the bomb's blast radius.
+	 */
 	public double getRange() {
 		return this.range;
 	}
 
+	/**
+	 * 
+	 * Sets the range of the bomb's blast radius.
+	 *
+	 * @param double
+	 *            The range of the bomb's blast radius.
+	 */
 	public void setRange(double range) {
 		this.range = range;
 	}
 
+	/**
+	 * 
+	 * Finds and sets the bombTile which is the tile in which the bomb is located.
+	 *
+	 */
 	public void setBombTile() {
 		for (Tile tile : this.tiles) {
 			if (this.x == tile.getX1() && this.y == tile.getY1()) {
@@ -213,6 +251,14 @@ public class Bomb {
 			}
 		}
 	}
+	
+	/**
+	 * 
+	 * Returns the tile which contains the bomb.
+	 *
+	 * @return Tile
+	 *            The tile containing the bomb.
+	 */
 	public Tile getBombTile(){
 		return this.bombTile;
 	}
