@@ -147,9 +147,12 @@ public class Bomb {
 				if (m.checkIfInTile(tile)) {
 					this.monsters.remove(m);
 				}
+				if(this.hero.checkIfInTile(tile)){
+					this.hero.subtractLife();
+					this.hero.reset();
+				}
 			}
 		}
-
 	}
 
 	public double getRange() {
