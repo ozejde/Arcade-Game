@@ -16,6 +16,12 @@ public class Bomb {
 	private double x;
 	private double y;
 	private ArrayList<Tile> tiles;
+	private double size;
+	protected Hero hero;
+	private double range;
+	private ArrayList<Monster> monsters;
+	private ArrayList<Tile> surroundingTiles = new ArrayList<>();
+	protected Tile bombTile = null;
 
 	/**
 	 * 
@@ -25,13 +31,20 @@ public class Bomb {
 	 *            x-coordinate
 	 * @param e
 	 *            y-coordinate
+	 * @param monsters
 	 */
-	public Bomb(double d, double e, ArrayList<Tile> tiles) {
+	public Bomb(double d, double e, ArrayList<Tile> tiles, Hero hero, ArrayList<Monster> monsters) {
 		this.x = d;
 		this.y = e;
 		this.tiles = tiles;
 		Timer timer = new Timer();
 		timer.schedule(new Task(), 5000);
+		this.size = 48;
+		this.hero = hero;
+		this.setRange(1);
+		this.monsters = monsters;
+		Bomb.this.setBombTile();
+		Bomb.this.bombTile.setPassable(false);
 	}
 
 	class Task extends TimerTask {
@@ -40,6 +53,8 @@ public class Bomb {
 		public void run() {
 			Bomb.this.explode();
 			System.out.println("Bomb has exploded");
+			Bomb.this.hero.bombs.remove(this);
+			Bomb.this.bombTile.setPassable(true);
 		}
 	}
 
@@ -54,75 +69,84 @@ public class Bomb {
 	public void drawCharacter(Graphics graphics) {
 		graphics.setColor(Color.BLACK);
 		Graphics2D gCast = (Graphics2D) graphics;
-		Ellipse2D.Double bomb = new Ellipse2D.Double(this.x, this.y, 20, 20);
+		Ellipse2D.Double bomb = new Ellipse2D.Double(this.x, this.y, this.size, this.size);
 		gCast.fill(bomb);
 	}
 
-	public void explode(){
-		//remove bomb from screen
-		//find tile that bomb is in
+	public void explode() {
+		// remove bomb from screen
+		// find tile that bomb is in
 		// use tile coordinates to find 4 tiles/characters surrounding it
-		//determine if objects are destructible, if so remove them from screen.
-		
-		//remove bomb from arraylist of bombs
-		//remove graphic of bomb from screen
-		
-		
-		Tile bombTile = null;
-		ArrayList<Tile> surroundingTiles = new ArrayList<>();
-		
-		
-		for (Tile tile: this.tiles){
-			if (tile.getX1()<=this.x&&tile.getX2()>=this.x&&tile.getY1()<=this.y&&tile.getY2()>=this.y){
-				bombTile = tile;
-				surroundingTiles.add(bombTile);
-			}
-		}
-		
-		int ux = bombTile.getX1() + 24;
-		int uy = bombTile.getY1() - 24;
-		int lx = bombTile.getX2() + 24;
-		int ly =  bombTile.getY2() + 24;
-		int rx =  bombTile.getX1() - 24;
-		int ry =  bombTile.getY1() + 24;
-		int dx =  bombTile.getX1() + 24;
-		int dy =  bombTile.getY2() + 24;
-		
+		// determine if objects are destructible, if so remove them from screen.
+
+		// remove bomb from arraylist of bombs
+		// remove graphic of bomb from screen
+
+		int ux = this.bombTile.getX1() + 24;
+		int uy = this.bombTile.getY1() - 24;
+		int lx = this.bombTile.getX2() + 24;
+		int ly = this.bombTile.getY2() + 24;
+		int rx = this.bombTile.getX1() - 24;
+		int ry = this.bombTile.getY1() + 24;
+		int dx = this.bombTile.getX1() + 24;
+		int dy = this.bombTile.getY2() + 24;
+
 		Tile tileUp = null;
 		Tile tileRight = null;
 		Tile tileLeft = null;
 		Tile tileDown = null;
-		
-		for(Tile tile: this.tiles){
-			if (tile.getX1()<=ux&&tile.getX2()>=ux&&tile.getY1()<=uy&&tile.getY2()>=uy){
+
+		for (Tile tile : this.tiles) {
+			if (tile.getX1() <= ux && tile.getX2() >= ux && tile.getY1() <= uy && tile.getY2() >= uy) {
 				tileUp = tile;
-				surroundingTiles.add(tileUp);
-			}
-			else if (tile.getX1()<=rx&&tile.getX2()>=rx&&tile.getY1()<=ry&&tile.getY2()>=ry){
+				this.surroundingTiles.add(tileUp);
+			} else if (tile.getX1() <= rx && tile.getX2() >= rx && tile.getY1() <= ry && tile.getY2() >= ry) {
 				tileRight = tile;
-				surroundingTiles.add(tileRight);
-			}
-			else if (tile.getX1()<=lx&&tile.getX2()>=lx&&tile.getY1()<=ly&&tile.getY2()>=ly){
+				this.surroundingTiles.add(tileRight);
+			} else if (tile.getX1() <= lx && tile.getX2() >= lx && tile.getY1() <= ly && tile.getY2() >= ly) {
 				tileLeft = tile;
-				surroundingTiles.add(tileLeft);
-			}
-			else if (tile.getX1()<=dx&&tile.getX2()>=dx&&tile.getY1()<=dy&&tile.getY2()>=dy){
+				this.surroundingTiles.add(tileLeft);
+			} else if (tile.getX1() <= dx && tile.getX2() >= dx && tile.getY1() <= dy && tile.getY2() >= dy) {
 				tileDown = tile;
-				surroundingTiles.add(tileDown);
+				this.surroundingTiles.add(tileDown);
 			}
 		}
-		
-		for(Tile tile : surroundingTiles){
-			if(tile.isDestructible()){
-				//remove tile and replace with ground tile
+		for (Tile tile : this.surroundingTiles) {
+			if (tile.isDestructible()) {
+				tile.createNewGroundTile();
 			}
 		}
-		
-		//if hero is in surroundingTiles, hero.death
-		
-		//if monster is in surroundingTiles, remove monster
-		
-		//if bomb is in surroundingTiles, explode bomb
+		// if hero is in surroundingTiles, hero.death
+		this.destroyCharacters();
+		// if bomb is in surroundingTiles, explode bomb
+	}
+
+	public void destroyCharacters() {
+		for (Monster m : this.monsters) {
+			for (Tile tile : this.surroundingTiles) {
+				if (m.checkIfInTile(tile)) {
+					System.out.println("Monster Died");
+				}
+			}
+		}
+
+	}
+
+	public double getRange() {
+		return this.range;
+	}
+
+	public void setRange(double range) {
+		this.range = range;
+	}
+
+	public void setBombTile() {
+		for (Tile tile : this.tiles) {
+			if (this.x == tile.getX1() && this.y == tile.getY1()) {
+				this.bombTile = tile;
+				this.surroundingTiles.add(this.bombTile);
+			}
+		}
 	}
 
 }

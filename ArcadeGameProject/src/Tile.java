@@ -8,16 +8,16 @@ import java.awt.image.BufferedImage;
  * @author ejdeoz. Created Oct 27, 2016.
  */
 public abstract class Tile {
-	private int ulhx = 0;
-	private int ulhy = 0;
-	private int lrhx = 0;
-	private int lrhy = 0;
+	protected int ulhx = 0;
+	protected int ulhy = 0;
+	protected int lrhx = 0;
+	protected int lrhy = 0;
 	private static final int SIZE = 48;
 	private boolean destructible = false;
 	private boolean passable = false;
 	private boolean hasChanged = false;
 
-	private BufferedImage tileSheet;
+	protected BufferedImage tileSheet;
 
 	/**
 	 * 
@@ -52,17 +52,17 @@ public abstract class Tile {
 
 	/**
 	 * 
-	 *Sets passable field to given boolean
+	 * Sets passable field to given boolean
 	 *
 	 * @param passable
-	 * Boolean to change passable to 
+	 *            Boolean to change passable to
 	 */
 	public void setPassable(boolean passable) {
 		this.passable = passable;
 	}
 
-	private int indexX;
-	private int indexY;
+	protected int indexX;
+	protected int indexY;
 	private int x1, x2, y1, y2;
 
 	/**
@@ -95,6 +95,7 @@ public abstract class Tile {
 		this.y1 = (this.indexY * Engine.TILE_HIEGHT);
 		this.x2 = ((this.indexX * Engine.TILE_WIDTH) + Engine.TILE_WIDTH);
 		this.y2 = ((this.indexY * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT);
+
 	}
 
 	/**
@@ -142,13 +143,23 @@ public abstract class Tile {
 	 * Draws a Tile object
 	 *
 	 * @param g
-	 * Graphic to draw on
+	 *            Graphic to draw on
 	 */
 	public void drawTile(Graphics g) {
 		g.drawImage(this.tileSheet, this.indexX * Engine.TILE_WIDTH, this.indexY * Engine.TILE_HIEGHT,
 				(this.indexX * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 				(this.indexY * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.ulhx, this.ulhy, this.lrhx, this.lrhy,
 				null);
+	}
+
+//	public Tile createNewGroundTile() {
+//		return new GroundTile(this.getX1(), this.getY1(), this.getX2(), this.getY2(), this.tileSheet, 0, 0);
+//	}
+	public void createNewGroundTile() {
+		this.ulhx = 0;
+		this.ulhy = 0;
+		this.lrhx = 48;
+		this.lrhy = 48;
 	}
 
 }
