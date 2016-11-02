@@ -119,7 +119,13 @@ abstract class Character {
 		}
 		return true;
 	}
-
+	/**
+	 * 
+	 * Checks if a character is currently in a passed in tile.
+	 *
+	 * @param tile
+	 * @return true or false
+	 */
 	public boolean checkIfInTile(Tile tile) {
 		if (this.x1 >= tile.getX1() && this.x1 <= tile.getX2()
 				&& (this.y1 >= tile.getY1() && this.y1 <= tile.getY2())) {
@@ -243,7 +249,7 @@ abstract class Character {
 	}
 	/**
 	 * 
-	 * Sets the 
+	 * Sets the offSet used in checkMove() method
 	 *
 	 * @param offset
 	 */
