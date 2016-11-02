@@ -61,11 +61,10 @@ public class Bomb {
 
 	/**
 	 * 
-	 * Class to set timer that allows the hero to leave the tile 
-	 * that they placed a bomb in for up to two seconds.
+	 * Class to set timer that allows the hero to leave the tile that they
+	 * placed a bomb in for up to two seconds.
 	 *
-	 * @author youngqom.
-	 *         Created Nov 1, 2016.
+	 * @author youngqom. Created Nov 1, 2016.
 	 */
 	class LeaveTimer extends TimerTask {
 		@Override
@@ -73,14 +72,13 @@ public class Bomb {
 			Bomb.this.bombTile.setPassable(false);
 		}
 	}
-	
+
 	/**
 	 * 
-	 * Class to handle a bomb interactions with the environment 
-	 * after a given amount of time has passed.
+	 * Class to handle a bomb interactions with the environment after a given
+	 * amount of time has passed.
 	 *
-	 * @author youngqom.
-	 *         Created Nov 1, 2016.
+	 * @author youngqom. Created Nov 1, 2016.
 	 */
 	class Task extends TimerTask {
 
@@ -93,7 +91,7 @@ public class Bomb {
 			Bomb.this.bombTile.setPassable(true);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Draws image of Bomb
@@ -108,6 +106,7 @@ public class Bomb {
 		Ellipse2D.Double bomb = new Ellipse2D.Double(this.x, this.y, this.size, this.size);
 		gCast.fill(bomb);
 	}
+
 	/**
 	 * 
 	 * Sets removed variable to true.
@@ -227,14 +226,10 @@ public class Bomb {
 	 * 
 	 */
 	public void destroyCharacters() {
-		if (this.monsters.size() <= 1) {
-			this.monsters.remove(this.monsters.get(0));
-		} else {
-			for (Monster m : this.monsters) {
-				for (Tile tile : this.surroundingTiles) {
-					if (m.checkIfInTile(tile)) {
-						this.monsters.remove(m);
-					}
+		for (Monster m : this.monsters) {
+			for (Tile tile : this.surroundingTiles) {
+				if (m.checkIfInTile(tile)) {
+					this.monsters.remove(m);
 				}
 			}
 		}
@@ -245,6 +240,7 @@ public class Bomb {
 			}
 		}
 	}
+
 	/**
 	 * 
 	 * Returns the range of the bomb's blast radius.
