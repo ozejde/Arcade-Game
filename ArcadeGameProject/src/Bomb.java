@@ -59,33 +59,41 @@ public class Bomb {
 
 	}
 
+	/**
+	 * 
+	 * Class to set timer that allows the hero to leave the tile 
+	 * that they placed a bomb in for up to two seconds.
+	 *
+	 * @author youngqom.
+	 *         Created Nov 1, 2016.
+	 */
 	class LeaveTimer extends TimerTask {
 		@Override
 		public void run() {
 			Bomb.this.bombTile.setPassable(false);
 		}
 	}
-
+	
+	/**
+	 * 
+	 * Class to handle a bomb interactions with the environment 
+	 * after a given amount of time has passed.
+	 *
+	 * @author youngqom.
+	 *         Created Nov 1, 2016.
+	 */
 	class Task extends TimerTask {
 
 		@Override
 		public void run() {
-			System.out.println(Bomb.this.hero.getLives());
 			if (!Bomb.this.removed) {
 				Bomb.this.hero.bombs.remove(0);
 			}
 			Bomb.this.explode();
 			Bomb.this.bombTile.setPassable(true);
-			System.out.println(Bomb.this.hero.getLives());
 		}
 	}
-
-	@Override
-	public String toString() {
-
-		return "Bomb at " + this.x + ", " + this.y;
-	}
-
+	
 	/**
 	 * 
 	 * Draws image of Bomb
@@ -100,7 +108,11 @@ public class Bomb {
 		Ellipse2D.Double bomb = new Ellipse2D.Double(this.x, this.y, this.size, this.size);
 		gCast.fill(bomb);
 	}
-
+	/**
+	 * 
+	 * Sets removed variable to true.
+	 *
+	 */
 	public void setRemoved() {
 		this.removed = true;
 	}
@@ -233,30 +245,6 @@ public class Bomb {
 			}
 		}
 	}
-
-	// private void destroyCharacters() {
-	// Iterator<Monster> monsterIterator = Bomb.this.monsters.iterator();
-	// Monster m = Bomb.this.monsters.get(0);
-	// while (monsterIterator.hasNext()) {
-	// Monster temp = m;
-	// m = monsterIterator.next();
-	// if (!m.equals(temp)) {
-	// for (Tile tile : this.surroundingTiles) {
-	// if (m.checkIfInTile(tile)) {
-	// this.monsters.remove(m);
-	// }
-	// }
-	// }
-	// }
-	// for (Tile tile : this.surroundingTiles) {
-	// if (this.hero.checkIfInTile(tile)) {
-	// this.hero.subtractLife();
-	// this.hero.reset();
-	// }
-	// }
-	//
-	// }
-
 	/**
 	 * 
 	 * Returns the range of the bomb's blast radius.

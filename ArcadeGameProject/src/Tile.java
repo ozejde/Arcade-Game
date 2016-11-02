@@ -152,6 +152,11 @@ public abstract class Tile {
 				null);
 	}
 
+	/**
+	 * 
+	 * Changes the tile to a gound tile type.
+	 *
+	 */
 	public void createNewGroundTile() {
 		this.ulhx = 0;
 		this.ulhy = 0;
