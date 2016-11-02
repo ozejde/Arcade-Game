@@ -22,7 +22,7 @@ public class Bomb {
 	private double range;
 	private ArrayList<Monster> monsters;
 	private ArrayList<Tile> surroundingTiles = new ArrayList<>();
-	protected Tile bombTile = null;
+	private Tile bombTile = null;
 	protected boolean removed;
 	protected Timer timer;
 	protected Timer leave;
@@ -87,8 +87,8 @@ public class Bomb {
 			if (!Bomb.this.removed) {
 				Bomb.this.hero.bombs.remove(0);
 			}
-			Bomb.this.explode();
 			Bomb.this.bombTile.setPassable(true);
+			Bomb.this.explode();
 		}
 	}
 
@@ -185,8 +185,10 @@ public class Bomb {
 
 		// blows up the characters in the blast radius of the bomb
 		if (!this.monsters.isEmpty()) {
-			this.destroyCharacters();
+			this.destroyMonsters();
 		}
+		// Kill hero
+		this.killHero();
 		// blows up any bombs in the blast radius of the bomb
 		this.destroyBombs();
 	}
@@ -225,7 +227,7 @@ public class Bomb {
 	 * Blows up any characters within the blast radius of the bomb.
 	 * 
 	 */
-	public void destroyCharacters() {
+	public void destroyMonsters() {
 		for (Monster m : this.monsters) {
 			for (Tile tile : this.surroundingTiles) {
 				if (m.checkIfInTile(tile)) {
@@ -233,6 +235,9 @@ public class Bomb {
 				}
 			}
 		}
+	}
+
+	public void killHero() {
 		for (Tile tile : this.surroundingTiles) {
 			if (this.hero.checkIfInTile(tile)) {
 				this.hero.subtractLife();
