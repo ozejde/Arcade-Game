@@ -23,7 +23,9 @@ public class Bomb {
 	private ArrayList<Monster> monsters;
 	private ArrayList<Tile> surroundingTiles = new ArrayList<>();
 	protected Tile bombTile = null;
-	private boolean removed;
+	protected boolean removed;
+	protected Timer timer;
+	protected Timer leave;
 
 	/**
 	 * 
@@ -45,20 +47,19 @@ public class Bomb {
 		this.y = e;
 		this.tiles = tiles;
 		this.removed = false;
-		Timer timer = new Timer();
-		timer.schedule(new Task(), 5000);
-		Timer leave = new Timer();
-		timer.schedule(new LeaveTimer(), 2000);
+		this.timer = new Timer();
+		this.timer.schedule(new Task(), 5000);
+		this.leave = new Timer();
+		this.leave.schedule(new LeaveTimer(), 2000);
 		this.size = 48;
 		this.hero = hero;
 		this.setRange(1);
 		this.monsters = monsters;
 		Bomb.this.setBombTile();
-		
 
 	}
-	
-	class LeaveTimer extends TimerTask{
+
+	class LeaveTimer extends TimerTask {
 		@Override
 		public void run() {
 			Bomb.this.bombTile.setPassable(false);
@@ -69,22 +70,20 @@ public class Bomb {
 
 		@Override
 		public void run() {
-			
-			if (!removed){
-			Bomb.this.hero.bombs.remove(0);
+			System.out.println(Bomb.this.hero.getLives());
+			if (!Bomb.this.removed) {
+				Bomb.this.hero.bombs.remove(0);
 			}
-			
 			Bomb.this.explode();
-		
 			Bomb.this.bombTile.setPassable(true);
-			
+			System.out.println(Bomb.this.hero.getLives());
 		}
 	}
-	
+
 	@Override
 	public String toString() {
-		
-		return "Bomb at " + this.x +", "+this.y;
+
+		return "Bomb at " + this.x + ", " + this.y;
 	}
 
 	/**
@@ -101,37 +100,46 @@ public class Bomb {
 		Ellipse2D.Double bomb = new Ellipse2D.Double(this.x, this.y, this.size, this.size);
 		gCast.fill(bomb);
 	}
-	
-	public void setRemoved(){
+
+	public void setRemoved() {
 		this.removed = true;
 	}
 
 	/**
 	 * 
-	 * Simulates the explosion of a bomb by destroying the brick walls, killing any character(s), and
-	 * exploding any bomb(s) within the blast radius of the bomb.
+	 * Simulates the explosion of a bomb by destroying the brick walls, killing
+	 * any character(s), and exploding any bomb(s) within the blast radius of
+	 * the bomb.
 	 * 
 	 */
 	public void explode() {
 
-		//x coordinate of the center of the tile above the tile containing the bomb
-		int ux = this.bombTile.getX1() + 24; 
-		//y coordinate of the center of the tile above the tile containing the bomb
+		// x coordinate of the center of the tile above the tile containing the
+		// bomb
+		int ux = this.bombTile.getX1() + 24;
+		// y coordinate of the center of the tile above the tile containing the
+		// bomb
 		int uy = this.bombTile.getY1() - 24;
-				
-		//x coordinate of the center of the tile to the left the tile containing the bomb
+
+		// x coordinate of the center of the tile to the left the tile
+		// containing the bomb
 		int lx = this.bombTile.getX1() - 24;
-		//y coordinate of the center of the tile to the left the tile containing the bomb
+		// y coordinate of the center of the tile to the left the tile
+		// containing the bomb
 		int ly = this.bombTile.getY1() + 24;
-		
-		//x coordinate of the center of the tile to the right the tile containing the bomb
+
+		// x coordinate of the center of the tile to the right the tile
+		// containing the bomb
 		int rx = this.bombTile.getX2() + 24;
-		//y coordinate of the center of the tile to the right the tile containing the bomb
-		int ry = this.bombTile.getY2() -24;
-				
-		//x coordinate of the center of the tile below the tile containing the bomb
+		// y coordinate of the center of the tile to the right the tile
+		// containing the bomb
+		int ry = this.bombTile.getY2() - 24;
+
+		// x coordinate of the center of the tile below the tile containing the
+		// bomb
 		int dx = this.bombTile.getX1() + 24;
-		//y coordinate of the center of the tile below the tile containing the bomb
+		// y coordinate of the center of the tile below the tile containing the
+		// bomb
 		int dy = this.bombTile.getY2() + 24;
 
 		Tile tileUp = null;
@@ -139,7 +147,8 @@ public class Bomb {
 		Tile tileLeft = null;
 		Tile tileDown = null;
 
-		//finds the tiles above, below, to the right, and to the left of the tile containing the bomb
+		// finds the tiles above, below, to the right, and to the left of the
+		// tile containing the bomb
 		for (Tile tile : this.tiles) {
 			if (tile.getX1() <= ux && tile.getX2() >= ux && tile.getY1() <= uy && tile.getY2() >= uy) {
 				tileUp = tile;
@@ -155,17 +164,19 @@ public class Bomb {
 				this.surroundingTiles.add(tileDown);
 			}
 		}
-		
-		//blows up the tiles which can be destroyed
+
+		// blows up the tiles which can be destroyed
 		for (Tile tile : this.surroundingTiles) {
 			if (tile.isDestructible()) {
 				tile.createNewGroundTile();
 			}
 		}
-		
-		//blows up the characters in the blast radius of the bomb
-		this.destroyCharacters();
-		//blows up any bombs in the blast radius of the bomb		
+
+		// blows up the characters in the blast radius of the bomb
+		if (!this.monsters.isEmpty()) {
+			this.destroyCharacters();
+		}
+		// blows up any bombs in the blast radius of the bomb
 		this.destroyBombs();
 	}
 
@@ -176,20 +187,22 @@ public class Bomb {
 	 */
 	private void destroyBombs() {
 		Iterator<Bomb> bombIterator = Bomb.this.hero.bombs.iterator();
-		
-		while (bombIterator.hasNext()){
+		while (bombIterator.hasNext()) {
 			Bomb bomb = bombIterator.next();
-			if(!bomb.equals(this)){
-				for(Tile tile: surroundingTiles){
+			if (!bomb.equals(Bomb.this)) {
+				for (Tile tile : this.surroundingTiles) {
 					int tileX = tile.getX1();
 					int tileY = tile.getY2();
 					int bombX = bomb.getBombTile().getX1();
 					int bombY = bomb.getBombTile().getY2();
-					
-					if(tileX==bombX&&tileY==bombY){
+
+					if (tileX == bombX && tileY == bombY) {
 						bomb.explode();
 						bomb.setRemoved();
 						bombIterator.remove();
+						bomb.bombTile.setPassable(true);
+						bomb.timer.cancel();
+						bomb.timer.purge();
 					}
 				}
 			}
@@ -202,25 +215,53 @@ public class Bomb {
 	 * 
 	 */
 	public void destroyCharacters() {
-		for (Monster m : this.monsters) {
-			for (Tile tile : this.surroundingTiles) {
-				if (m.checkIfInTile(tile)) {
-					this.monsters.remove(m);
-				}
-				if(this.hero.checkIfInTile(tile)){
-					this.hero.subtractLife();
-					this.hero.reset();
+		if (this.monsters.size() <= 1) {
+			this.monsters.remove(this.monsters.get(0));
+		} else {
+			for (Monster m : this.monsters) {
+				for (Tile tile : this.surroundingTiles) {
+					if (m.checkIfInTile(tile)) {
+						this.monsters.remove(m);
+					}
 				}
 			}
 		}
+		for (Tile tile : this.surroundingTiles) {
+			if (this.hero.checkIfInTile(tile)) {
+				this.hero.subtractLife();
+				this.hero.reset();
+			}
+		}
 	}
+
+	// private void destroyCharacters() {
+	// Iterator<Monster> monsterIterator = Bomb.this.monsters.iterator();
+	// Monster m = Bomb.this.monsters.get(0);
+	// while (monsterIterator.hasNext()) {
+	// Monster temp = m;
+	// m = monsterIterator.next();
+	// if (!m.equals(temp)) {
+	// for (Tile tile : this.surroundingTiles) {
+	// if (m.checkIfInTile(tile)) {
+	// this.monsters.remove(m);
+	// }
+	// }
+	// }
+	// }
+	// for (Tile tile : this.surroundingTiles) {
+	// if (this.hero.checkIfInTile(tile)) {
+	// this.hero.subtractLife();
+	// this.hero.reset();
+	// }
+	// }
+	//
+	// }
 
 	/**
 	 * 
 	 * Returns the range of the bomb's blast radius.
 	 *
-	 * @return double
-	 *            The range of the bomb's blast radius.
+	 * @return double The range of the bomb's blast radius.
 	 */
 	public double getRange() {
 		return this.range;
@@ -239,7 +280,8 @@ public class Bomb {
 
 	/**
 	 * 
-	 * Finds and sets the bombTile which is the tile in which the bomb is located.
+	 * Finds and sets the bombTile which is the tile in which the bomb is
+	 * located.
 	 *
 	 */
 	public void setBombTile() {
@@ -251,15 +293,14 @@ public class Bomb {
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Returns the tile which contains the bomb.
 	 *
-	 * @return Tile
-	 *            The tile containing the bomb.
+	 * @return Tile The tile containing the bomb.
 	 */
-	public Tile getBombTile(){
+	public Tile getBombTile() {
 		return this.bombTile;
 	}
 
