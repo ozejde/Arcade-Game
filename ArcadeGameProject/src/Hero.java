@@ -129,6 +129,7 @@ public class Hero extends Character {
 	 * @param tiles
 	 *            Arraylist of Tiles in the game
 	 */
+	@Override
 	public void setTiles(ArrayList<Tile> tiles) {
 		this.tiles = tiles;
 	}
