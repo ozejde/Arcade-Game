@@ -53,6 +53,9 @@ public class DrawPanel extends JPanel {
 							for (Monster m : DrawPanel.this.m1) {
 								m.reset();
 							}
+							if(DrawPanel.this.hero.monsters.isEmpty()){
+								DrawPanel.this.levelUp();
+							}
 							if(DrawPanel.this.hero.getLives() <= 0){
 								throw new InterruptedException("Game Over");
 							}

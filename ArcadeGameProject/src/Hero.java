@@ -12,7 +12,7 @@ public class Hero extends Character {
 	protected ArrayList<Bomb> bombs;
 	private int heroSize = 34;
 	private int lives;
-	private ArrayList<Monster> monsters;
+	protected ArrayList<Monster> monsters;
 
 	/**
 	 * 

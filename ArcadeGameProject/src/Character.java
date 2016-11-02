@@ -232,11 +232,21 @@ abstract class Character {
 	public void setY2(double startY22) {
 		this.y2 = startY22;
 	}
-
+	/**
+	 * 
+	 * Sets the size of the Character
+	 *
+	 * @param size
+	 */
 	public void setSize(int size) {
 		this.size = size;
 	}
-
+	/**
+	 * 
+	 * Sets the 
+	 *
+	 * @param offset
+	 */
 	public void setOffset(int offset) {
 		this.offset = offset;
 	}
