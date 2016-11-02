@@ -13,7 +13,7 @@ abstract class Character {
 	protected double x1, x2, y1, y2;
 	protected ArrayList<Tile> tiles = new ArrayList<>();
 	private double startX1, startX2, startY1, startY2;
-	private int offset = 0;
+	private double offset = 0;
 
 	/**
 	 * 
@@ -251,10 +251,10 @@ abstract class Character {
 	 * 
 	 * Sets the offSet used in checkMove() method
 	 *
-	 * @param offset
+	 * @param d
 	 */
-	public void setOffset(int offset) {
-		this.offset = offset;
+	public void setOffset(double d) {
+		this.offset = d;
 	}
 
 }

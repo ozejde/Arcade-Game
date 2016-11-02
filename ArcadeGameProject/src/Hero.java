@@ -30,7 +30,7 @@ public class Hero extends Character {
 		this.setSize(this.heroSize);
 		this.lives = 3;
 		this.monsters = m;
-		this.setOffset(2);
+		this.setOffset(1.5);
 	}
 
 	/**
@@ -105,7 +105,9 @@ public class Hero extends Character {
 				continue;
 			}
 		}
-		this.bombs.add(new Bomb((tempTile.getX1()), tempTile.getY1(), this.tiles, this, this.monsters));
+		if (this.bombs.size() < 2) {
+			this.bombs.add(new Bomb((tempTile.getX1()), tempTile.getY1(), this.tiles, this, this.monsters));
+		}
 	}
 
 	public void addLife() {
