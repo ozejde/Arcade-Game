@@ -3,7 +3,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,7 +47,7 @@ public class Bomb {
 		this.tiles = tiles;
 		this.removed = false;
 		this.timer = new Timer();
-		this.timer.schedule(new Task(), 5000);
+		this.timer.schedule(new Task(), 3000);
 		this.leave = new Timer();
 		this.leave.schedule(new LeaveTimer(), 2000);
 		this.size = 48;
@@ -199,26 +198,30 @@ public class Bomb {
 	 * 
 	 */
 	private void destroyBombs() {
-		Iterator<Bomb> bombIterator = Bomb.this.hero.bombs.iterator();
-		while (bombIterator.hasNext()) {
-			Bomb bomb = bombIterator.next();
-			if (!bomb.equals(Bomb.this)) {
+		ArrayList<Bomb> toRemove = new ArrayList<Bomb>();
+		//Iterator<Bomb> bombIterator = Bomb.this.hero.bombs.iterator();
+		for (Bomb b : Bomb.this.hero.bombs) {
+			if (!b.equals(Bomb.this)) {
 				for (Tile tile : this.surroundingTiles) {
 					int tileX = tile.getX1();
 					int tileY = tile.getY2();
-					int bombX = bomb.getBombTile().getX1();
-					int bombY = bomb.getBombTile().getY2();
+					int bombX = b.getBombTile().getX1();
+					int bombY = b.getBombTile().getY2();
 
 					if (tileX == bombX && tileY == bombY) {
-						bomb.explode();
-						bomb.setRemoved();
-						bombIterator.remove();
-						bomb.bombTile.setPassable(true);
-						bomb.timer.cancel();
-						bomb.timer.purge();
+						toRemove.add(b);
 					}
 				}
 			}
+		}
+		Bomb.this.hero.bombs.removeAll(toRemove);
+		for(Bomb b : toRemove){
+			b.explode();
+			b.setRemoved();
+			//bombIterator.remove();
+			b.bombTile.setPassable(true);
+			b.timer.cancel();
+			b.timer.purge();
 		}
 	}
 
@@ -228,13 +231,16 @@ public class Bomb {
 	 * 
 	 */
 	public void destroyMonsters() {
+		ArrayList<Monster> toRemove = new ArrayList<Monster>();
 		for (Monster m : this.monsters) {
 			for (Tile tile : this.surroundingTiles) {
 				if (m.checkIfInTile(tile)) {
-					this.monsters.remove(m);
+					//this.monsters.remove(m);
+					toRemove.add(m);
 				}
 			}
 		}
+		monsters.removeAll(toRemove);
 	}
 
 	public void killHero() {
