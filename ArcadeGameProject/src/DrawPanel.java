@@ -8,7 +8,7 @@ import javax.swing.JPanel;
  * 
  * Creates and draws the game objects
  *
- * @author  ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
+ * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
  */
 @SuppressWarnings("serial")
 public class DrawPanel extends JPanel {
@@ -24,13 +24,9 @@ public class DrawPanel extends JPanel {
 	 *
 	 */
 	public DrawPanel() {
-		
+
+		// this.addMonsters();
 		this.m1.add(new MonsterOne(116, 170));
-		this.m1.add(new MonsterOne(597, 160));
-		this.m1.add(new MonsterOne(116, 454));
-		this.m1.add(new MonsterTwo(116, 215));
-		this.m1.add(new MonsterTwo(597, 215));
-		this.m1.add(new MonsterTwo(116, 503));
 		this.hero = new Hero(408, 350, this.m1);
 		this.layer = TileLayer.FromFile("Level1.txt", this.hero, this.m1);
 		this.keyLis = new GameKeyListener(this.hero, this);
@@ -46,20 +42,23 @@ public class DrawPanel extends JPanel {
 				try {
 					while (true) {
 						// checkLevelChange();
+						// System.out.println(DrawPanel.this.hero.monsters.size());
+						if (DrawPanel.this.hero.monsters.size() == 0) {
+							System.out.println("No more monsters");
+							DrawPanel.this.levelUp();
+						}
 						Thread.sleep(1);
 						for (Monster m : DrawPanel.this.m1) {
 							m.monsterMove();
 						}
-						if(DrawPanel.this.hero.checkMonster()){
+						if (DrawPanel.this.hero.checkMonster()) {
 							DrawPanel.this.hero.subtractLife();
 							DrawPanel.this.hero.reset();
 							for (Monster m : DrawPanel.this.m1) {
 								m.reset();
 							}
-							if(DrawPanel.this.hero.monsters.isEmpty()){
-								DrawPanel.this.levelUp();
-							}
-							if(DrawPanel.this.hero.getLives() <= 0){
+
+							if (DrawPanel.this.hero.getLives() <= 0) {
 								throw new InterruptedException("Game Over");
 							}
 						}
@@ -67,54 +66,58 @@ public class DrawPanel extends JPanel {
 
 					}
 				} catch (InterruptedException exception) {
-						JOptionPane.showMessageDialog(null, exception.getMessage());
+					JOptionPane.showMessageDialog(null, exception.getMessage());
 				}
 			}
 		}).start();
 	}
 
+	private void addMonsters() {
+		this.m1.add(new MonsterOne(116, 170));
+		this.m1.add(new MonsterOne(597, 160));
+		this.m1.add(new MonsterOne(116, 454));
+		this.m1.add(new MonsterTwo(116, 215));
+		this.m1.add(new MonsterTwo(597, 215));
+		this.m1.add(new MonsterTwo(116, 503));
+	}
+
 	/**
 	 * 
-	 * Switches to a higher level, or loops back to first level if last level is reached
+	 * Switches to a higher level, or loops back to first level if last level is
+	 * reached
 	 *
 	 */
 	public void levelUp() {
+		this.addMonsters();
 		String fileName = "";
-		System.out.println("level up" + this.level);
 		if (this.level > 2) {
 			this.level = 1;
-			System.out.println("level up." + this.level);
 			fileName = "Level" + this.level + ".txt";
 			this.layer.removeKeyListener(this.keyLis);
 			this.layer = TileLayer.FromFile(fileName, this.hero, this.m1);
 			this.layer.setKeyLis(this.keyLis);
 			this.layer.createTiles();
 			this.layer.hero.reset();
-			for (Monster m : DrawPanel.this.m1) {
-				m.reset();
-			}
+
 		} else {
-			System.out.println("level up." + this.level);
 			this.level = this.level + 1;
-			System.out.println("level up." + this.level);
 			this.layer.removeKeyListener(this.keyLis);
 			fileName = "Level" + this.level + ".txt";
 			this.layer = TileLayer.FromFile(fileName, this.hero, this.m1);
 			this.layer.setKeyLis(this.keyLis);
 			this.layer.createTiles();
 			this.layer.hero.reset();
-			for (Monster m : DrawPanel.this.m1) {
-				m.reset();
-			}
 		}
 	}
 
 	/**
 	 * 
-	 * Switches to a lower level, or loops back to last level if first level is reached
+	 * Switches to a lower level, or loops back to last level if first level is
+	 * reached
 	 *
 	 */
 	public void levelDown() {
+		this.addMonsters();
 		String fileName = "";
 		if (this.level < 2) {
 			this.level = 3;
