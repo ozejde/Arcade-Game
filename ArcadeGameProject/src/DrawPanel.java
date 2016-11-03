@@ -28,6 +28,9 @@ public class DrawPanel extends JPanel {
 		this.m1.add(new MonsterOne(116, 170));
 		this.m1.add(new MonsterOne(597, 160));
 		this.m1.add(new MonsterOne(116, 454));
+		this.m1.add(new MonsterTwo(116, 215));
+		this.m1.add(new MonsterTwo(597, 215));
+		this.m1.add(new MonsterTwo(116, 503));
 		this.hero = new Hero(408, 350, this.m1);
 		this.layer = TileLayer.FromFile("Level1.txt", this.hero, this.m1);
 		this.keyLis = new GameKeyListener(this.hero, this);

@@ -6,6 +6,7 @@ public class MonsterTwo extends Monster {
 
 	public MonsterTwo(int i, int j) {
 		super(i, j);
+		this.setSize(40);
 		this.isMovingRight = true;
 	}
 	
