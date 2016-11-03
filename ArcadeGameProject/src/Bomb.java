@@ -211,7 +211,7 @@ public class Bomb {
 
 					if (tileX == bombX && tileY == bombY) {
 						bomb.explode();
-//						bomb.setRemoved();
+						bomb.setRemoved();
 						bombIterator.remove();
 						bomb.bombTile.setPassable(true);
 						bomb.timer.cancel();
