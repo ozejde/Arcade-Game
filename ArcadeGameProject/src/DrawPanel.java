@@ -17,7 +17,18 @@ public class DrawPanel extends JPanel {
 	protected Hero hero;
 	private int level = 1;
 	protected ArrayList<Monster> m1 = new ArrayList<>();
+	private static final ArrayList<Monster> overallMonsters = new ArrayList<>();
+	static {
+	overallMonsters.add(new MonsterOne(116, 170));
+	overallMonsters.add(new MonsterOne(597, 160));
+	overallMonsters.add(new MonsterOne(116, 454));
+	overallMonsters.add(new MonsterTwo(116, 215));
+	overallMonsters.add(new MonsterTwo(597, 215));
+	overallMonsters.add(new MonsterTwo(116, 503));
+	}
 
+			
+			
 	/**
 	 * 
 	 * Creates a DrawPanel with repaint timer
@@ -25,8 +36,7 @@ public class DrawPanel extends JPanel {
 	 */
 	public DrawPanel() {
 
-		// this.addMonsters();
-		this.m1.add(new MonsterOne(116, 170));
+		this.addMonsters();
 		this.hero = new Hero(408, 350, this.m1);
 		this.layer = TileLayer.FromFile("Level1.txt", this.hero, this.m1);
 		this.keyLis = new GameKeyListener(this.hero, this);
@@ -73,12 +83,15 @@ public class DrawPanel extends JPanel {
 	}
 
 	private void addMonsters() {
-		this.m1.add(new MonsterOne(116, 170));
-		this.m1.add(new MonsterOne(597, 160));
-		this.m1.add(new MonsterOne(116, 454));
-		this.m1.add(new MonsterTwo(116, 215));
-		this.m1.add(new MonsterTwo(597, 215));
-		this.m1.add(new MonsterTwo(116, 503));
+		for(Monster m: overallMonsters){
+			if (!m1.contains(m)){
+				m1.add(m);
+			}
+		}
+		for(Monster m: this.m1){
+			m.reset();
+		}
+		
 	}
 
 	/**
