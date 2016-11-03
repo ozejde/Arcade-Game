@@ -1,0 +1,18 @@
+Cycle 3 Status Report
+Met Thursday afternoon
+
+New kind of monster
+30 min
+
+Going between levels on victory 
+2 hours
+
+Concurrent loop error fix
+30 min
+
+Monster spawning 
+2 hours
+
+Start game screen
+30 min
+
