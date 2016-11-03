@@ -105,9 +105,9 @@ public class Hero extends Character {
 				continue;
 			}
 		}
-		if (this.bombs.size() < 2) {
+//		if (this.bombs.size() < 2) {
 			this.bombs.add(new Bomb((tempTile.getX1()), tempTile.getY1(), this.tiles, this, this.monsters));
-		}
+//		}
 	}
 
 	public void addLife() {
