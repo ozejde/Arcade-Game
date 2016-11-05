@@ -81,11 +81,13 @@ public class DrawPanel extends JPanel {
 									t.createNewGroundTile();
 									t.setPowerUp(false);
 									DrawPanel.this.hero.addRange();
+									System.out.println(DrawPanel.this.hero.range);
 								}
 								if (t.getPowerTileType().equals("MoreBombs")) {
 									t.setPowerUp(false);
 									t.createNewGroundTile();
 									DrawPanel.this.hero.addBombCount();
+									System.out.println(DrawPanel.this.hero.bombCount);
 								}
 							}
 							DrawPanel.this.repaint();
