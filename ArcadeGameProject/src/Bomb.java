@@ -87,7 +87,7 @@ public class Bomb {
 				Bomb.this.explode();
 				Bomb.this.getBombTile().setPassable(true);
 			}
-			
+
 		}
 	}
 
@@ -123,55 +123,61 @@ public class Bomb {
 	 * 
 	 */
 	public void explode() {
+		for (int i = 1; i <= this.range; i++) {
+			// x coordinate of the center of the tile above the tile containing
+			// the
+			// bomb
+			double ux = this.bombTile.getX1() + 24;
+			// y coordinate of the center of the tile above the tile containing
+			// the
+			// bomb
+			double uy = this.bombTile.getY1() - 24 * i;
 
-		// x coordinate of the center of the tile above the tile containing the
-		// bomb
-		double ux = this.bombTile.getX1() + 24;
-		// y coordinate of the center of the tile above the tile containing the
-		// bomb
-		double uy = this.bombTile.getY1() - 24;
+			// x coordinate of the center of the tile to the left the tile
+			// containing the bomb
+			double lx = this.bombTile.getX1() - 24 * i;
+			// y coordinate of the center of the tile to the left the tile
+			// containing the bomb
+			double ly = this.bombTile.getY1() + 24;
 
-		// x coordinate of the center of the tile to the left the tile
-		// containing the bomb
-		double lx = this.bombTile.getX1() - 24;
-		// y coordinate of the center of the tile to the left the tile
-		// containing the bomb
-		double ly = this.bombTile.getY1() + 24;
+			// x coordinate of the center of the tile to the right the tile
+			// containing the bomb
+			double rx = this.bombTile.getX2() + 24 * i;
+			// y coordinate of the center of the tile to the right the tile
+			// containing the bomb
+			double ry = this.bombTile.getY2() - 24;
 
-		// x coordinate of the center of the tile to the right the tile
-		// containing the bomb
-		double rx = this.bombTile.getX2() + 24;
-		// y coordinate of the center of the tile to the right the tile
-		// containing the bomb
-		double ry = this.bombTile.getY2() - 24;
+			// x coordinate of the center of the tile below the tile containing
+			// the
+			// bomb
+			double dx = this.bombTile.getX1() + 24;
+			// y coordinate of the center of the tile below the tile containing
+			// the
+			// bomb
+			double dy = this.bombTile.getY2() + 24 * i;
 
-		// x coordinate of the center of the tile below the tile containing the
-		// bomb
-		double dx = this.bombTile.getX1() + 24;
-		// y coordinate of the center of the tile below the tile containing the
-		// bomb
-		double dy = this.bombTile.getY2() + 24;
+			Tile tileUp = null;
+			Tile tileRight = null;
+			Tile tileLeft = null;
+			Tile tileDown = null;
 
-		Tile tileUp = null;
-		Tile tileRight = null;
-		Tile tileLeft = null;
-		Tile tileDown = null;
-
-		// finds the tiles above, below, to the right, and to the left of the
-		// tile containing the bomb
-		for (Tile tile : this.tiles) {
-			if (tile.getX1() <= ux && tile.getX2() >= ux && tile.getY1() <= uy && tile.getY2() >= uy) {
-				tileUp = tile;
-				this.surroundingTiles.add(tileUp);
-			} else if (tile.getX1() <= rx && tile.getX2() >= rx && tile.getY1() <= ry && tile.getY2() >= ry) {
-				tileRight = tile;
-				this.surroundingTiles.add(tileRight);
-			} else if (tile.getX1() <= lx && tile.getX2() >= lx && tile.getY1() <= ly && tile.getY2() >= ly) {
-				tileLeft = tile;
-				this.surroundingTiles.add(tileLeft);
-			} else if (tile.getX1() <= dx && tile.getX2() >= dx && tile.getY1() <= dy && tile.getY2() >= dy) {
-				tileDown = tile;
-				this.surroundingTiles.add(tileDown);
+			// finds the tiles above, below, to the right, and to the left of
+			// the
+			// tile containing the bomb
+			for (Tile tile : this.tiles) {
+				if (tile.getX1() <= ux && tile.getX2() >= ux && tile.getY1() <= uy && tile.getY2() >= uy) {
+					tileUp = tile;
+					this.surroundingTiles.add(tileUp);
+				} else if (tile.getX1() <= rx && tile.getX2() >= rx && tile.getY1() <= ry && tile.getY2() >= ry) {
+					tileRight = tile;
+					this.surroundingTiles.add(tileRight);
+				} else if (tile.getX1() <= lx && tile.getX2() >= lx && tile.getY1() <= ly && tile.getY2() >= ly) {
+					tileLeft = tile;
+					this.surroundingTiles.add(tileLeft);
+				} else if (tile.getX1() <= dx && tile.getX2() >= dx && tile.getY1() <= dy && tile.getY2() >= dy) {
+					tileDown = tile;
+					this.surroundingTiles.add(tileDown);
+				}
 			}
 		}
 
@@ -194,7 +200,6 @@ public class Bomb {
 		this.killHero();
 		// blows up any bombs in the blast radius of the bomb
 		this.destroyBombs();
-		this.bombTile.setPassable(true);
 	}
 
 	/**
