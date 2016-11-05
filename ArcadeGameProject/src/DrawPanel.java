@@ -71,7 +71,7 @@ public class DrawPanel extends JPanel {
 							}
 						}
 						for (Tile t : DrawPanel.this.layer.tiles) {
-							if (t.getPowerUp() && DrawPanel.this.hero.checkIfInTile(t)) {
+							if (t.isBlownUp() && t.getPowerUp() && DrawPanel.this.hero.checkIfInTile(t)) {
 								if (t.getPowerTileType().equals("Detonate")) {
 									t.setPowerUp(false);
 									t.createNewGroundTile();

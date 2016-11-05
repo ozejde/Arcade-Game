@@ -208,6 +208,7 @@ public class Bomb {
 		// blows up the tiles which can be destroyed
 		for (Tile tile : this.surroundingTiles) {
 			if (tile.isDestructible()) {
+				tile.setBlownUp(true);
 				if (tile.getPowerUp()) {
 					tile.createPowerUpTile(tile.getPowerTileType());
 				} else {

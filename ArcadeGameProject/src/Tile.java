@@ -21,6 +21,15 @@ public abstract class Tile {
 	protected int indexY;
 	private int x1, x2, y1, y2;
 	private boolean powerUp;
+	protected boolean isBlownUp;
+
+	public boolean isBlownUp() {
+		return this.isBlownUp;
+	}
+
+	public void setBlownUp(boolean isBlowUp) {
+		this.isBlownUp = isBlowUp;
+	}
 
 	/**
 	 * 
@@ -96,6 +105,7 @@ public abstract class Tile {
 		this.y2 = ((this.indexY * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT);
 		this.powerUp = false;
 		this.powerTileType = null;
+		this.isBlownUp = false;
 	}
 
 	/**

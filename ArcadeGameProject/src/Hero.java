@@ -129,7 +129,8 @@ public class Hero extends Character {
 	}
 	
 	public void blowUpBomb(int i){
-		bombs.get(i).run();
+		this.bombs.get(i).bombTile.setPassable(true);
+		this.bombs.get(i).explode();
 	}
 
 	public void addLife() {
@@ -180,5 +181,6 @@ public class Hero extends Character {
 	public void addBombCount() {
 		this.bombCount++;
 	}
+	
 
 }
