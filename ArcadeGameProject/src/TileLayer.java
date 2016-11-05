@@ -90,10 +90,6 @@ public class TileLayer extends JComponent {
 			for (int x = 0; x < this.map[y].length; x++) {
 				int index = this.map[y][x];
 				int yOffset = 0;
-				if (index > (this.tileSheet.getWidth() / Engine.TILE_WIDTH) - 1) {
-					yOffset++;
-					index = index - ((this.tileSheet.getWidth() / Engine.TILE_WIDTH) - 1);
-				}
 
 				if (index == 0) {
 					this.tiles.add(new GroundTile(index * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
@@ -110,10 +106,32 @@ public class TileLayer extends JComponent {
 							(index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
 				}
+				if (index == 6) {
+					this.tiles.add(new BrickWall((index-1) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							((index-1) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
+					this.tiles.get(this.tiles.size() - 1).setPowerUp(true);
+					this.tiles.get(this.tiles.size() - 1).setPowerTileType("Detonate");
+				}
+				
+				if (index == 7){
+					this.tiles.add(new BrickWall((index-2)* Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							((index-2) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
+					this.tiles.get(this.tiles.size() - 1).setPowerUp(true);
+					this.tiles.get(this.tiles.size() - 1).setPowerTileType("IncreaseRange");
+				}
+				if(index == 8){
+					this.tiles.add(new BrickWall(index * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							(index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
+					this.tiles.get(this.tiles.size()-1).setPowerUp(true);
+					this.tiles.get(this.tiles.size()-1).setPowerTileType("MoreBombs");
+				}
 			}
 		}
-		this.hero.setTiles(this.tiles);
 
+		this.hero.setTiles(this.tiles);
 		for (Monster m : this.m1) {
 			m.setTiles(this.tiles);
 		}

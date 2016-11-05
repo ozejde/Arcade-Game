@@ -15,9 +15,12 @@ public abstract class Tile {
 	private static final int SIZE = 48;
 	private boolean destructible = false;
 	private boolean passable = false;
-	private boolean hasChanged = false;
-
 	protected BufferedImage tileSheet;
+	private String powerTileType;
+	protected int indexX;
+	protected int indexY;
+	private int x1, x2, y1, y2;
+	private boolean powerUp;
 
 	/**
 	 * 
@@ -61,10 +64,6 @@ public abstract class Tile {
 		this.passable = passable;
 	}
 
-	protected int indexX;
-	protected int indexY;
-	private int x1, x2, y1, y2;
-
 	/**
 	 * Creates Tile object
 	 *
@@ -95,7 +94,8 @@ public abstract class Tile {
 		this.y1 = (this.indexY * Engine.TILE_HIEGHT);
 		this.x2 = ((this.indexX * Engine.TILE_WIDTH) + Engine.TILE_WIDTH);
 		this.y2 = ((this.indexY * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT);
-
+		this.powerUp = false;
+		this.powerTileType = null;
 	}
 
 	/**
@@ -163,6 +163,50 @@ public abstract class Tile {
 		this.lrhx = 48;
 		this.lrhy = 48;
 		this.setPassable(true);
+	}
+
+	public void createPowerUpTile(String str) {
+		if (str.equals("Detonate")) {
+			this.ulhx = 144;
+			this.ulhy = 0;
+			this.lrhx = 192;
+			this.lrhy = 48;
+			this.setPassable(true);
+			System.out.println(str);
+		}
+
+		if (str.equals("IncreaseRange")) {
+			this.ulhx = 192;
+			this.ulhy = 0;
+			this.lrhx = 240;
+			this.lrhy = 48;
+			this.setPassable(true);
+			System.out.println(str);
+		}
+		if (str.equals("MoreBombs")) {
+			this.ulhx = 96;
+			this.ulhy = 0;
+			this.lrhx = 144;
+			this.lrhy = 48;
+			this.setPassable(true);
+			System.out.println(str);
+		}
+	}
+
+	public void setPowerUp(boolean b) {
+		this.powerUp = b;
+	}
+	
+	public boolean getPowerUp(){
+		return this.powerUp;
+	}
+	
+	public void setPowerTileType(String str){
+		this.powerTileType = str;
+	}
+	
+	public String getPowerTileType(){
+		return this.powerTileType;
 	}
 
 }

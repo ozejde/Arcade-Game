@@ -13,6 +13,8 @@ public class Hero extends Character {
 	private int heroSize = 34;
 	private int lives;
 	protected ArrayList<Monster> monsters;
+	private double range;
+	private int bombCount;
 
 	/**
 	 * 
@@ -31,6 +33,7 @@ public class Hero extends Character {
 		this.lives = 3;
 		this.monsters = m;
 		this.setOffset(1.5);
+		this.bombCount = 1;
 	}
 
 	/**
@@ -105,9 +108,9 @@ public class Hero extends Character {
 				continue;
 			}
 		}
-//		if (this.bombs.size() < 2) {
-			this.bombs.add(new Bomb((tempTile.getX1()), tempTile.getY1(), this.tiles, this, this.monsters));
-//		}
+		if (this.bombs.size() < this.bombCount) {
+			this.bombs.add(new Bomb((tempTile.getX1()), tempTile.getY1(), this.tiles, this, this.monsters, this.range));
+		}
 	}
 
 	public void addLife() {
@@ -150,4 +153,13 @@ public class Hero extends Character {
 		}
 		return false;
 	}
+	
+	public void addRange() {
+		this.range++;
+	}
+	
+	public void addBombCount(){
+		this.bombCount++;
+	}
+
 }

@@ -21,7 +21,7 @@ public class Bomb {
 	private double range;
 	private ArrayList<Monster> monsters;
 	private ArrayList<Tile> surroundingTiles = new ArrayList<>();
-	private Tile bombTile = null;
+	protected Tile bombTile;
 	protected boolean removed;
 	protected Timer timer;
 	protected Timer leave;
@@ -41,7 +41,7 @@ public class Bomb {
 	 * @param monsters
 	 * 
 	 */
-	public Bomb(double d, double e, ArrayList<Tile> tiles, Hero hero, ArrayList<Monster> monsters) {
+	public Bomb(double d, double e, ArrayList<Tile> tiles, Hero hero, ArrayList<Monster> monsters, double range) {
 		this.x = d;
 		this.y = e;
 		this.tiles = tiles;
@@ -52,10 +52,9 @@ public class Bomb {
 		this.leave.schedule(new LeaveTimer(), 2000);
 		this.size = 48;
 		this.hero = hero;
-		this.setRange(1);
+		this.range = range;
 		this.monsters = monsters;
-		Bomb.this.setBombTile();
-
+		setBombTile();
 	}
 
 	/**
@@ -68,7 +67,7 @@ public class Bomb {
 	class LeaveTimer extends TimerTask {
 		@Override
 		public void run() {
-			Bomb.this.bombTile.setPassable(false);
+			Bomb.this.getBombTile().setPassable(false);
 		}
 	}
 
@@ -84,9 +83,9 @@ public class Bomb {
 		@Override
 		public void run() {
 			if (!Bomb.this.removed) {
+				Bomb.this.getBombTile().setPassable(true);
 				Bomb.this.hero.bombs.remove(0);
 			}
-			Bomb.this.bombTile.setPassable(true);
 			Bomb.this.explode();
 		}
 	}
@@ -126,31 +125,31 @@ public class Bomb {
 
 		// x coordinate of the center of the tile above the tile containing the
 		// bomb
-		int ux = this.bombTile.getX1() + 24;
+		double ux = this.bombTile.getX1() + 24 * this.range;
 		// y coordinate of the center of the tile above the tile containing the
 		// bomb
-		int uy = this.bombTile.getY1() - 24;
+		double uy = this.bombTile.getY1() - 24 * this.range;
 
 		// x coordinate of the center of the tile to the left the tile
 		// containing the bomb
-		int lx = this.bombTile.getX1() - 24;
+		double lx = this.bombTile.getX1() - 24 * this.range;
 		// y coordinate of the center of the tile to the left the tile
 		// containing the bomb
-		int ly = this.bombTile.getY1() + 24;
+		double ly = this.bombTile.getY1() + 24 * this.range;
 
 		// x coordinate of the center of the tile to the right the tile
 		// containing the bomb
-		int rx = this.bombTile.getX2() + 24;
+		double rx = this.bombTile.getX2() + 24 * this.range;
 		// y coordinate of the center of the tile to the right the tile
 		// containing the bomb
-		int ry = this.bombTile.getY2() - 24;
+		double ry = this.bombTile.getY2() - 24 * this.range;
 
 		// x coordinate of the center of the tile below the tile containing the
 		// bomb
-		int dx = this.bombTile.getX1() + 24;
+		double dx = this.bombTile.getX1() + 24 * this.range;
 		// y coordinate of the center of the tile below the tile containing the
 		// bomb
-		int dy = this.bombTile.getY2() + 24;
+		double dy = this.bombTile.getY2() + 24 * this.range;
 
 		Tile tileUp = null;
 		Tile tileRight = null;
@@ -178,7 +177,11 @@ public class Bomb {
 		// blows up the tiles which can be destroyed
 		for (Tile tile : this.surroundingTiles) {
 			if (tile.isDestructible()) {
-				tile.createNewGroundTile();
+				if (tile.getPowerUp()) {
+					tile.createPowerUpTile(tile.getPowerTileType());
+				} else {
+					tile.createNewGroundTile();
+				}
 			}
 		}
 
@@ -198,8 +201,7 @@ public class Bomb {
 	 * 
 	 */
 	private void destroyBombs() {
-		ArrayList<Bomb> toRemove = new ArrayList<Bomb>();
-		//Iterator<Bomb> bombIterator = Bomb.this.hero.bombs.iterator();
+		ArrayList<Bomb> toRemove = new ArrayList<>();
 		for (Bomb b : Bomb.this.hero.bombs) {
 			if (!b.equals(Bomb.this)) {
 				for (Tile tile : this.surroundingTiles) {
@@ -216,10 +218,9 @@ public class Bomb {
 		}
 		Bomb.this.hero.bombs.removeAll(toRemove);
 		for(Bomb b : toRemove){
+			b.bombTile.setPassable(true);
 			b.explode();
 			b.setRemoved();
-			//bombIterator.remove();
-			b.bombTile.setPassable(true);
 			b.timer.cancel();
 			b.timer.purge();
 		}
@@ -231,7 +232,7 @@ public class Bomb {
 	 * 
 	 */
 	public void destroyMonsters() {
-		ArrayList<Monster> toRemove = new ArrayList<Monster>();
+		ArrayList<Monster> toRemove = new ArrayList<>();
 		for (Monster m : this.monsters) {
 			for (Tile tile : this.surroundingTiles) {
 				if (m.checkIfInTile(tile)) {
@@ -240,7 +241,7 @@ public class Bomb {
 				}
 			}
 		}
-		monsters.removeAll(toRemove);
+		this.monsters.removeAll(toRemove);
 	}
 
 	public void killHero() {
@@ -252,31 +253,12 @@ public class Bomb {
 		}
 	}
 
-	/**
-	 * 
-	 * Returns the range of the bomb's blast radius.
-	 *
-	 * @return double The range of the bomb's blast radius.
-	 */
-	public double getRange() {
-		return this.range;
-	}
-
-	/**
-	 * 
-	 * Sets the range of the bomb's blast radius.
-	 *
-	 * @param double
-	 *            The range of the bomb's blast radius.
-	 */
-	public void setRange(double range) {
-		this.range = range;
-	}
 
 	/**
 	 * 
 	 * Finds and sets the bombTile which is the tile in which the bomb is
 	 * located.
+	 * @return 
 	 *
 	 */
 	public void setBombTile() {
@@ -298,5 +280,4 @@ public class Bomb {
 	public Tile getBombTile() {
 		return this.bombTile;
 	}
-
 }
