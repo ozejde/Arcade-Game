@@ -125,31 +125,31 @@ public class Bomb {
 
 		// x coordinate of the center of the tile above the tile containing the
 		// bomb
-		double ux = this.bombTile.getX1() + 24 * this.range;
+		double ux = this.bombTile.getX1() + 24;
 		// y coordinate of the center of the tile above the tile containing the
 		// bomb
-		double uy = this.bombTile.getY1() - 24 * this.range;
+		double uy = this.bombTile.getY1() - 24;
 
 		// x coordinate of the center of the tile to the left the tile
 		// containing the bomb
-		double lx = this.bombTile.getX1() - 24 * this.range;
+		double lx = this.bombTile.getX1() - 24;
 		// y coordinate of the center of the tile to the left the tile
 		// containing the bomb
-		double ly = this.bombTile.getY1() + 24 * this.range;
+		double ly = this.bombTile.getY1() + 24;
 
 		// x coordinate of the center of the tile to the right the tile
 		// containing the bomb
-		double rx = this.bombTile.getX2() + 24 * this.range;
+		double rx = this.bombTile.getX2() + 24;
 		// y coordinate of the center of the tile to the right the tile
 		// containing the bomb
-		double ry = this.bombTile.getY2() - 24 * this.range;
+		double ry = this.bombTile.getY2() - 24;
 
 		// x coordinate of the center of the tile below the tile containing the
 		// bomb
-		double dx = this.bombTile.getX1() + 24 * this.range;
+		double dx = this.bombTile.getX1() + 24;
 		// y coordinate of the center of the tile below the tile containing the
 		// bomb
-		double dy = this.bombTile.getY2() + 24 * this.range;
+		double dy = this.bombTile.getY2() + 24;
 
 		Tile tileUp = null;
 		Tile tileRight = null;
@@ -209,7 +209,6 @@ public class Bomb {
 					int tileY = tile.getY2();
 					int bombX = b.getBombTile().getX1();
 					int bombY = b.getBombTile().getY2();
-
 					if (tileX == bombX && tileY == bombY) {
 						toRemove.add(b);
 					}
@@ -217,7 +216,7 @@ public class Bomb {
 			}
 		}
 		Bomb.this.hero.bombs.removeAll(toRemove);
-		for(Bomb b : toRemove){
+		for (Bomb b : toRemove) {
 			b.bombTile.setPassable(true);
 			b.explode();
 			b.setRemoved();
@@ -236,7 +235,7 @@ public class Bomb {
 		for (Monster m : this.monsters) {
 			for (Tile tile : this.surroundingTiles) {
 				if (m.checkIfInTile(tile)) {
-					//this.monsters.remove(m);
+					// this.monsters.remove(m);
 					toRemove.add(m);
 				}
 			}
@@ -253,12 +252,12 @@ public class Bomb {
 		}
 	}
 
-
 	/**
 	 * 
 	 * Finds and sets the bombTile which is the tile in which the bomb is
 	 * located.
-	 * @return 
+	 * 
+	 * @return
 	 *
 	 */
 	public void setBombTile() {
