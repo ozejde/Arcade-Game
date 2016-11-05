@@ -19,16 +19,14 @@ public class DrawPanel extends JPanel {
 	protected ArrayList<Monster> m1 = new ArrayList<>();
 	private static final ArrayList<Monster> overallMonsters = new ArrayList<>();
 	static {
-	overallMonsters.add(new MonsterOne(116, 170));
-	overallMonsters.add(new MonsterOne(597, 160));
-	overallMonsters.add(new MonsterOne(116, 454));
-	overallMonsters.add(new MonsterTwo(116, 215));
-	overallMonsters.add(new MonsterTwo(597, 215));
-	overallMonsters.add(new MonsterTwo(116, 503));
+		overallMonsters.add(new MonsterOne(116, 170));
+		overallMonsters.add(new MonsterOne(597, 160));
+		overallMonsters.add(new MonsterOne(116, 454));
+		overallMonsters.add(new MonsterTwo(116, 215));
+		overallMonsters.add(new MonsterTwo(597, 215));
+		overallMonsters.add(new MonsterTwo(116, 503));
 	}
 
-			
-			
 	/**
 	 * 
 	 * Creates a DrawPanel with repaint timer
@@ -72,8 +70,26 @@ public class DrawPanel extends JPanel {
 								throw new InterruptedException("Game Over");
 							}
 						}
-						DrawPanel.this.repaint();
-
+						for (Tile t : DrawPanel.this.layer.tiles) {
+							if (t.getPowerUp() && DrawPanel.this.hero.checkIfInTile(t)) {
+								if (t.getPowerTileType().equals("Detonate")) {
+									t.setPowerUp(false);
+									t.createNewGroundTile();
+//									DrawPanel.this.hero.addRange();
+								}
+								if (t.getPowerTileType().equals("IncreaseRange")) {
+									t.createNewGroundTile();
+									t.setPowerUp(false);
+									DrawPanel.this.hero.addRange();
+								}
+								if (t.getPowerTileType().equals("MoreBombs")) {
+									t.setPowerUp(false);
+									t.createNewGroundTile();
+									DrawPanel.this.hero.addBombCount();
+								}
+							}
+							DrawPanel.this.repaint();
+						}
 					}
 				} catch (InterruptedException exception) {
 					JOptionPane.showMessageDialog(null, exception.getMessage());
@@ -83,15 +99,15 @@ public class DrawPanel extends JPanel {
 	}
 
 	private void addMonsters() {
-		for(Monster m: overallMonsters){
-			if (!m1.contains(m)){
+		for (Monster m : overallMonsters) {
+			if (!m1.contains(m)) {
 				m1.add(m);
 			}
 		}
-		for(Monster m: this.m1){
+		for (Monster m : this.m1) {
 			m.reset();
 		}
-		
+
 	}
 
 	/**
