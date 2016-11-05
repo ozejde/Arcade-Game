@@ -16,6 +16,8 @@ public class GameKeyListener implements KeyListener {
 	public boolean right = false;
 	public boolean u = false;
 	public boolean d = false;
+	public boolean x = false;
+	public boolean z = false;
 	private Hero hero;
 	private DrawPanel drawPanel;
 
@@ -65,6 +67,8 @@ public class GameKeyListener implements KeyListener {
 		this.right = this.keys[KeyEvent.VK_RIGHT];
 		this.u = this.keys[KeyEvent.VK_U];
 		this.d = this.keys[KeyEvent.VK_D];
+		this.x = this.keys[KeyEvent.VK_X];
+		this.z = this.keys[KeyEvent.VK_Z];
 	}
 
 	/**
@@ -94,6 +98,14 @@ public class GameKeyListener implements KeyListener {
 			break;
 		case KeyEvent.VK_D:
 			this.drawPanel.levelDown();
+			break;
+		case KeyEvent.VK_X:
+			this.hero.dropDetonatableBomb();
+			break;
+		case KeyEvent.VK_Z:
+			for(int i = 0; i < this.hero.bombs.size(); i++){
+				this.hero.blowUpBomb(i);
+			}
 			break;
 		}
 		update();

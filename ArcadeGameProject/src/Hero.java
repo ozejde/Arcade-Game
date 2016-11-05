@@ -113,6 +113,24 @@ public class Hero extends Character {
 			this.bombs.add(new Bomb((tempTile.getX1()), tempTile.getY1(), this.tiles, this, this.monsters, this.range));
 		}
 	}
+	
+	@SuppressWarnings("null")
+	public void dropDetonatableBomb() {
+		Tile tempTile = null;
+		for (Tile tile : this.tiles) {
+			if (this.checkIfInTile(tile)) {
+				tempTile = tile;
+				continue;
+			}
+		}
+		if (this.bombs.size() < this.bombCount) {
+			this.bombs.add(new Bomb((tempTile.getX1()), tempTile.getY1(), this.tiles, this, this.monsters, this.range, true));
+		}
+	}
+	
+	public void blowUpBomb(int i){
+		bombs.get(i).run();
+	}
 
 	public void addLife() {
 		this.lives++;

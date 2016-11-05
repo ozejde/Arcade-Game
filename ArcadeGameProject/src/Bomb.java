@@ -13,19 +13,34 @@ import java.util.TimerTask;
  * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
  */
 public class Bomb {
-	private double x;
-	private double y;
-	private ArrayList<Tile> tiles;
-	private double size;
+	protected double x;
+	protected double y;
+	protected ArrayList<Tile> tiles;
+	protected double size;
 	protected Hero hero;
-	private double range;
-	private ArrayList<Monster> monsters;
+	protected double range;
+	protected ArrayList<Monster> monsters;
 	private ArrayList<Tile> surroundingTiles = new ArrayList<>();
 	protected Tile bombTile;
 	protected boolean removed;
 	protected Timer timer;
 	protected Timer leave;
+	protected boolean isDetonatable;
 
+	public Bomb(double d, double e, ArrayList<Tile> tiles, Hero hero, ArrayList<Monster> monsters, double range, boolean isDetonatable) {
+		this.x = d;
+		this.y = e;
+		this.tiles = tiles;
+		this.removed = false;
+		this.leave = new Timer();
+		this.leave.schedule(new LeaveTimer(), 2000);
+		this.size = 48;
+		this.hero = hero;
+		this.range = range;
+		this.monsters = monsters;
+		this.isDetonatable = isDetonatable;
+		setBombTile();
+	}
 	/**
 	 * 
 	 * Sets the coordinates of Bomb
@@ -89,6 +104,15 @@ public class Bomb {
 			}
 
 		}
+	}
+	
+	public void run(){
+		if (!Bomb.this.removed) {
+			Bomb.this.hero.bombs.remove(Bomb.this);
+			Bomb.this.explode();
+			Bomb.this.getBombTile().setPassable(true);
+		}
+		
 	}
 
 	/**
