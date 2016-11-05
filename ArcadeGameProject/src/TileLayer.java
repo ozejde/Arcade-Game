@@ -122,8 +122,8 @@ public class TileLayer extends JComponent {
 					this.tiles.get(this.tiles.size() - 1).setPowerTileType("IncreaseRange");
 				}
 				if(index == 8){
-					this.tiles.add(new BrickWall(index * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
-							(index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+					this.tiles.add(new BrickWall((index-3) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							((index-3) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
 					this.tiles.get(this.tiles.size()-1).setPowerUp(true);
 					this.tiles.get(this.tiles.size()-1).setPowerTileType("MoreBombs");
