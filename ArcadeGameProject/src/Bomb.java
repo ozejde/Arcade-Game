@@ -83,10 +83,11 @@ public class Bomb {
 		@Override
 		public void run() {
 			if (!Bomb.this.removed) {
+				Bomb.this.hero.bombs.remove(Bomb.this);
+				Bomb.this.explode();
 				Bomb.this.getBombTile().setPassable(true);
-				Bomb.this.hero.bombs.remove(0);
 			}
-			Bomb.this.explode();
+			
 		}
 	}
 
@@ -193,6 +194,7 @@ public class Bomb {
 		this.killHero();
 		// blows up any bombs in the blast radius of the bomb
 		this.destroyBombs();
+		this.bombTile.setPassable(true);
 	}
 
 	/**
@@ -217,8 +219,10 @@ public class Bomb {
 		}
 		Bomb.this.hero.bombs.removeAll(toRemove);
 		for (Bomb b : toRemove) {
-			b.bombTile.setPassable(true);
+			b.leave.cancel();
+			b.leave.purge();
 			b.explode();
+			b.bombTile.setPassable(true);
 			b.setRemoved();
 			b.timer.cancel();
 			b.timer.purge();
@@ -235,7 +239,6 @@ public class Bomb {
 		for (Monster m : this.monsters) {
 			for (Tile tile : this.surroundingTiles) {
 				if (m.checkIfInTile(tile)) {
-					// this.monsters.remove(m);
 					toRemove.add(m);
 				}
 			}
