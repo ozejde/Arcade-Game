@@ -32,7 +32,7 @@ public class Hero extends Character {
 		this.setSize(this.heroSize);
 		this.lives = 3;
 		this.monsters = m;
-		this.setOffset(1.5);
+		this.setOffset(2);
 		this.bombCount = 1;
 		this.range = 1;
 	}
@@ -61,35 +61,35 @@ public class Hero extends Character {
 
 		switch (direction) {
 		case "up":
-			this.setY1(getY1() - 3);
-			this.setY2(getY2() - 3);
+			this.setY1(getY1() - 4);
+			this.setY2(getY2() - 4);
 			if (!this.checkMove()) {
-				this.setY1(getY1() + 3);
-				this.setY2(getY2() + 3);
+				this.setY1(getY1() + 4);
+				this.setY2(getY2() + 4);
 			}
 			break;
 		case "down":
-			this.setY1(getY1() + 3);
-			this.setY2(getY2() + 3);
+			this.setY1(getY1() + 4);
+			this.setY2(getY2() + 4);
 			if (!this.checkMove()) {
-				this.setY1(getY1() - 3);
-				this.setY2(getY2() - 3);
+				this.setY1(getY1() - 4);
+				this.setY2(getY2() - 4);
 			}
 			break;
 		case "left":
-			this.setX1(getX1() - 3);
-			this.setX2(getX2() - 3);
+			this.setX1(getX1() - 4);
+			this.setX2(getX2() - 4);
 			if (!this.checkMove()) {
-				this.setX1(getX1() + 3);
-				this.setX2(getX2() + 3);
+				this.setX1(getX1() + 4);
+				this.setX2(getX2() + 4);
 			}
 			break;
 		case "right":
-			this.setX1(getX1() + 3);
-			this.setX2(getX2() + 3);
+			this.setX1(getX1() + 4);
+			this.setX2(getX2() + 4);
 			if (!this.checkMove()) {
-				this.setX1(getX1() - 3);
-				this.setX2(getX2() - 3);
+				this.setX1(getX1() - 4);
+				this.setX2(getX2() - 4);
 			}
 			break;
 		}
@@ -109,9 +109,9 @@ public class Hero extends Character {
 				continue;
 			}
 		}
-//		if (this.bombs.size() < this.bombCount) {
+		if (this.bombs.size() < this.bombCount) {
 			this.bombs.add(new Bomb((tempTile.getX1()), tempTile.getY1(), this.tiles, this, this.monsters, this.range));
-//		}
+		}
 	}
 
 	public void addLife() {
@@ -154,12 +154,12 @@ public class Hero extends Character {
 		}
 		return false;
 	}
-	
+
 	public void addRange() {
 		this.range++;
 	}
-	
-	public void addBombCount(){
+
+	public void addBombCount() {
 		this.bombCount++;
 	}
 
