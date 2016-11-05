@@ -182,7 +182,6 @@ public abstract class Tile {
 			this.lrhx = 192;
 			this.lrhy = 48;
 			this.setPassable(true);
-			System.out.println(str);
 		}
 
 		if (str.equals("IncreaseRange")) {
@@ -191,7 +190,6 @@ public abstract class Tile {
 			this.lrhx = 240;
 			this.lrhy = 48;
 			this.setPassable(true);
-			System.out.println(str);
 		}
 		if (str.equals("MoreBombs")) {
 			this.ulhx = 96;
@@ -199,7 +197,6 @@ public abstract class Tile {
 			this.lrhx = 144;
 			this.lrhy = 48;
 			this.setPassable(true);
-			System.out.println(str);
 		}
 	}
 

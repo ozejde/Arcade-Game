@@ -99,9 +99,6 @@ public class GameKeyListener implements KeyListener {
 		case KeyEvent.VK_D:
 			this.drawPanel.levelDown();
 			break;
-		case KeyEvent.VK_X:
-			this.hero.dropDetonatableBomb();
-			break;
 		case KeyEvent.VK_Z:
 			for(int i = 0; i < this.hero.bombs.size(); i++){
 				this.hero.blowUpBomb(i);

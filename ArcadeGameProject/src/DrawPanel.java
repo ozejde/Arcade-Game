@@ -75,19 +75,17 @@ public class DrawPanel extends JPanel {
 								if (t.getPowerTileType().equals("Detonate")) {
 									t.setPowerUp(false);
 									t.createNewGroundTile();
-//									DrawPanel.this.hero.addRange();
+									DrawPanel.this.hero.setDetonatable(true);
 								}
 								if (t.getPowerTileType().equals("IncreaseRange")) {
 									t.createNewGroundTile();
 									t.setPowerUp(false);
 									DrawPanel.this.hero.addRange();
-									System.out.println("Hero Bomb Range " + DrawPanel.this.hero.range);
 								}
 								if (t.getPowerTileType().equals("MoreBombs")) {
 									t.setPowerUp(false);
 									t.createNewGroundTile();
 									DrawPanel.this.hero.addBombCount();
-									System.out.println("Hero Bomb Count: " + DrawPanel.this.hero.bombCount);
 								}
 							}
 							DrawPanel.this.repaint();

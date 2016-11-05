@@ -15,6 +15,7 @@ public class Hero extends Character {
 	protected ArrayList<Monster> monsters;
 	protected double range;
 	protected int bombCount;
+	protected boolean isDetonatable;
 
 	/**
 	 * 
@@ -35,6 +36,15 @@ public class Hero extends Character {
 		this.setOffset(2);
 		this.bombCount = 1;
 		this.range = 1;
+		this.isDetonatable = false;
+	}
+
+	public boolean isDetonatable() {
+		return this.isDetonatable;
+	}
+
+	public void setDetonatable(boolean isDetonatable) {
+		this.isDetonatable = isDetonatable;
 	}
 
 	/**
@@ -110,27 +120,22 @@ public class Hero extends Character {
 			}
 		}
 		if (this.bombs.size() < this.bombCount) {
-			this.bombs.add(new Bomb((tempTile.getX1()), tempTile.getY1(), this.tiles, this, this.monsters, this.range));
-		}
-	}
-	
-	@SuppressWarnings("null")
-	public void dropDetonatableBomb() {
-		Tile tempTile = null;
-		for (Tile tile : this.tiles) {
-			if (this.checkIfInTile(tile)) {
-				tempTile = tile;
-				continue;
+			if (this.isDetonatable) {
+				this.bombs.add(new Bomb((tempTile.getX1()), tempTile.getY1(), this.tiles, this, this.monsters,
+						this.range, true));
+			} else {
+				this.bombs.add(
+						new Bomb((tempTile.getX1()), tempTile.getY1(), this.tiles, this, this.monsters, this.range));
 			}
 		}
-		if (this.bombs.size() < this.bombCount) {
-			this.bombs.add(new Bomb((tempTile.getX1()), tempTile.getY1(), this.tiles, this, this.monsters, this.range, true));
-		}
+
 	}
-	
-	public void blowUpBomb(int i){
-		this.bombs.get(i).bombTile.setPassable(true);
-		this.bombs.get(i).explode();
+
+	public void blowUpBomb(int i) {
+		if (this.bombs.get(i).isDetonatable) {
+			this.bombs.get(i).bombTile.setPassable(true);
+			this.bombs.get(i).explode();
+		}
 	}
 
 	public void addLife() {
@@ -181,6 +186,5 @@ public class Hero extends Character {
 	public void addBombCount() {
 		this.bombCount++;
 	}
-	
 
 }

@@ -27,7 +27,8 @@ public class Bomb {
 	protected Timer leave;
 	protected boolean isDetonatable;
 
-	public Bomb(double d, double e, ArrayList<Tile> tiles, Hero hero, ArrayList<Monster> monsters, double range, boolean isDetonatable) {
+	public Bomb(double d, double e, ArrayList<Tile> tiles, Hero hero, ArrayList<Monster> monsters, double range,
+			boolean isDetonatable) {
 		this.x = d;
 		this.y = e;
 		this.tiles = tiles;
@@ -41,6 +42,7 @@ public class Bomb {
 		this.isDetonatable = isDetonatable;
 		setBombTile();
 	}
+
 	/**
 	 * 
 	 * Sets the coordinates of Bomb
@@ -104,15 +106,6 @@ public class Bomb {
 			}
 
 		}
-	}
-	
-	public void run(){
-		if (!Bomb.this.removed) {
-			Bomb.this.hero.bombs.remove(Bomb.this);
-			Bomb.this.explode();
-			Bomb.this.getBombTile().setPassable(true);
-		}
-		
 	}
 
 	/**
@@ -225,6 +218,11 @@ public class Bomb {
 		this.killHero();
 		// blows up any bombs in the blast radius of the bomb
 		this.destroyBombs();
+		
+		if(this.isDetonatable){
+			this.bombTile.setPassable(true);
+			this.hero.bombs.remove(this);
+		}
 	}
 
 	/**
@@ -254,8 +252,10 @@ public class Bomb {
 			b.explode();
 			b.bombTile.setPassable(true);
 			b.setRemoved();
-			b.timer.cancel();
-			b.timer.purge();
+			if (!b.isDetonatable) {
+				b.timer.cancel();
+				b.timer.purge();
+			}
 		}
 	}
 
