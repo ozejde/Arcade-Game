@@ -16,16 +16,15 @@ public class TileLayer extends JComponent {
 	protected ArrayList<Tile> tiles = new ArrayList<>();
 	protected Hero hero;
 	private GameKeyListener keyLis;
-	private ArrayList<Monster> m1 = new ArrayList<>();
+	protected ArrayList<Monster> m = new ArrayList<>();
 
-	public TileLayer(int width, int height, Hero hero, ArrayList<Monster> m12) {
+	public TileLayer(int width, int height, Hero hero) {
 		this.map = new int[height][width];
 		this.hero = hero;
-		this.m1 = m12;
 		// Creates thread to update animation
 	}
 
-	public static TileLayer FromFile(String fileName, Hero hero, ArrayList<Monster> m12) {
+	public static TileLayer FromFile(String fileName, Hero hero) {
 		TileLayer layer = null;
 		ArrayList<ArrayList<Integer>> tempLayout = new ArrayList<>();
 
@@ -54,7 +53,7 @@ public class TileLayer extends JComponent {
 
 		int width = tempLayout.get(0).size();
 		int height = tempLayout.size();
-		layer = new TileLayer(width, height, hero, m12);
+		layer = new TileLayer(width, height, hero);
 
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
@@ -101,6 +100,19 @@ public class TileLayer extends JComponent {
 							(index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
 				}
+				if (index == 2) {
+					this.tiles.add(new GroundTile((index-2) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							((index-2) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
+					this.m.add(new MonsterOne((x*Engine.TILE_WIDTH)+20,(y*Engine.TILE_HIEGHT)));
+				}
+				if (index == 3) {
+					this.tiles.add(new GroundTile((index-3) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							((index-3) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
+					this.m.add(new MonsterTwo((x*Engine.TILE_WIDTH)-24,(y*Engine.TILE_HIEGHT)+24));
+				}
+				
 				if (index == 5) {
 					this.tiles.add(new BrickWall(index * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
 							(index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
@@ -128,12 +140,19 @@ public class TileLayer extends JComponent {
 					this.tiles.get(this.tiles.size()-1).setPowerUp(true);
 					this.tiles.get(this.tiles.size()-1).setPowerTileType("MoreBombs");
 				}
+				if(index == 9){
+					this.tiles.add(new BrickWall((index-4) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							((index-4) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
+					this.tiles.get(this.tiles.size()-1).setPowerUp(true);
+					this.tiles.get(this.tiles.size()-1).setPowerTileType("AddLife");
+				}
 			}
 		}
-
+		this.hero.setMonsters(this.m);
 		this.hero.setTiles(this.tiles);
-		for (Monster m : this.m1) {
-			m.setTiles(this.tiles);
+		for (Monster m1 : this.m) {
+			m1.setTiles(this.tiles);
 		}
 	}
 
@@ -143,8 +162,8 @@ public class TileLayer extends JComponent {
 		for (Tile t : this.tiles) {
 			t.drawTile(g);
 		}
-		for (Monster m : this.m1) {
-			m.drawMonster(g);
+		for (Monster m1 : this.m) {
+			m1.drawMonster(g);
 		}
 		if (this.hero.bombs.size() != 0) {
 			for (Bomb bomb : this.hero.bombs) {

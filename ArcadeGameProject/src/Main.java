@@ -1,5 +1,8 @@
+import java.awt.BorderLayout;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  * The main class for your arcade game.
@@ -32,7 +35,10 @@ public class Main {
 	
 	public void gameSetup(){
 		DrawPanel panel = new DrawPanel();
+		JLabel label = panel.label;
+		label.setText("Lives: " + panel.hero.getLives());
 		this.frame = new JFrame("BomberMan Game");
+		this.frame.add(label, BorderLayout.NORTH);
 		this.frame.add(panel);
 		this.frame.setSize(834, 688);
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
