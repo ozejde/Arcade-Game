@@ -1,6 +1,6 @@
 import java.awt.Graphics;
-import java.util.ArrayList;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -13,19 +13,10 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class DrawPanel extends JPanel {
 	protected TileLayer layer;
-	private GameKeyListener keyLis;
+	protected GameKeyListener keyLis;
 	protected Hero hero;
 	private int level = 1;
-	protected ArrayList<Monster> m1 = new ArrayList<>();
-	private static final ArrayList<Monster> overallMonsters = new ArrayList<>();
-	static {
-		overallMonsters.add(new MonsterOne(116, 170));
-		overallMonsters.add(new MonsterOne(597, 160));
-		overallMonsters.add(new MonsterOne(116, 454));
-		overallMonsters.add(new MonsterTwo(116, 215));
-		overallMonsters.add(new MonsterTwo(597, 215));
-		overallMonsters.add(new MonsterTwo(116, 503));
-	}
+	JLabel label = new JLabel();
 
 	/**
 	 * 
@@ -33,15 +24,14 @@ public class DrawPanel extends JPanel {
 	 *
 	 */
 	public DrawPanel() {
-
-		this.addMonsters();
-		this.hero = new Hero(408, 350, this.m1);
-		this.layer = TileLayer.FromFile("Level1.txt", this.hero, this.m1);
+		this.hero = new Hero(408, 350);
+		this.layer = TileLayer.FromFile("Level1.txt", this.hero);
 		this.keyLis = new GameKeyListener(this.hero, this);
 		this.layer.setKeyLis(this.keyLis);
 		this.addKeyListener(this.keyLis);
 		this.setFocusable(true);
 		this.layer.createTiles();
+		this.label.setText("Lives: " + this.hero.getLives());
 
 		new Thread(new Runnable() {
 			@Override
@@ -49,20 +39,19 @@ public class DrawPanel extends JPanel {
 				// Periodically asks Java to repaint this component
 				try {
 					while (true) {
-						// checkLevelChange();
-						// System.out.println(DrawPanel.this.hero.monsters.size());
+						DrawPanel.this.label.setText("Lives: " + DrawPanel.this.hero.getLives());
 						if (DrawPanel.this.hero.monsters.size() == 0) {
 							System.out.println("No more monsters");
 							DrawPanel.this.levelUp();
 						}
 						Thread.sleep(1);
-						for (Monster m : DrawPanel.this.m1) {
+						for (Monster m : DrawPanel.this.layer.m) {
 							m.monsterMove();
 						}
 						if (DrawPanel.this.hero.checkMonster()) {
 							DrawPanel.this.hero.subtractLife();
 							DrawPanel.this.hero.reset();
-							for (Monster m : DrawPanel.this.m1) {
+							for (Monster m : DrawPanel.this.layer.m) {
 								m.reset();
 							}
 
@@ -87,27 +76,29 @@ public class DrawPanel extends JPanel {
 									t.createNewGroundTile();
 									DrawPanel.this.hero.addBombCount();
 								}
+								if (t.getPowerTileType().equals("AddLife")) {
+									t.setPowerUp(false);
+									t.createNewGroundTile();
+									DrawPanel.this.hero.addLife();
+								}
 							}
-							DrawPanel.this.repaint();
 						}
+
+						if (DrawPanel.this.keyLis.u) {
+							DrawPanel.this.keyLis.u = false;
+							DrawPanel.this.levelUp();
+						}
+						if (DrawPanel.this.keyLis.d) {
+							DrawPanel.this.keyLis.d = false;
+							DrawPanel.this.levelDown();
+						}
+						DrawPanel.this.repaint();
 					}
 				} catch (InterruptedException exception) {
 					JOptionPane.showMessageDialog(null, exception.getMessage());
 				}
 			}
 		}).start();
-	}
-
-	private void addMonsters() {
-		for (Monster m : overallMonsters) {
-			if (!m1.contains(m)) {
-				m1.add(m);
-			}
-		}
-		for (Monster m : this.m1) {
-			m.reset();
-		}
-
 	}
 
 	/**
@@ -117,13 +108,12 @@ public class DrawPanel extends JPanel {
 	 *
 	 */
 	public void levelUp() {
-		this.addMonsters();
 		String fileName = "";
 		if (this.level > 2) {
 			this.level = 1;
 			fileName = "Level" + this.level + ".txt";
 			this.layer.removeKeyListener(this.keyLis);
-			this.layer = TileLayer.FromFile(fileName, this.hero, this.m1);
+			this.layer = TileLayer.FromFile(fileName, this.hero);
 			this.layer.setKeyLis(this.keyLis);
 			this.layer.createTiles();
 			this.layer.hero.reset();
@@ -132,7 +122,7 @@ public class DrawPanel extends JPanel {
 			this.level = this.level + 1;
 			this.layer.removeKeyListener(this.keyLis);
 			fileName = "Level" + this.level + ".txt";
-			this.layer = TileLayer.FromFile(fileName, this.hero, this.m1);
+			this.layer = TileLayer.FromFile(fileName, this.hero);
 			this.layer.setKeyLis(this.keyLis);
 			this.layer.createTiles();
 			this.layer.hero.reset();
@@ -146,32 +136,25 @@ public class DrawPanel extends JPanel {
 	 *
 	 */
 	public void levelDown() {
-		this.addMonsters();
 		String fileName = "";
 		if (this.level < 2) {
 			this.level = 3;
 			this.layer.removeKeyListener(this.keyLis);
 			fileName = "Level" + this.level + ".txt";
-			this.layer = TileLayer.FromFile(fileName, this.hero, this.m1);
+			this.layer = TileLayer.FromFile(fileName, this.hero);
 			this.layer.setKeyLis(this.keyLis);
 			this.layer.createTiles();
 			this.layer.hero.reset();
-			for (Monster m : DrawPanel.this.m1) {
-				m.reset();
-			}
 		}
 
 		else {
 			this.level = this.level - 1;
 			this.layer.removeKeyListener(this.keyLis);
 			fileName = "Level" + this.level + ".txt";
-			this.layer = TileLayer.FromFile(fileName, this.hero, this.m1);
+			this.layer = TileLayer.FromFile(fileName, this.hero);
 			this.layer.setKeyLis(this.keyLis);
 			this.layer.createTiles();
 			this.layer.hero.reset();
-			for (Monster m : DrawPanel.this.m1) {
-				m.reset();
-			}
 		}
 	}
 

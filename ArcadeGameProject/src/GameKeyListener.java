@@ -65,9 +65,8 @@ public class GameKeyListener implements KeyListener {
 		this.down = this.keys[KeyEvent.VK_DOWN];
 		this.left = this.keys[KeyEvent.VK_LEFT];
 		this.right = this.keys[KeyEvent.VK_RIGHT];
-		this.u = this.keys[KeyEvent.VK_U];
-		this.d = this.keys[KeyEvent.VK_D];
-		this.x = this.keys[KeyEvent.VK_X];
+//		this.u = this.keys[KeyEvent.VK_U];
+//		this.d = this.keys[KeyEvent.VK_D];
 		this.z = this.keys[KeyEvent.VK_Z];
 	}
 
@@ -94,10 +93,10 @@ public class GameKeyListener implements KeyListener {
 			this.hero.dropBomb();
 			break;
 		case KeyEvent.VK_U:
-			this.drawPanel.levelUp();
+			this.u = true;
 			break;
 		case KeyEvent.VK_D:
-			this.drawPanel.levelDown();
+			this.d = true;
 			break;
 		case KeyEvent.VK_Z:
 			for(int i = 0; i < this.hero.bombs.size(); i++){

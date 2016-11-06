@@ -183,7 +183,6 @@ public abstract class Tile {
 			this.lrhy = 48;
 			this.setPassable(true);
 		}
-
 		if (str.equals("IncreaseRange")) {
 			this.ulhx = 192;
 			this.ulhy = 0;
@@ -195,6 +194,13 @@ public abstract class Tile {
 			this.ulhx = 96;
 			this.ulhy = 0;
 			this.lrhx = 144;
+			this.lrhy = 48;
+			this.setPassable(true);
+		}
+		if (str.equals("AddLife")) {
+			this.ulhx = 288;
+			this.ulhy = 0;
+			this.lrhx = 336;
 			this.lrhy = 48;
 			this.setPassable(true);
 		}

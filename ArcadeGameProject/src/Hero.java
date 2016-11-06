@@ -12,11 +12,11 @@ public class Hero extends Character {
 	protected ArrayList<Bomb> bombs;
 	private int heroSize = 34;
 	private int lives;
-	protected ArrayList<Monster> monsters;
+	protected ArrayList<Monster> monsters = new ArrayList<>();
+;
 	protected double range;
 	protected int bombCount;
 	protected boolean isDetonatable;
-
 	/**
 	 * 
 	 * Creates a Hero object
@@ -27,16 +27,23 @@ public class Hero extends Character {
 	 *            y-coordinate of middle of the top edge of Hero
 	 * 
 	 */
-	public Hero(int i, int j, ArrayList<Monster> m) {
+	public Hero(int i, int j) {
 		super(i, j);
 		this.bombs = new ArrayList<>();
 		this.setSize(this.heroSize);
 		this.lives = 3;
-		this.monsters = m;
 		this.setOffset(2);
 		this.bombCount = 1;
 		this.range = 1;
 		this.isDetonatable = false;
+	}
+
+	public ArrayList<Monster> getMonsters() {
+		return this.monsters;
+	}
+
+	public void setMonsters(ArrayList<Monster> monsters) {
+		this.monsters = monsters;
 	}
 
 	public boolean isDetonatable() {
@@ -185,6 +192,16 @@ public class Hero extends Character {
 
 	public void addBombCount() {
 		this.bombCount++;
+	}
+	@Override
+	public void reset() {
+		setX1(this.startX1);
+		setX2(this.startX2);
+		setY1(this.startY1);
+		setY2(this.startY2);
+		this.bombCount = 1;
+		this.range = 1;
+		this.isDetonatable = false;
 	}
 
 }
