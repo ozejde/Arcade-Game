@@ -1,5 +1,6 @@
 Cycle 3 Status Report
-Met Thursday afternoon
+Met as team Thursday afternoon
+Met as team Saturday afternoon. 
 
 New kind of monster
 30 min
@@ -11,8 +12,14 @@ Concurrent loop error fix
 30 min
 
 Monster spawning 
-2 hours
+4 hours
 
 Start game screen
 30 min
 
+Power Up's and Power Up tiles
+4 hours
+Purple tile adds a life; red tile makes the palyers bombs detonatable by pressing the z key after
+placing a bomb with the b key, oragne tiles increase the bombs effective blast distance by 1 tile; 
+and blue allows the palyer to drop more than one bomb at a time. Death removes all power ups. Leveling up removes
+all power ups. 
