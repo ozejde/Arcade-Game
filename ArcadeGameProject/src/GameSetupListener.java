@@ -26,7 +26,7 @@ public class GameSetupListener implements ActionListener{
 			this.main.instuctSetup();
 		}
 		
-		if(title.equals("Back")){
+		if(title.equals("Back to Menu")){
 			this.main.startSetup();
 		}
 		
