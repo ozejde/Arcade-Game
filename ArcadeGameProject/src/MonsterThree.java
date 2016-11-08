@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MonsterThree extends Monster {
 	private HashMap<String, Tile> surroundingTiles;
@@ -142,36 +144,42 @@ public class MonsterThree extends Monster {
 		this.isMovingRight = false;
 		this.movingUp = false;
 		this.movingDown = false;
+		int indexNum=0;
+		ArrayList<String> temp = new ArrayList<>();
 		setSurroundingTiles();
 		for (String str : this.surroundingTiles.keySet()) {
 			if (this.surroundingTiles.get(str).isPassable()) {
 				if (str.equals("up")) {
-					System.out.println(str);
-					this.movingUp = true;
-					this.isMovingLeft = false;
-					this.isMovingRight = false;
-					this.movingDown = false;
-				} else if (str.equals("down")) {
-					System.out.println(str);
-					this.movingDown = true;
-					this.isMovingLeft = false;
-					this.isMovingRight = false;
-					this.movingUp = false;
-				} else if (str.equals("right")) {
-					System.out.println(str);
-					this.isMovingRight = true;
-					this.isMovingLeft = false;
-					this.movingUp = false;
-					this.movingDown = false;
-				} else if (str.equals("left")) {
-					System.out.println(str);
-					this.isMovingLeft = true;
-					this.isMovingRight = false;
-					this.movingUp = false;
-					this.movingDown = false;
+					temp.add("up");
+					indexNum++;
+				} 
+				else if (str.equals("down")) {
+					temp.add("down");
+					indexNum++;
+				} 
+				else if (str.equals("right")) {
+					temp.add("right");
+					indexNum++;
+				} 
+				else if (str.equals("left")) {
+					temp.add("left");
+					indexNum++;
 				}
 			}
 		}
-
+		int getIndex = ThreadLocalRandom.current().nextInt(0, indexNum);
+		String str = temp.get(getIndex);
+		if (str.equals("up")) {
+			this.movingUp = true;
+		} 
+		else if (str.equals("down")) {
+			this.movingDown = true;
+		} 
+		else if (str.equals("right")) {
+			this.isMovingRight = true;
+		} 
+		else if (str.equals("left")) {
+			this.isMovingLeft = true;
+		}
 	}
 }
