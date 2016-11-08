@@ -39,6 +39,7 @@ public class DrawPanel extends JPanel {
 				// Periodically asks Java to repaint this component
 				try {
 					while (true) {
+//						Thread.sleep(30);
 						DrawPanel.this.label.setText("Lives: " + DrawPanel.this.hero.getLives());
 						if (DrawPanel.this.hero.monsters.size() == 0) {
 							DrawPanel.this.levelUp();
