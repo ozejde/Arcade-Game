@@ -17,15 +17,13 @@ import javax.swing.JLabel;
  */
 
 public class Main {
-	
-	JFrame frame;
 
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("Start Screen");
 		JButton startButton = new JButton("Start Game");
+		JFrame frame = new JFrame("Start Game");
 		frame.add(startButton);
 		Main main = new Main();
-		startButton.addActionListener(new GameSetupListener(main));
+		startButton.addActionListener(new GameSetupListener(main, frame));
 		frame.setSize(834, 688);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -34,17 +32,17 @@ public class Main {
 	}
 	
 	public void gameSetup(){
+		JFrame frame = new JFrame();
 		DrawPanel panel = new DrawPanel();
 		JLabel label = panel.label;
 		label.setText("Lives: " + panel.hero.getLives());
-		this.frame = new JFrame("BomberMan Game");
-		this.frame.add(label, BorderLayout.NORTH);
-		this.frame.add(panel);
-		this.frame.setSize(834, 688);
-		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.frame.setVisible(true);
-		this.frame.setResizable(false);
-
+		frame.setTitle("BomberMan Game");
+		frame.add(label, BorderLayout.NORTH);
+		frame.add(panel);
+		frame.setSize(834, 688);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		frame.setResizable(false);
 	}
 
 }
