@@ -21,7 +21,6 @@ public class TileLayer extends JComponent {
 	public TileLayer(int width, int height, Hero hero) {
 		this.map = new int[height][width];
 		this.hero = hero;
-		// Creates thread to update animation
 	}
 
 	public static TileLayer FromFile(String fileName, Hero hero) {
@@ -90,6 +89,12 @@ public class TileLayer extends JComponent {
 				int index = this.map[y][x];
 				int yOffset = 0;
 
+				if (index == -1) {
+					this.tiles.add(new GroundTile((index + 1) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							((index + 1) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
+					this.m.add(new MonsterThree((x * Engine.TILE_WIDTH) + 25, (y * Engine.TILE_HIEGHT + 23)));
+				}
 				if (index == 0) {
 					this.tiles.add(new GroundTile(index * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
 							(index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
@@ -101,51 +106,56 @@ public class TileLayer extends JComponent {
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
 				}
 				if (index == 2) {
-					this.tiles.add(new GroundTile((index-2) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
-							((index-2) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+					this.tiles.add(new GroundTile((index - 2) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							((index - 2) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
-					this.m.add(new MonsterOne((x*Engine.TILE_WIDTH)+20,(y*Engine.TILE_HIEGHT)));
+					this.m.add(new MonsterOne((x * Engine.TILE_WIDTH) + 20, (y * Engine.TILE_HIEGHT)));
 				}
 				if (index == 3) {
-					this.tiles.add(new GroundTile((index-3) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
-							((index-3) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+					this.tiles.add(new GroundTile((index - 3) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							((index - 3) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
-					this.m.add(new MonsterTwo((x*Engine.TILE_WIDTH)-24,(y*Engine.TILE_HIEGHT)+24));
+					this.m.add(new MonsterTwo((x * Engine.TILE_WIDTH) - 24, (y * Engine.TILE_HIEGHT) + 24));
 				}
-				
+				if (index == 4) {
+					this.tiles.add(new GroundTile((index - 4) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							((index - 4) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
+					this.m.add(new BouncingMonster((x * Engine.TILE_WIDTH) - 24, (y * Engine.TILE_HIEGHT) + 24));
+				}
 				if (index == 5) {
 					this.tiles.add(new BrickWall(index * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
 							(index * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
 				}
 				if (index == 6) {
-					this.tiles.add(new BrickWall((index-1) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
-							((index-1) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+					this.tiles.add(new BrickWall((index - 1) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							((index - 1) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
 					this.tiles.get(this.tiles.size() - 1).setPowerUp(true);
 					this.tiles.get(this.tiles.size() - 1).setPowerTileType("Detonate");
 				}
-				
-				if (index == 7){
-					this.tiles.add(new BrickWall((index-2)* Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
-							((index-2) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+
+				if (index == 7) {
+					this.tiles.add(new BrickWall((index - 2) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							((index - 2) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
 					this.tiles.get(this.tiles.size() - 1).setPowerUp(true);
 					this.tiles.get(this.tiles.size() - 1).setPowerTileType("IncreaseRange");
 				}
-				if(index == 8){
-					this.tiles.add(new BrickWall((index-3) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
-							((index-3) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+				if (index == 8) {
+					this.tiles.add(new BrickWall((index - 3) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							((index - 3) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
-					this.tiles.get(this.tiles.size()-1).setPowerUp(true);
-					this.tiles.get(this.tiles.size()-1).setPowerTileType("MoreBombs");
+					this.tiles.get(this.tiles.size() - 1).setPowerUp(true);
+					this.tiles.get(this.tiles.size() - 1).setPowerTileType("MoreBombs");
 				}
-				if(index == 9){
-					this.tiles.add(new BrickWall((index-4) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
-							((index-4) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
+				if (index == 9) {
+					this.tiles.add(new BrickWall((index - 4) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
+							((index - 4) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
-					this.tiles.get(this.tiles.size()-1).setPowerUp(true);
-					this.tiles.get(this.tiles.size()-1).setPowerTileType("AddLife");
+					this.tiles.get(this.tiles.size() - 1).setPowerUp(true);
+					this.tiles.get(this.tiles.size() - 1).setPowerTileType("AddLife");
 				}
 			}
 		}

@@ -41,7 +41,6 @@ public class DrawPanel extends JPanel {
 					while (true) {
 						DrawPanel.this.label.setText("Lives: " + DrawPanel.this.hero.getLives());
 						if (DrawPanel.this.hero.monsters.size() == 0) {
-							System.out.println("No more monsters");
 							DrawPanel.this.levelUp();
 						}
 						Thread.sleep(1);
@@ -49,11 +48,11 @@ public class DrawPanel extends JPanel {
 							m.monsterMove();
 						}
 						if (DrawPanel.this.hero.checkMonster()) {
-							DrawPanel.this.hero.subtractLife();
-							DrawPanel.this.hero.reset();
-							for (Monster m : DrawPanel.this.layer.m) {
-								m.reset();
-							}
+//							DrawPanel.this.hero.subtractLife();
+//							DrawPanel.this.hero.reset();
+//							for (Monster m : DrawPanel.this.layer.m) {
+//								m.reset();
+//							}
 
 							if (DrawPanel.this.hero.getLives() <= 0) {
 								throw new InterruptedException("Game Over");
