@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * The main class for your arcade game.
@@ -20,8 +21,16 @@ public class Main {
 
 	public static void main(String[] args) {
 		JButton startButton = new JButton("Start Game");
+		JButton instrButton = new JButton("Instructions");
+		
+		JPanel p = new JPanel();
+		p.add(startButton);
+		p.add(instrButton);
+		
 		JFrame frame = new JFrame("Start Game");
-		frame.add(startButton);
+		frame.add(p, BorderLayout.SOUTH);
+		
+		
 		Main main = new Main();
 		startButton.addActionListener(new GameSetupListener(main, frame));
 		frame.setSize(834, 688);
@@ -30,6 +39,8 @@ public class Main {
 		frame.setResizable(false);
 
 	}
+	
+	
 	
 	public void gameSetup(){
 		JFrame frame = new JFrame();

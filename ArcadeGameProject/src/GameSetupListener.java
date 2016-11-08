@@ -16,7 +16,6 @@ public class GameSetupListener implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		frame.dispose();
 		this.main.gameSetup();
-		
 	}
 
 }
