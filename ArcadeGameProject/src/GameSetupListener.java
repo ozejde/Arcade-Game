@@ -1,6 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class GameSetupListener implements ActionListener{
@@ -14,8 +15,22 @@ public class GameSetupListener implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		frame.dispose();
-		this.main.gameSetup();
+		JButton buttonPressed = (JButton) e.getSource();
+		String title = buttonPressed.getText();
+		
+		if(title.equals("Start Game")){
+			this.main.gameSetup();
+		}
+		
+		if(title.equals("Instructions")){
+			this.main.instuctSetup();
+		}
+		
+		if(title.equals("Back")){
+			this.main.startSetup();
+		}
+		
+		this.frame.dispose();
 	}
 
 }
