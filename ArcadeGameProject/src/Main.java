@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,7 +30,7 @@ public class Main {
 		
 		JFrame frame = new JFrame("Start Game");
 		frame.add(p, BorderLayout.SOUTH);
-		
+		frame.add(new JLabel(new ImageIcon("titlepic.png")), BorderLayout.NORTH);
 		
 		Main main = new Main();
 		startButton.addActionListener(new GameSetupListener(main, frame));
