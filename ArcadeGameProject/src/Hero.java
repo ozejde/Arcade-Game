@@ -13,10 +13,10 @@ public class Hero extends Character {
 	private int heroSize = 34;
 	private int lives;
 	protected ArrayList<Monster> monsters = new ArrayList<>();
-;
 	protected double range;
 	protected int bombCount;
 	protected boolean isDetonatable;
+	private double speed;
 	/**
 	 * 
 	 * Creates a Hero object
@@ -32,10 +32,11 @@ public class Hero extends Character {
 		this.bombs = new ArrayList<>();
 		this.setSize(this.heroSize);
 		this.lives = 3;
-		this.setOffset(2);
+		this.setOffset(3.75);
 		this.bombCount = 1;
 		this.range = 1;
 		this.isDetonatable = false;
+		this.speed = 6;
 	}
 
 	public ArrayList<Monster> getMonsters() {
@@ -75,38 +76,37 @@ public class Hero extends Character {
 	 */
 	@SuppressWarnings("incomplete-switch")
 	public void move(String direction) {
-
 		switch (direction) {
 		case "up":
-			this.setY1(getY1() - 4);
-			this.setY2(getY2() - 4);
+			this.setY1(getY1() - this.speed);
+			this.setY2(getY2() - this.speed);
 			if (!this.checkMove()) {
-				this.setY1(getY1() + 4);
-				this.setY2(getY2() + 4);
+				this.setY1(getY1() + this.speed);
+				this.setY2(getY2() + this.speed);
 			}
 			break;
 		case "down":
-			this.setY1(getY1() + 4);
-			this.setY2(getY2() + 4);
+			this.setY1(getY1() + this.speed);
+			this.setY2(getY2() + this.speed);
 			if (!this.checkMove()) {
-				this.setY1(getY1() - 4);
-				this.setY2(getY2() - 4);
+				this.setY1(getY1() - this.speed);
+				this.setY2(getY2() - this.speed);
 			}
 			break;
 		case "left":
-			this.setX1(getX1() - 4);
-			this.setX2(getX2() - 4);
+			this.setX1(getX1() - this.speed);
+			this.setX2(getX2() - this.speed);
 			if (!this.checkMove()) {
-				this.setX1(getX1() + 4);
-				this.setX2(getX2() + 4);
+				this.setX1(getX1() + this.speed);
+				this.setX2(getX2() + this.speed);
 			}
 			break;
 		case "right":
-			this.setX1(getX1() + 4);
-			this.setX2(getX2() + 4);
+			this.setX1(getX1() + this.speed);
+			this.setX2(getX2() + this.speed);
 			if (!this.checkMove()) {
-				this.setX1(getX1() - 4);
-				this.setX2(getX2() - 4);
+				this.setX1(getX1() - this.speed);
+				this.setX2(getX2() - this.speed);
 			}
 			break;
 		}
@@ -155,6 +155,9 @@ public class Hero extends Character {
 
 	public int getLives() {
 		return this.lives;
+	}
+	public void setLives(int lives){
+		this.lives = lives;
 	}
 
 	/**

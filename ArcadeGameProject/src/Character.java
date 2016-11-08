@@ -93,14 +93,14 @@ abstract class Character {
 	 */
 	protected boolean checkMove() {
 		for (Tile tile : this.tiles) {
-			if (this.x1 + this.offset >= tile.getX1() && this.x1 + this.offset <= tile.getX2()
+			if (this.x1 - this.offset+4 > tile.getX1() && this.x1 - this.offset +4 < tile.getX2()
 					&& (this.y1 + this.offset >= tile.getY1() && this.y1 + this.offset <= tile.getY2())) {
 				if (!tile.isPassable()) {
 					return false;
 				}
-			} else if (this.x1 + this.offset >= tile.getX1() && this.x1 + this.offset <= tile.getX2()
-					&& (this.y1 + this.size - this.offset >= tile.getY1()
-							&& this.y1 + this.size - this.offset <= tile.getY2())) {
+			} else if (this.x1 - this.offset +4 >= tile.getX1() && this.x1 - this.offset +4 <= tile.getX2()
+					&& this.y1 + this.size - this.offset >= tile.getY1()
+					&& this.y1 + this.size - this.offset <= tile.getY2()) {
 				if (!tile.isPassable()) {
 					return false;
 				}
@@ -119,6 +119,7 @@ abstract class Character {
 		}
 		return true;
 	}
+
 	/**
 	 * 
 	 * Checks if a character is currently in a passed in tile.
@@ -127,17 +128,19 @@ abstract class Character {
 	 * @return true or false
 	 */
 	public boolean checkIfInTile(Tile tile) {
-		if (this.x1 >= tile.getX1() && this.x1 <= tile.getX2()
-				&& (this.y1 >= tile.getY1() && this.y1 <= tile.getY2())) {
+		if (this.x1 + this.offset >= tile.getX1() && this.x1 + this.offset <= tile.getX2()
+				&& (this.y1 + this.offset >= tile.getY1() && this.y1 + this.offset <= tile.getY2())) {
 			return true;
-		} else if (this.x1 >= tile.getX1() && this.x1 <= tile.getX2()
-				&& (this.y1 + this.size >= tile.getY1() && this.y1 + this.size <= tile.getY2())) {
+		} else if (this.x1 + this.offset >= tile.getX1() && this.x1 + this.offset <= tile.getX2()
+				&& (this.y1 + this.offset + this.size >= tile.getY1()
+						&& this.y1 + this.offset + this.size <= tile.getY2())) {
 			return true;
-		} else if (this.x2 >= tile.getX1() && this.x2 <= tile.getX2() && this.y2 >= tile.getY1()
-				&& this.y2 <= tile.getY2()) {
+		} else if (this.x2 - this.offset >= tile.getX1() && this.x2 - this.offset <= tile.getX2()
+				&& this.y2 - this.offset >= tile.getY1() && this.y2 - this.offset <= tile.getY2()) {
 			return true;
-		} else if (this.x2 >= tile.getX1() && this.x2 <= tile.getX2() && this.y2 - this.size >= tile.getY1()
-				&& this.y2 - this.size <= tile.getY2()) {
+		} else if (this.x2 - this.offset >= tile.getX1() && this.x2 - this.offset <= tile.getX2()
+				&& this.y2 - (this.offset + .7) - this.size >= tile.getY1()
+				&& this.y2 - (this.offset + .7) - this.size <= tile.getY2()) {
 			return true;
 		}
 
@@ -238,6 +241,7 @@ abstract class Character {
 	public void setY2(double startY22) {
 		this.y2 = startY22;
 	}
+
 	/**
 	 * 
 	 * Sets the size of the Character
@@ -247,6 +251,7 @@ abstract class Character {
 	public void setSize(int size) {
 		this.size = size;
 	}
+
 	/**
 	 * 
 	 * Sets the offSet used in checkMove() method
