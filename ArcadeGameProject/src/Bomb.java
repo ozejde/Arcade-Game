@@ -27,7 +27,8 @@ public class Bomb {
 	protected Timer leave;
 	protected boolean isDetonatable;
 	protected Color color;
-	private boolean bossBomb = false;
+	protected boolean bossBomb = false;
+	protected MonsterThree boss;
 
 	public Bomb(double d, double e, ArrayList<Tile> tiles, Hero hero, ArrayList<Monster> monsters, double range,
 			boolean isDetonatable) {
@@ -78,7 +79,7 @@ public class Bomb {
 		setBombTile();
 	}
 
-	public Bomb(int d, int e, ArrayList<Tile> tiles, Hero hero, int range, boolean bossBomb) {
+	public Bomb(int d, int e, ArrayList<Tile> tiles, Hero hero, int range, boolean bossBomb, MonsterThree boss) {
 		this.x = d;
 		this.y = e;
 		this.tiles = tiles;
@@ -92,6 +93,7 @@ public class Bomb {
 		this.size = 48;
 		this.color = Color.RED;
 		this.bossBomb = bossBomb;
+		this.boss = boss;
 		setBombTile();
 	}
 
@@ -122,6 +124,9 @@ public class Bomb {
 		public void run() {
 			if (!Bomb.this.removed) {
 				Bomb.this.hero.bombs.remove(Bomb.this);
+				if(Bomb.this.bossBomb){
+					Bomb.this.boss.bombs.remove(Bomb.this);
+				}
 				Bomb.this.explode();
 				Bomb.this.getBombTile().setPassable(true);
 			}
