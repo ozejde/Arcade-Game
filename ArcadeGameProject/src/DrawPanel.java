@@ -57,7 +57,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 		label.setFont(new Font("Sans Serif", Font.BOLD, 30));
 		labelPanel.add(label);
 
-		JButton instrButton = new JButton("Instructions");
+		JButton instrButton = new JButton("New Game");
 		instrButton.addActionListener(new GameSetupListener(this.main, this.frame));
 		labelPanel.add(instrButton);
 
