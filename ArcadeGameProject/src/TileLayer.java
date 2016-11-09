@@ -17,10 +17,13 @@ public class TileLayer extends JComponent {
 	protected Hero hero;
 	private GameKeyListener keyLis;
 	protected ArrayList<Monster> m = new ArrayList<>();
+	private MonsterThree bossMonster;
+	private boolean bossExsists;
 
 	public TileLayer(int width, int height, Hero hero) {
 		this.map = new int[height][width];
 		this.hero = hero;
+		this.bossExsists = false;
 	}
 
 	public static TileLayer FromFile(String fileName, Hero hero) {
@@ -93,7 +96,11 @@ public class TileLayer extends JComponent {
 					this.tiles.add(new GroundTile((index + 1) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
 							((index + 1) * Engine.TILE_WIDTH) + Engine.TILE_WIDTH,
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
-					this.m.add(new MonsterThree((x * Engine.TILE_WIDTH) + 25, (y * Engine.TILE_HIEGHT + 23)));
+					MonsterThree tempMonster = new MonsterThree((x * Engine.TILE_WIDTH) + 25,
+							(y * Engine.TILE_HIEGHT + 23), this.hero);
+					this.m.add(tempMonster);
+					this.bossMonster = tempMonster;
+					this.bossExsists = true;
 				}
 				if (index == 0) {
 					this.tiles.add(new GroundTile(index * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
@@ -180,6 +187,14 @@ public class TileLayer extends JComponent {
 				bomb.drawCharacter(g);
 			}
 		}
+		if (this.bossExsists ) {
+			if (this.bossMonster.bombs.size() != 0) {
+				for (Bomb bomb : this.bossMonster.bombs) {
+					bomb.drawCharacter(g);
+				}
+			}
+		}
+
 		this.hero.drawCharacter(g);
 	}
 

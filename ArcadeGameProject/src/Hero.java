@@ -114,7 +114,7 @@ public class Hero extends Character {
 
 	/**
 	 *
-	 * Drops bomb at center of Hero's current location
+	 * Drops bomb at center of characters current location
 	 *
 	 */
 	@SuppressWarnings("null")
