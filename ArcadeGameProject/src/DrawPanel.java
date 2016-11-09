@@ -42,7 +42,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 		this.addKeyListener(this.keyLis);
 		this.setFocusable(true);
 		this.layer.createTiles();
-		this.label.setText("Lives: " + this.hero.getLives());
+		this.label.setText("<html><font color='white'>Lives: " + this.hero.getLives()+"</font><html>");
 
 		JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 0));
 		labelPanel.setOpaque(false);
@@ -77,7 +77,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 						while (!isPaused) {
 							isPaused = false;
 							// Thread.sleep(30);
-							DrawPanel.this.label.setText("Lives: " + DrawPanel.this.hero.getLives());
+							DrawPanel.this.label.setText("<html><font color='white'>Lives: " + DrawPanel.this.hero.getLives()+"</font><html>");
 							if (DrawPanel.this.hero.monsters.size() == 0) {
 								DrawPanel.this.levelUp();
 							}
