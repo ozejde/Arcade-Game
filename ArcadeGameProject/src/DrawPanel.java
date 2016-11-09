@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,6 +27,12 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 	JLabel label = new JLabel();
 	private Main main;
 	private JFrame frame;
+	ArrayList<String> powerups;
+	private JLabel detonateLabel;
+	private JPanel powerupPanel;
+	private JLabel increaseLabel;
+	private JLabel moreLabel;
+	private JLabel addLabel;
 
 	/**
 	 * 
@@ -35,9 +42,15 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 	public DrawPanel(Main main, JFrame frame) {
 		this.main = main;
 		this.frame = frame;
+		this.detonateLabel = new JLabel();
+		this.increaseLabel = new JLabel();
+		this.moreLabel = new JLabel();
+		this.addLabel = new JLabel();
+		this.powerups = new ArrayList<>();
 		this.hero = new Hero(408, 350);
 		this.layer = TileLayer.FromFile("Level1.txt", this.hero);
 		this.keyLis = new GameKeyListener(this.hero, this);
+		this.setLayout(new BorderLayout());
 		this.layer.setKeyLis(this.keyLis);
 		this.addKeyListener(this.keyLis);
 		this.setFocusable(true);
@@ -60,10 +73,29 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 		JButton instrButton = new JButton("New Game");
 		instrButton.addActionListener(new GameSetupListener(this.main, this.frame));
 		labelPanel.add(instrButton);
+		
+		this.powerupPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 0));
+		this.powerupPanel.setOpaque(false);
+		this.add(this.powerupPanel, BorderLayout.PAGE_END);
+		
+		this.moreLabel.setFont(new Font("Sans Serif", Font.BOLD, 20));
+		this.detonateLabel.setFont(new Font("Sans Serif", Font.BOLD, 20));
+		this.increaseLabel.setFont(new Font("Sans Serif", Font.BOLD, 20));
+		this.addLabel.setFont(new Font("Sans Serif", Font.BOLD, 20));
+		
+		this.powerupPanel.add(this.moreLabel);
+		this.powerupPanel.add(this.detonateLabel);
+		this.powerupPanel.add(this.increaseLabel);
+		this.powerupPanel.add(this.addLabel);
+		
+		
+		
+		
 
 		this.setFocusable(true);
 
 		new Thread(new Runnable() {
+			int livesAdded = 0;
 
 			@Override
 			public void run() {
@@ -102,25 +134,41 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 										t.setPowerUp(false);
 										t.createNewGroundTile();
 										DrawPanel.this.hero.setDetonatable(true);
+										if(!DrawPanel.this.powerups.contains("Detonatable Bombs")){
+											DrawPanel.this.powerups.add("Detonatable Bombs");
+											DrawPanel.this.detonateLabel.setText("Detonatable Bombs");
+										}
 									}
 									if (t.getPowerTileType().equals("IncreaseRange")) {
 										t.createNewGroundTile();
 										t.setPowerUp(false);
 										DrawPanel.this.hero.addRange();
+										if(!DrawPanel.this.powerups.contains("Increased Range")){
+											DrawPanel.this.powerups.add("Increased Range");
+											DrawPanel.this.increaseLabel.setText("Increased Range");
+										}
 									}
 									if (t.getPowerTileType().equals("MoreBombs")) {
 										t.setPowerUp(false);
 										t.createNewGroundTile();
 										DrawPanel.this.hero.addBombCount();
+										if(!DrawPanel.this.powerups.contains("Multiple Bombs")){
+											DrawPanel.this.powerups.add("Multiple Bombs");
+											DrawPanel.this.moreLabel.setText("Multiple Bombs");
+										}
 									}
+									
 									if (t.getPowerTileType().equals("AddLife")) {
 										t.setPowerUp(false);
 										t.createNewGroundTile();
 										DrawPanel.this.hero.addLife();
+										this.livesAdded++;
+										DrawPanel.this.addLabel.setText("Lives Added: "+this.livesAdded);
 									}
 								}
 							}
-
+							
+							
 							if (DrawPanel.this.keyLis.u) {
 								DrawPanel.this.keyLis.u = false;
 								DrawPanel.this.levelUp();
@@ -216,5 +264,10 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 
 	public boolean getPaused() {
 		return this.keyLis.getPaused();
+	}
+	
+	private void addPowerup(String powerup){
+		this.powerupPanel.add(new JLabel(powerup));
+		this.powerupPanel.repaint();
 	}
 }
