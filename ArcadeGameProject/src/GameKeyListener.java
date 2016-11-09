@@ -18,7 +18,7 @@ public class GameKeyListener implements KeyListener {
 	public boolean d = false;
 	public boolean x = false;
 	public boolean z = false;
-	public boolean p;
+	public boolean p = false;
 	private Hero hero;
 	private DrawPanel drawPanel;
 
@@ -66,8 +66,6 @@ public class GameKeyListener implements KeyListener {
 		this.down = this.keys[KeyEvent.VK_DOWN];
 		this.left = this.keys[KeyEvent.VK_LEFT];
 		this.right = this.keys[KeyEvent.VK_RIGHT];
-		// this.u = this.keys[KeyEvent.VK_U];
-		// this.d = this.keys[KeyEvent.VK_D];
 		this.z = this.keys[KeyEvent.VK_Z];
 	}
 
@@ -97,6 +95,7 @@ public class GameKeyListener implements KeyListener {
 			this.u = true;
 			break;
 		case KeyEvent.VK_P:
+//			System.out.println("Current P value: " + this.p);
 			if (this.p) {
 				this.p = false;
 			} else {
@@ -127,6 +126,10 @@ public class GameKeyListener implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+	}
+
+	public boolean getPaused() {
+		return this.p;
 	}
 
 }

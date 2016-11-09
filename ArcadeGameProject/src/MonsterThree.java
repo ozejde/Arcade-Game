@@ -2,18 +2,27 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 public class MonsterThree extends Monster {
-	private HashMap<String, Tile> surroundingTiles;
-	private Tile currentTile;
-	private boolean movingUp;
-	private boolean movingDown;
-	private boolean isMovingRight;
-	private boolean isMovingLeft;
-	private int backup = 4;
+	protected HashMap<String, Tile> surroundingTiles;
+	protected Tile currentTile;
+	protected boolean movingUp;
+	protected boolean movingDown;
+	protected boolean isMovingRight;
+	protected boolean isMovingLeft;
+	protected int backup = 3;
+	protected double speed = .25;
+	private String previousTrue;
+	private int lives = 3;
+	protected ArrayList<Bomb> bombs;
+	protected Hero hero;
+	protected boolean firstTime;
 
-	public MonsterThree(int i, int j) {
+	public MonsterThree(int i, int j, Hero hero) {
 		super(i, j);
 		this.setSize(34);
 		this.setOffset(3.75);
@@ -22,6 +31,12 @@ public class MonsterThree extends Monster {
 		this.isMovingRight = false;
 		this.movingUp = false;
 		this.movingDown = true;
+		this.previousTrue = "down";
+		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+		executor.scheduleAtFixedRate(this.bombRunnable, 0, 5, TimeUnit.SECONDS);
+		this.bombs = new ArrayList<>();
+		this.hero = hero;
+		this.firstTime = false;
 	}
 
 	@Override
@@ -30,40 +45,57 @@ public class MonsterThree extends Monster {
 		g.fillRect((int) this.x1, (int) this.y1, this.size, this.size);
 	}
 
+	Runnable bombRunnable = new Runnable() {
+		@Override
+		public void run() {
+			System.out.println("Dropped Bomb before (or was supposed to)");
+			Tile tempTile = MonsterThree.this.setCurrentTile();
+	    	MonsterThree.this.bombs.add(
+					new Bomb((tempTile.getX1()), tempTile.getY1(), 
+							MonsterThree.this.tiles, MonsterThree.this.hero, 1, true));
+	    	System.out.println("Dropped Bomb after (or was supposed to)");
+	    	if(!MonsterThree.this.firstTime){
+	    		MonsterThree.this.bombs.remove(MonsterThree.this.bombs.size()-2);
+				System.out.println("Dropped Bomb after (or was supposed to)");
+	    	}
+	    	MonsterThree.this.firstTime = true;
+	    }
+	};
+
 	@Override
 	public void monsterMove() {
 		if (this.movingUp) {
-			this.setY1(getY1() - .1);
-			this.setY2(getY2() - .1);
+			this.setY1(getY1() - this.speed);
+			this.setY2(getY2() - this.speed);
 			if (!this.checkMove()) {
-				System.out.println(1);
+				this.previousTrue = "up";
 				this.setY1(getY1() + this.backup);
 				this.setY2(getY2() + this.backup);
 				setNewDirection();
 			}
 		} else if (this.movingDown) {
-			this.setY1(getY1() + .1);
-			this.setY2(getY2() + .1);
+			this.setY1(getY1() + this.speed);
+			this.setY2(getY2() + this.speed);
 			if (!this.checkMove()) {
-				System.out.println(2);
+				this.previousTrue = "down";
 				this.setY1(getY1() - this.backup);
 				this.setY2(getY2() - this.backup);
 				setNewDirection();
 			}
 		} else if (this.isMovingRight) {
-			this.setX1(getX1() + .1);
-			this.setX2(getX2() + .1);
+			this.setX1(getX1() + this.speed);
+			this.setX2(getX2() + this.speed);
 			if (!this.checkMove()) {
-				System.out.println(3);
+				this.previousTrue = "right";
 				this.setX1(getX1() - this.backup);
 				this.setX2(getX2() - this.backup);
 				setNewDirection();
 			}
 		} else if (this.isMovingLeft) {
-			this.setX1(getX1() - .1);
-			this.setX2(getX2() - .1);
+			this.setX1(getX1() - this.speed);
+			this.setX2(getX2() - this.speed);
 			if (!this.checkMove()) {
-				System.out.println(4);
+				this.previousTrue = "left";
 				this.setX1(getX1() + this.backup);
 				this.setX2(getX2() + this.backup);
 				setNewDirection();
@@ -144,42 +176,62 @@ public class MonsterThree extends Monster {
 		this.isMovingRight = false;
 		this.movingUp = false;
 		this.movingDown = false;
-		int indexNum=0;
+		int indexNum = 0;
 		ArrayList<String> temp = new ArrayList<>();
 		setSurroundingTiles();
 		for (String str : this.surroundingTiles.keySet()) {
-			if (this.surroundingTiles.get(str).isPassable()) {
+			if (this.surroundingTiles.get(str).isPassable() || this.surroundingTiles.get(str).getPassableToBoss()) {
 				if (str.equals("up")) {
 					temp.add("up");
 					indexNum++;
-				} 
-				else if (str.equals("down")) {
+				} else if (str.equals("down")) {
 					temp.add("down");
 					indexNum++;
-				} 
-				else if (str.equals("right")) {
+				} else if (str.equals("right")) {
 					temp.add("right");
 					indexNum++;
-				} 
-				else if (str.equals("left")) {
+				} else if (str.equals("left")) {
 					temp.add("left");
 					indexNum++;
 				}
 			}
 		}
+
 		int getIndex = ThreadLocalRandom.current().nextInt(0, indexNum);
 		String str = temp.get(getIndex);
 		if (str.equals("up")) {
+			if (str.equals(this.previousTrue)) {
+				this.y1 -= 50;
+				this.y2 -= 50;
+			}
 			this.movingUp = true;
-		} 
-		else if (str.equals("down")) {
+		} else if (str.equals("down")) {
+			if (str.equals(this.previousTrue)) {
+				this.y1 += 50;
+				this.y2 += 50;
+			}
 			this.movingDown = true;
-		} 
-		else if (str.equals("right")) {
+		} else if (str.equals("right")) {
+			if (str.equals(this.previousTrue)) {
+				this.x1 += 50;
+				this.x2 += 50;
+			}
 			this.isMovingRight = true;
-		} 
-		else if (str.equals("left")) {
+		} else if (str.equals("left")) {
+			if (str.equals(this.previousTrue)) {
+				this.x1 -= 50;
+				this.x2 -= 50;
+			}
 			this.isMovingLeft = true;
 		}
 	}
+
+	public int getLives() {
+		return this.lives;
+	}
+
+	public void subLives() {
+		this.lives--;
+	}
+
 }

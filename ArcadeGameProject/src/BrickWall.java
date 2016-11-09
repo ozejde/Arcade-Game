@@ -31,6 +31,8 @@ public class BrickWall extends Tile {
 		super(x1, y1, x2, y2, tileSheet, x, y);
 		super.setDestructible(true);
 		super.setPassable(false);
+		this.passableToBoss = true;
 	}
+	
 
 }

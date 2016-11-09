@@ -22,6 +22,7 @@ public abstract class Tile {
 	private int x1, x2, y1, y2;
 	private boolean powerUp;
 	protected boolean isBlownUp;
+	protected boolean passableToBoss;
 
 	public boolean isBlownUp() {
 		return this.isBlownUp;
@@ -220,6 +221,9 @@ public abstract class Tile {
 	
 	public String getPowerTileType(){
 		return this.powerTileType;
+	}
+	public boolean getPassableToBoss(){
+		return this.passableToBoss;
 	}
 
 }

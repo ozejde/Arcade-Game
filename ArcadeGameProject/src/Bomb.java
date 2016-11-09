@@ -26,6 +26,8 @@ public class Bomb {
 	protected Timer timer;
 	protected Timer leave;
 	protected boolean isDetonatable;
+	protected Color color;
+	private boolean bossBomb = false;
 
 	public Bomb(double d, double e, ArrayList<Tile> tiles, Hero hero, ArrayList<Monster> monsters, double range,
 			boolean isDetonatable) {
@@ -40,6 +42,7 @@ public class Bomb {
 		this.range = range;
 		this.monsters = monsters;
 		this.isDetonatable = isDetonatable;
+		this.color = Color.BLACK;
 		setBombTile();
 	}
 
@@ -71,6 +74,24 @@ public class Bomb {
 		this.hero = hero;
 		this.range = range;
 		this.monsters = monsters;
+		this.color = Color.BLACK;
+		setBombTile();
+	}
+
+	public Bomb(int d, int e, ArrayList<Tile> tiles, Hero hero, int range, boolean bossBomb) {
+		this.x = d;
+		this.y = e;
+		this.tiles = tiles;
+		this.hero = hero;
+		this.range = range;
+		this.removed = false;
+		this.timer = new Timer();
+		this.timer.schedule(new Task(), 3000);
+		this.leave = new Timer();
+		this.leave.schedule(new LeaveTimer(), 2000);
+		this.size = 48;
+		this.color = Color.RED;
+		this.bossBomb = bossBomb;
 		setBombTile();
 	}
 
@@ -117,7 +138,7 @@ public class Bomb {
 	 * 
 	 */
 	public void drawCharacter(Graphics graphics) {
-		graphics.setColor(Color.BLACK);
+		graphics.setColor(this.color);
 		Graphics2D gCast = (Graphics2D) graphics;
 		Ellipse2D.Double bomb = new Ellipse2D.Double(this.x, this.y, this.size, this.size);
 		gCast.fill(bomb);
@@ -211,15 +232,18 @@ public class Bomb {
 		}
 
 		// blows up the characters in the blast radius of the bomb
-		if (!this.monsters.isEmpty()) {
-			this.destroyMonsters();
+		if (!this.bossBomb) {
+			if (!this.monsters.isEmpty()) {
+				this.destroyMonsters();
+			}
 		}
 		// Kill hero
 		this.killHero();
+
 		// blows up any bombs in the blast radius of the bomb
 		this.destroyBombs();
 		
-		if(this.isDetonatable){
+		if (this.isDetonatable) {
 			this.bombTile.setPassable(true);
 			this.hero.bombs.remove(this);
 		}

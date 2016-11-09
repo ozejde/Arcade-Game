@@ -14,9 +14,10 @@ import javax.swing.JPanel;
  * Creates and draws the game objects
  *
  * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
+ * @param <booleanIsPaused>
  */
 @SuppressWarnings("serial")
-public class DrawPanel extends JPanel {
+public class DrawPanel<booleanIsPaused> extends JPanel {
 	protected static boolean flag = true;
 	protected TileLayer layer;
 	protected GameKeyListener keyLis;
@@ -25,8 +26,6 @@ public class DrawPanel extends JPanel {
 	JLabel label = new JLabel();
 	private Main main;
 	private JFrame frame;
-	
-
 
 	/**
 	 * 
@@ -44,100 +43,98 @@ public class DrawPanel extends JPanel {
 		this.setFocusable(true);
 		this.layer.createTiles();
 		this.label.setText("Lives: " + this.hero.getLives());
-		
+
 		JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 0));
 		labelPanel.setOpaque(false);
-		this.add(labelPanel,BorderLayout.NORTH);
-		
+		this.add(labelPanel, BorderLayout.NORTH);
+
 		JButton backButton = new JButton("Back to Menu");
 		backButton.addActionListener(new GameSetupListener(this.main, this.frame));
 		labelPanel.add(backButton);
-		
+
 		JLabel label = this.label;
-		
-		label.setText("<html><font color='white'>Lives: </font></html>");
+		label.setText("Lives: " + this.hero.getLives());
 		label.setFont(new Font("Sans Serif", Font.BOLD, 30));
 		labelPanel.add(label);
-		
+
 		JButton instrButton = new JButton("Instructions");
 		instrButton.addActionListener(new GameSetupListener(this.main, this.frame));
 		labelPanel.add(instrButton);
-		
+
 		this.setFocusable(true);
 
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
-				
+
 				// Periodically asks Java to repaint this component
 				try {
-					int stuff = 2;
-					while (true) {
-						stuff = 2;
-						while(!DrawPanel.this.keyLis.p){
-//						Thread.sleep(30);
-						//DrawPanel.this.label.setText("Lives: " + DrawPanel.this.hero.getLives());
-						DrawPanel.this.label.setText("<html><font color='white'>Lives:" +DrawPanel.this.hero.getLives() +"</font></html>" );
-						if (DrawPanel.this.hero.monsters.size() == 0) {
-							DrawPanel.this.levelUp();
-						}
-						Thread.sleep(1);
-						for (Monster m : DrawPanel.this.layer.m) {
-							m.monsterMove();
-						}
-						if (DrawPanel.this.hero.checkMonster()) {
-//							DrawPanel.this.hero.subtractLife();
-//							DrawPanel.this.hero.reset();
-//							for (Monster m : DrawPanel.this.layer.m) {
-//								m.reset();
-//							}
-
+					boolean isPaused = false;
+					while (DrawPanel.this.hero.getLives() > 0) {
+						isPaused = DrawPanel.this.getPaused();
+//						System.out.println(isPaused);
+						while (!isPaused) {
+							isPaused = false;
+							// Thread.sleep(30);
+							DrawPanel.this.label.setText("Lives: " + DrawPanel.this.hero.getLives());
+							if (DrawPanel.this.hero.monsters.size() == 0) {
+								DrawPanel.this.levelUp();
+							}
+							Thread.sleep(1);
+							for (Monster m : DrawPanel.this.layer.m) {
+								m.monsterMove();
+							}
+							if (DrawPanel.this.hero.checkMonster()) {
+								DrawPanel.this.hero.subtractLife();
+								DrawPanel.this.hero.reset();
+								for (Monster m : DrawPanel.this.layer.m) {
+									m.reset();
+								}
+							}
 							if (DrawPanel.this.hero.getLives() <= 0) {
 								throw new InterruptedException("Game Over");
 							}
-						}
-						for (Tile t : DrawPanel.this.layer.tiles) {
-							if (t.isBlownUp() && t.getPowerUp() && DrawPanel.this.hero.checkIfInTile(t)) {
-								if (t.getPowerTileType().equals("Detonate")) {
-									t.setPowerUp(false);
-									t.createNewGroundTile();
-									DrawPanel.this.hero.setDetonatable(true);
-								}
-								if (t.getPowerTileType().equals("IncreaseRange")) {
-									t.createNewGroundTile();
-									t.setPowerUp(false);
-									DrawPanel.this.hero.addRange();
-								}
-								if (t.getPowerTileType().equals("MoreBombs")) {
-									t.setPowerUp(false);
-									t.createNewGroundTile();
-									DrawPanel.this.hero.addBombCount();
-								}
-								if (t.getPowerTileType().equals("AddLife")) {
-									t.setPowerUp(false);
-									t.createNewGroundTile();
-									DrawPanel.this.hero.addLife();
+
+							for (Tile t : DrawPanel.this.layer.tiles) {
+								if (t.isBlownUp() && t.getPowerUp() && DrawPanel.this.hero.checkIfInTile(t)) {
+									if (t.getPowerTileType().equals("Detonate")) {
+										t.setPowerUp(false);
+										t.createNewGroundTile();
+										DrawPanel.this.hero.setDetonatable(true);
+									}
+									if (t.getPowerTileType().equals("IncreaseRange")) {
+										t.createNewGroundTile();
+										t.setPowerUp(false);
+										DrawPanel.this.hero.addRange();
+									}
+									if (t.getPowerTileType().equals("MoreBombs")) {
+										t.setPowerUp(false);
+										t.createNewGroundTile();
+										DrawPanel.this.hero.addBombCount();
+									}
+									if (t.getPowerTileType().equals("AddLife")) {
+										t.setPowerUp(false);
+										t.createNewGroundTile();
+										DrawPanel.this.hero.addLife();
+									}
 								}
 							}
-						}
 
-						if (DrawPanel.this.keyLis.u) {
-							DrawPanel.this.keyLis.u = false;
-							DrawPanel.this.levelUp();
+							if (DrawPanel.this.keyLis.u) {
+								DrawPanel.this.keyLis.u = false;
+								DrawPanel.this.levelUp();
+							}
+							if (DrawPanel.this.keyLis.d) {
+								DrawPanel.this.keyLis.d = false;
+								DrawPanel.this.levelDown();
+							}
+
+							isPaused = DrawPanel.this.keyLis.getPaused();
+							DrawPanel.this.repaint();
 						}
-						if (DrawPanel.this.keyLis.d) {
-							DrawPanel.this.keyLis.d = false;
-							DrawPanel.this.levelDown();
-						}
-//						if (DrawPanel.this.keyLis.p) {
-//							DrawPanel.this.flag = false;
-//						}
-//						if(!DrawPanel.this.keyLis.p){
-//							DrawPanel.this.flag = true;
-//						}
-						DrawPanel.this.repaint();
-					}
+//						System.out.println("Is going through outer loop at all");
+
 					}
 				} catch (InterruptedException exception) {
 					JOptionPane.showMessageDialog(null, exception.getMessage());
@@ -154,7 +151,7 @@ public class DrawPanel extends JPanel {
 	 */
 	public void levelUp() {
 		String fileName = "";
-		if (this.level > 2) {
+		if (this.level > 3) {
 			this.level = 1;
 			fileName = "Level" + this.level + ".txt";
 			this.layer.removeKeyListener(this.keyLis);
@@ -183,7 +180,7 @@ public class DrawPanel extends JPanel {
 	public void levelDown() {
 		String fileName = "";
 		if (this.level < 2) {
-			this.level = 3;
+			this.level = 4;
 			this.layer.removeKeyListener(this.keyLis);
 			fileName = "Level" + this.level + ".txt";
 			this.layer = TileLayer.FromFile(fileName, this.hero);
@@ -212,8 +209,12 @@ public class DrawPanel extends JPanel {
 		this.layer.paintComponent(g);
 
 	}
-	
-	public void setFocusable(){
+
+	public void setFocusable() {
 		this.setFocusable(true);
+	}
+
+	public boolean getPaused() {
+		return this.keyLis.getPaused();
 	}
 }
