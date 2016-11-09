@@ -28,9 +28,14 @@ public class GameSetupListener implements ActionListener {
 			int n = 0;
 			if (this.frame.getTitle().equals("BomberMan Game")) {
 
-				n = JOptionPane.showConfirmDialog(frame,
-						"Warning: Progress will be lost. Do you still want to continue?", "Warning",
-						JOptionPane.YES_NO_OPTION);
+				n = //JOptionPane.showConfirmDialog(frame,
+						//"Warning: Progress will be lost. Do you still want to continue?", "Warning",
+						//JOptionPane.YES_NO_OPTION);
+						JOptionPane.showConfirmDialog(null,
+				                "Warning: Progress will be lost.",
+				                "Warning",
+				                JOptionPane.DEFAULT_OPTION,
+				                JOptionPane.PLAIN_MESSAGE);
 				System.out.println(n);
 			} else {
 				n = 0;
