@@ -1,5 +1,10 @@
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -12,18 +17,25 @@ import javax.swing.JPanel;
  */
 @SuppressWarnings("serial")
 public class DrawPanel extends JPanel {
+	protected static boolean flag = true;
 	protected TileLayer layer;
 	protected GameKeyListener keyLis;
 	protected Hero hero;
 	private int level = 1;
 	JLabel label = new JLabel();
+	private Main main;
+	private JFrame frame;
+	
+
 
 	/**
 	 * 
 	 * Creates a DrawPanel with repaint timer
 	 *
 	 */
-	public DrawPanel() {
+	public DrawPanel(Main main, JFrame frame) {
+		this.main = main;
+		this.frame = frame;
 		this.hero = new Hero(408, 350);
 		this.layer = TileLayer.FromFile("Level1.txt", this.hero);
 		this.keyLis = new GameKeyListener(this.hero, this);
@@ -32,13 +44,35 @@ public class DrawPanel extends JPanel {
 		this.setFocusable(true);
 		this.layer.createTiles();
 		this.label.setText("Lives: " + this.hero.getLives());
+		
+		JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 0));
+		labelPanel.setOpaque(false);
+		this.add(labelPanel,BorderLayout.NORTH);
+		
+		JButton backButton = new JButton("Back to Menu");
+		backButton.addActionListener(new GameSetupListener(this.main, this.frame));
+		labelPanel.add(backButton);
+		
+		JLabel label = this.label;
+		label.setText("Lives: " + this.hero.getLives());
+		label.setFont(new Font("Sans Serif", Font.BOLD, 30));
+		labelPanel.add(label);
+		
+		JButton instrButton = new JButton("Instructions");
+		instrButton.addActionListener(new GameSetupListener(this.main, this.frame));
+		labelPanel.add(instrButton);
+		
+		this.setFocusable(true);
 
 		new Thread(new Runnable() {
+			
 			@Override
 			public void run() {
+				
 				// Periodically asks Java to repaint this component
 				try {
 					while (true) {
+						while(!DrawPanel.this.keyLis.p){
 //						Thread.sleep(30);
 						DrawPanel.this.label.setText("Lives: " + DrawPanel.this.hero.getLives());
 						if (DrawPanel.this.hero.monsters.size() == 0) {
@@ -92,7 +126,14 @@ public class DrawPanel extends JPanel {
 							DrawPanel.this.keyLis.d = false;
 							DrawPanel.this.levelDown();
 						}
+//						if (DrawPanel.this.keyLis.p) {
+//							DrawPanel.this.flag = false;
+//						}
+//						if(!DrawPanel.this.keyLis.p){
+//							DrawPanel.this.flag = true;
+//						}
 						DrawPanel.this.repaint();
+					}
 					}
 				} catch (InterruptedException exception) {
 					JOptionPane.showMessageDialog(null, exception.getMessage());
@@ -166,5 +207,9 @@ public class DrawPanel extends JPanel {
 		super.paintComponent(g);
 		this.layer.paintComponent(g);
 
+	}
+	
+	public void setFocusable(){
+		this.setFocusable(true);
 	}
 }
