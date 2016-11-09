@@ -163,7 +163,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 										t.createNewGroundTile();
 										DrawPanel.this.hero.addLife();
 										this.livesAdded++;
-										DrawPanel.this.addLabel.setText("Lives Added: "+this.livesAdded);
+										DrawPanel.this.addLabel.setText("Total Lives Added: "+this.livesAdded);
 									}
 								}
 							}
