@@ -19,6 +19,7 @@ public class TileLayer extends JComponent {
 	protected ArrayList<Monster> m = new ArrayList<>();
 	private MonsterThree bossMonster;
 	private boolean bossExsists;
+	
 
 	public TileLayer(int width, int height, Hero hero) {
 		this.map = new int[height][width];
@@ -141,6 +142,7 @@ public class TileLayer extends JComponent {
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
 					this.tiles.get(this.tiles.size() - 1).setPowerUp(true);
 					this.tiles.get(this.tiles.size() - 1).setPowerTileType("Detonate");
+					
 				}
 
 				if (index == 7) {
@@ -149,6 +151,7 @@ public class TileLayer extends JComponent {
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
 					this.tiles.get(this.tiles.size() - 1).setPowerUp(true);
 					this.tiles.get(this.tiles.size() - 1).setPowerTileType("IncreaseRange");
+					
 				}
 				if (index == 8) {
 					this.tiles.add(new BrickWall((index - 3) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
@@ -156,6 +159,7 @@ public class TileLayer extends JComponent {
 							(yOffset * Engine.TILE_HIEGHT) + Engine.TILE_HIEGHT, this.tileSheet, x, y));
 					this.tiles.get(this.tiles.size() - 1).setPowerUp(true);
 					this.tiles.get(this.tiles.size() - 1).setPowerTileType("MoreBombs");
+					
 				}
 				if (index == 9) {
 					this.tiles.add(new BrickWall((index - 4) * Engine.TILE_WIDTH, yOffset * Engine.TILE_HIEGHT,
@@ -197,5 +201,5 @@ public class TileLayer extends JComponent {
 
 		this.hero.drawCharacter(g);
 	}
-
+	
 }
