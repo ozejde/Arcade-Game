@@ -67,7 +67,7 @@ public class Main {
 
 	}
 
-	public void instuctSetup() {
+	public void instructSetup() {
 		JFrame frame = new JFrame();
 		frame.setTitle("Bomber Man Instructions");
 		JPanel panel = new JPanel();
@@ -103,7 +103,12 @@ public class Main {
 						+ "<br> • Purple tiles add a life" + "<br> • Red tiles make the bombs detonatable"
 						+ "<br> • Orange tiles increase the bomb's blast distance by one tile in all directions"
 						+ "<br> • Blue allows you to drop more than one bomb at a time"
-						+ "<br> • Death removes all power-ups " + "<br> • Leveling up removes all power ups<html>");
+						+ "<br> • Death removes all power-ups " 
+						+ "<br> • Leveling up removes all power ups<html>"
+		                + "<br>"
+		                 + "<br> Monsters"
+		                 + "<br> •"
+		                 + "<br> • <html>");
 
 		manualLabel.setFont(new Font("Sans Serif", Font.PLAIN, 20));
 		panel.add(manualLabel);
@@ -117,26 +122,26 @@ public class Main {
 
 	public void gameSetup() {
 		JFrame frame = new JFrame();
-		DrawPanel panel = new DrawPanel();
+		DrawPanel panel = new DrawPanel(this, frame);
 		JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 0));
+		frame.add(panel, BorderLayout.CENTER);
 
-		JButton backButton = new JButton("Back to Menu");
-		backButton.addActionListener(new GameSetupListener(this, frame));
-		labelPanel.add(backButton);
-
-		JLabel label = panel.label;
-		label.setText("Lives: " + panel.hero.getLives());
-		label.setFont(new Font("Sans Serif", Font.BOLD, 30));
-		labelPanel.add(label);
-		frame.add(labelPanel, BorderLayout.NORTH);
-
-		JButton instrButton = new JButton("Instructions");
-		instrButton.addActionListener(new GameSetupListener(this, frame));
-		labelPanel.add(instrButton);
+		// JButton backButton = new JButton("Back to Menu");
+		// backButton.addActionListener(new GameSetupListener(this, frame));
+		// labelPanel.add(backButton);
+		//
+		// JLabel label = panel.label;
+		// label.setText("Lives: " + panel.hero.getLives());
+		// label.setFont(new Font("Sans Serif", Font.BOLD, 30));
+		// labelPanel.add(label);
+		// frame.add(labelPanel, BorderLayout.NORTH);
+		//
+		// JButton instrButton = new JButton("Instructions");
+		// instrButton.addActionListener(new GameSetupListener(this, frame));
+		// labelPanel.add(instrButton);
 
 		frame.setTitle("BomberMan Game");
 
-		frame.add(panel);
 		frame.setSize(834, 688);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);

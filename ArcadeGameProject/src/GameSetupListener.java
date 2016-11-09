@@ -3,8 +3,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
-public class GameSetupListener implements ActionListener{
+public class GameSetupListener implements ActionListener {
 	private Main main;
 	private JFrame frame;
 
@@ -17,20 +18,35 @@ public class GameSetupListener implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		JButton buttonPressed = (JButton) e.getSource();
 		String title = buttonPressed.getText();
-		
-		if(title.equals("Start Game")){
+
+		if (title.equals("Start Game")) {
 			this.main.gameSetup();
+			this.frame.dispose();
 		}
-		
-		if(title.equals("Instructions")){
-			this.main.instuctSetup();
+
+		if (title.equals("Instructions") || title.equals("Back to Menu")) {
+			int n = 0;
+			if (this.frame.getTitle().equals("BomberMan Game")) {
+
+				n = JOptionPane.showConfirmDialog(frame,
+						"Warning: Progress will be lost. Do you still want to continue?", "Warning",
+						JOptionPane.YES_NO_OPTION);
+				System.out.println(n);
+			} else {
+				n = 0;
+			}
+
+			if (n == 0 && title.equals("Instructions")) {
+				this.main.instructSetup();
+				this.frame.dispose();
+			} else if (n == 0 && title.equals("Back to Menu")) {
+				this.main.startSetup();
+				this.frame.dispose();
+			} else {
+				return;
+			}
 		}
-		
-		if(title.equals("Back to Menu")){
-			this.main.startSetup();
-		}
-		
-		this.frame.dispose();
+
 	}
 
 }
