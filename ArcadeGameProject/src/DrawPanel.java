@@ -54,7 +54,8 @@ public class DrawPanel extends JPanel {
 		labelPanel.add(backButton);
 		
 		JLabel label = this.label;
-		label.setText("Lives: " + this.hero.getLives());
+		
+		label.setText("<html><font color='white'>Lives: </font></html>");
 		label.setFont(new Font("Sans Serif", Font.BOLD, 30));
 		labelPanel.add(label);
 		
@@ -71,10 +72,13 @@ public class DrawPanel extends JPanel {
 				
 				// Periodically asks Java to repaint this component
 				try {
+					int stuff = 2;
 					while (true) {
+						stuff = 2;
 						while(!DrawPanel.this.keyLis.p){
 //						Thread.sleep(30);
-						DrawPanel.this.label.setText("Lives: " + DrawPanel.this.hero.getLives());
+						//DrawPanel.this.label.setText("Lives: " + DrawPanel.this.hero.getLives());
+						DrawPanel.this.label.setText("<html><font color='white'>Lives:" +DrawPanel.this.hero.getLives() +"</font></html>" );
 						if (DrawPanel.this.hero.monsters.size() == 0) {
 							DrawPanel.this.levelUp();
 						}
