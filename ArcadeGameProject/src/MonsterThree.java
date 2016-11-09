@@ -34,9 +34,11 @@ public class MonsterThree extends Monster {
 		this.previousTrue = "down";
 		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 		executor.scheduleAtFixedRate(this.bombRunnable, 0, 5, TimeUnit.SECONDS);
+		ScheduledExecutorService executor2 = Executors.newScheduledThreadPool(2);
+		executor2.scheduleAtFixedRate(this.remove, 0, 10, TimeUnit.SECONDS);
 		this.bombs = new ArrayList<>();
 		this.hero = hero;
-		this.firstTime = false;
+		this.firstTime = true;
 	}
 
 	@Override
@@ -50,16 +52,17 @@ public class MonsterThree extends Monster {
 		public void run() {
 			System.out.println("Dropped Bomb before (or was supposed to)");
 			Tile tempTile = MonsterThree.this.setCurrentTile();
-	    	MonsterThree.this.bombs.add(
-					new Bomb((tempTile.getX1()), tempTile.getY1(), 
-							MonsterThree.this.tiles, MonsterThree.this.hero, 1, true));
-	    	System.out.println("Dropped Bomb after (or was supposed to)");
-	    	if(!MonsterThree.this.firstTime){
-	    		MonsterThree.this.bombs.remove(MonsterThree.this.bombs.size()-2);
-				System.out.println("Dropped Bomb after (or was supposed to)");
-	    	}
-	    	MonsterThree.this.firstTime = true;
-	    }
+			MonsterThree.this.bombs.add(new Bomb((tempTile.getX1()), tempTile.getY1(), MonsterThree.this.tiles,
+					MonsterThree.this.hero, 1, true, MonsterThree.this));
+			System.out.println("Dropped Bomb after (or was supposed to)");
+		}
+	};
+	Runnable remove = new Runnable() {
+		@Override
+		public void run() {
+			System.out.println("Removed?");
+			MonsterThree.this.bombs.remove(MonsterThree.this.bombs.size()-1);
+		}
 	};
 
 	@Override
