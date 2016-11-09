@@ -19,7 +19,7 @@ public class GameSetupListener implements ActionListener {
 		JButton buttonPressed = (JButton) e.getSource();
 		String title = buttonPressed.getText();
 
-		if (title.equals("Start Game")) {
+		if (title.equals("Start Game")||title.equals("New Game")) {
 			this.main.gameSetup();
 			this.frame.dispose();
 		}
