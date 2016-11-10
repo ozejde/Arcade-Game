@@ -19,7 +19,6 @@ import javax.swing.JPanel;
  */
 @SuppressWarnings("serial")
 public class DrawPanel<booleanIsPaused> extends JPanel {
-	protected static boolean flag = true;
 	protected TileLayer layer;
 	protected GameKeyListener keyLis;
 	protected Hero hero;
@@ -28,11 +27,11 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 	private Main main;
 	private JFrame frame;
 	ArrayList<String> powerups;
-	private JLabel detonateLabel;
-	private JPanel powerupPanel;
-	private JLabel increaseLabel;
-	private JLabel moreLabel;
-	private JLabel addLabel;
+	protected JLabel detonateLabel;
+	protected JPanel powerupPanel;
+	protected JLabel increaseLabel;
+	protected JLabel moreLabel;
+	protected JLabel addLabel;
 	private JLabel levelLabel;
 
 	/**
@@ -110,7 +109,6 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 					boolean isPaused = false;
 					while (DrawPanel.this.hero.getLives() > 0) {
 						isPaused = DrawPanel.this.getPaused();
-//						System.out.println(isPaused);
 						while (!isPaused) {
 							isPaused = false;
 							// Thread.sleep(30);

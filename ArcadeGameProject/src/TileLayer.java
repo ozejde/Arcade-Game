@@ -17,7 +17,7 @@ public class TileLayer extends JComponent {
 	protected Hero hero;
 	private GameKeyListener keyLis;
 	protected ArrayList<Monster> m = new ArrayList<>();
-	private MonsterThree bossMonster;
+	private ArrayList<MonsterThree> bossMonster = new ArrayList<>();
 	private boolean bossExsists;
 	
 
@@ -100,7 +100,7 @@ public class TileLayer extends JComponent {
 					MonsterThree tempMonster = new MonsterThree((x * Engine.TILE_WIDTH) + 25,
 							(y * Engine.TILE_HIEGHT + 23), this.hero);
 					this.m.add(tempMonster);
-					this.bossMonster = tempMonster;
+					this.bossMonster.add(tempMonster);
 					this.bossExsists = true;
 				}
 				if (index == 0) {
@@ -192,11 +192,14 @@ public class TileLayer extends JComponent {
 			}
 		}
 		if (this.bossExsists ) {
-			if (this.bossMonster.bombs.size() != 0) {
-				for (Bomb bomb : this.bossMonster.bombs) {
-					bomb.drawCharacter(g);
+			for (MonsterThree monsterThree : this.bossMonster) {
+				if (monsterThree.bombs.size() != 0) {
+					for (Bomb bomb : monsterThree.bombs) {
+						bomb.drawCharacter(g);
+					}
 				}
 			}
+
 		}
 
 		this.hero.drawCharacter(g);
