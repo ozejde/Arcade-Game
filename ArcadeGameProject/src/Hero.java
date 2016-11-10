@@ -17,6 +17,7 @@ public class Hero extends Character {
 	protected int bombCount;
 	protected boolean isDetonatable;
 	private double speed;
+	private DrawPanel panel;
 	/**
 	 * 
 	 * Creates a Hero object
@@ -27,8 +28,9 @@ public class Hero extends Character {
 	 *            y-coordinate of middle of the top edge of Hero
 	 * 
 	 */
-	public Hero(int i, int j) {
+	public Hero(int i, int j, DrawPanel panel) {
 		super(i, j);
+		this.panel = panel;
 		this.bombs = new ArrayList<>();
 		this.setSize(this.heroSize);
 		this.lives = 3;
@@ -151,6 +153,7 @@ public class Hero extends Character {
 
 	public void subtractLife() {
 		this.lives--;
+		this.panel.resetPowerups();
 	}
 
 	public int getLives() {

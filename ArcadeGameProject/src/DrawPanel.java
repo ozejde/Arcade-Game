@@ -33,6 +33,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 	private JLabel increaseLabel;
 	private JLabel moreLabel;
 	private JLabel addLabel;
+	private JLabel levelLabel;
 
 	/**
 	 * 
@@ -47,8 +48,10 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 		this.moreLabel = new JLabel();
 		this.addLabel = new JLabel();
 		this.powerups = new ArrayList<>();
-		this.hero = new Hero(408, 350);
+		this.hero = new Hero(408, 350,this);
 		this.layer = TileLayer.FromFile("Level1.txt", this.hero);
+		this.levelLabel = new JLabel("<html><font color='white'>Level 1</font><html>");
+		this.levelLabel.setFont(new Font("Sans Serif", Font.BOLD, 30));
 		this.keyLis = new GameKeyListener(this.hero, this);
 		this.setLayout(new BorderLayout());
 		this.layer.setKeyLis(this.keyLis);
@@ -57,7 +60,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 		this.layer.createTiles();
 		this.label.setText("<html><font color='white'>Lives: " + this.hero.getLives()+"</font><html>");
 
-		JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 0));
+		JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 4));
 		labelPanel.setOpaque(false);
 		this.add(labelPanel, BorderLayout.NORTH);
 
@@ -65,6 +68,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 		backButton.addActionListener(new GameSetupListener(this.main, this.frame));
 		labelPanel.add(backButton);
 
+		labelPanel.add(this.levelLabel);
 		JLabel label = this.label;
 		label.setText("Lives: " + this.hero.getLives());
 		label.setFont(new Font("Sans Serif", Font.BOLD, 30));
@@ -74,7 +78,8 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 		instrButton.addActionListener(new GameSetupListener(this.main, this.frame));
 		labelPanel.add(instrButton);
 		
-		this.powerupPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 0));
+		
+		this.powerupPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 40));
 		this.powerupPanel.setOpaque(false);
 		this.add(this.powerupPanel, BorderLayout.PAGE_END);
 		
@@ -120,6 +125,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 							if (DrawPanel.this.hero.checkMonster()) {
 								DrawPanel.this.hero.subtractLife();
 								DrawPanel.this.hero.reset();
+								DrawPanel.this.resetPowerups();
 								for (Monster m : DrawPanel.this.layer.m) {
 									m.reset();
 								}
@@ -136,7 +142,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 										DrawPanel.this.hero.setDetonatable(true);
 										if(!DrawPanel.this.powerups.contains("Detonatable Bombs")){
 											DrawPanel.this.powerups.add("Detonatable Bombs");
-											DrawPanel.this.detonateLabel.setText("Detonatable Bombs");
+											DrawPanel.this.detonateLabel.setText("<html><font color='white'>"+"Detonatable Bombs"+"</font><html>");
 										}
 									}
 									if (t.getPowerTileType().equals("IncreaseRange")) {
@@ -145,7 +151,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 										DrawPanel.this.hero.addRange();
 										if(!DrawPanel.this.powerups.contains("Increased Range")){
 											DrawPanel.this.powerups.add("Increased Range");
-											DrawPanel.this.increaseLabel.setText("Increased Range");
+											DrawPanel.this.increaseLabel.setText("<html><font color='white'>"+"Increased Range"+"</font><html>");
 										}
 									}
 									if (t.getPowerTileType().equals("MoreBombs")) {
@@ -154,7 +160,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 										DrawPanel.this.hero.addBombCount();
 										if(!DrawPanel.this.powerups.contains("Multiple Bombs")){
 											DrawPanel.this.powerups.add("Multiple Bombs");
-											DrawPanel.this.moreLabel.setText("Multiple Bombs");
+											DrawPanel.this.moreLabel.setText("<html><font color='white'>"+"Multiple Bombs"+"</font><html>");
 										}
 									}
 									
@@ -163,7 +169,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 										t.createNewGroundTile();
 										DrawPanel.this.hero.addLife();
 										this.livesAdded++;
-										DrawPanel.this.addLabel.setText("Total Lives Added: "+this.livesAdded);
+										DrawPanel.this.addLabel.setText("<html><font color='white'>"+"Total Lives Added: "+this.livesAdded+"</font><html>");
 									}
 								}
 							}
@@ -201,22 +207,17 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 		String fileName = "";
 		if (this.level > 3) {
 			this.level = 1;
-			fileName = "Level" + this.level + ".txt";
-			this.layer.removeKeyListener(this.keyLis);
-			this.layer = TileLayer.FromFile(fileName, this.hero);
-			this.layer.setKeyLis(this.keyLis);
-			this.layer.createTiles();
-			this.layer.hero.reset();
-
 		} else {
 			this.level = this.level + 1;
-			this.layer.removeKeyListener(this.keyLis);
-			fileName = "Level" + this.level + ".txt";
-			this.layer = TileLayer.FromFile(fileName, this.hero);
-			this.layer.setKeyLis(this.keyLis);
-			this.layer.createTiles();
-			this.layer.hero.reset();
 		}
+		fileName = "Level" + this.level + ".txt";
+		this.layer.removeKeyListener(this.keyLis);
+		this.layer = TileLayer.FromFile(fileName, this.hero);
+		this.layer.setKeyLis(this.keyLis);
+		this.layer.createTiles();
+		this.layer.hero.reset();
+		this.resetPowerups();
+		this.levelLabel.setText("<html><font color='white'>Level "+this.level+"</font><html>");
 	}
 
 	/**
@@ -229,23 +230,19 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 		String fileName = "";
 		if (this.level < 2) {
 			this.level = 4;
-			this.layer.removeKeyListener(this.keyLis);
-			fileName = "Level" + this.level + ".txt";
-			this.layer = TileLayer.FromFile(fileName, this.hero);
-			this.layer.setKeyLis(this.keyLis);
-			this.layer.createTiles();
-			this.layer.hero.reset();
 		}
-
 		else {
 			this.level = this.level - 1;
-			this.layer.removeKeyListener(this.keyLis);
-			fileName = "Level" + this.level + ".txt";
-			this.layer = TileLayer.FromFile(fileName, this.hero);
-			this.layer.setKeyLis(this.keyLis);
-			this.layer.createTiles();
-			this.layer.hero.reset();
 		}
+		this.layer.removeKeyListener(this.keyLis);
+		fileName = "Level" + this.level + ".txt";
+		this.layer = TileLayer.FromFile(fileName, this.hero);
+		this.layer.setKeyLis(this.keyLis);
+		this.layer.createTiles();
+		this.layer.hero.reset();
+		System.out.println("Text Set");
+		this.resetPowerups();
+		this.levelLabel.setText("<html><font color='white'>Level "+this.level+"</font><html>");
 	}
 
 	/**
@@ -266,8 +263,13 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 		return this.keyLis.getPaused();
 	}
 	
-	private void addPowerup(String powerup){
-		this.powerupPanel.add(new JLabel(powerup));
-		this.powerupPanel.repaint();
+	public void resetPowerups(){
+		this.addLabel.setText("");
+		this.moreLabel.setText("");
+		this.detonateLabel.setText("");
+		this.increaseLabel.setText("");
+		this.powerups.clear();
 	}
+	
+	
 }
