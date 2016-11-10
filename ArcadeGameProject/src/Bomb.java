@@ -124,7 +124,7 @@ public class Bomb {
 		public void run() {
 			if (!Bomb.this.removed) {
 				Bomb.this.hero.bombs.remove(Bomb.this);
-				if(Bomb.this.bossBomb){
+				if (Bomb.this.bossBomb) {
 					Bomb.this.boss.bombs.remove(Bomb.this);
 				}
 				Bomb.this.explode();
@@ -247,7 +247,7 @@ public class Bomb {
 
 		// blows up any bombs in the blast radius of the bomb
 		this.destroyBombs();
-		
+
 		if (this.isDetonatable) {
 			this.bombTile.setPassable(true);
 			this.hero.bombs.remove(this);
@@ -298,7 +298,16 @@ public class Bomb {
 		for (Monster m : this.monsters) {
 			for (Tile tile : this.surroundingTiles) {
 				if (m.checkIfInTile(tile)) {
-					toRemove.add(m);
+//					toRemove.add(m);
+					if (m.getClass().toString().equals("MonsterThree")) {
+						((MonsterThree) m).subLives();
+						if (((MonsterThree) m).getLives() < 1) {
+							toRemove.add(m);
+						}
+					} else {
+						toRemove.add(m);
+					}
+
 				}
 			}
 		}

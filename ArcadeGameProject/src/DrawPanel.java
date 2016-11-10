@@ -107,10 +107,10 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 				// Periodically asks Java to repaint this component
 				try {
 					boolean isPaused = false;
-					while (DrawPanel.this.hero.getLives() > 0) {
+					while (true) {
 						isPaused = DrawPanel.this.getPaused();
 						while (!isPaused) {
-							isPaused = false;
+							isPaused = DrawPanel.this.keyLis.getPaused();
 							// Thread.sleep(30);
 							DrawPanel.this.label.setText("<html><font color='white'>Lives: " + DrawPanel.this.hero.getLives()+"</font><html>");
 							if (DrawPanel.this.hero.monsters.size() == 0) {
@@ -181,11 +181,9 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 								DrawPanel.this.keyLis.d = false;
 								DrawPanel.this.levelDown();
 							}
-
-							isPaused = DrawPanel.this.keyLis.getPaused();
 							DrawPanel.this.repaint();
 						}
-//						System.out.println("Is going through outer loop at all");
+						System.out.println();
 
 					}
 				} catch (InterruptedException exception) {
