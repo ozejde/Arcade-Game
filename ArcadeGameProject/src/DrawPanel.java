@@ -17,6 +17,7 @@ import javax.swing.JPanel;
  * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
  * @param <booleanIsPaused>
  */
+
 @SuppressWarnings("serial")
 public class DrawPanel<booleanIsPaused> extends JPanel {
 	protected TileLayer layer;
@@ -111,7 +112,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 						isPaused = DrawPanel.this.getPaused();
 						while (!isPaused) {
 							isPaused = DrawPanel.this.keyLis.getPaused();
-							// Thread.sleep(30);
+//							Thread.sleep(20);
 							DrawPanel.this.label.setText("<html><font color='white'>Lives: " + DrawPanel.this.hero.getLives()+"</font><html>");
 							if (DrawPanel.this.hero.monsters.size() == 0) {
 								DrawPanel.this.levelUp();

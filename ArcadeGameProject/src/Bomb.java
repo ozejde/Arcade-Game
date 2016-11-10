@@ -12,7 +12,7 @@ import java.util.TimerTask;
  *
  * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
  */
-public class Bomb {
+public class Bomb implements GetTilesFunctions{
 	protected double x;
 	protected double y;
 	protected ArrayList<Tile> tiles;
@@ -166,6 +166,36 @@ public class Bomb {
 	 * 
 	 */
 	public void explode() {
+		setSurroundingTiles();
+
+		// blows up the tiles which can be destroyed
+		for (Tile tile : this.surroundingTiles) {
+			if (tile.isDestructible()) {
+				tile.setBlownUp(true);
+				if (tile.getPowerUp()) {
+					tile.createPowerUpTile(tile.getPowerTileType());
+				} else {
+					tile.createNewGroundTile();
+				}
+			}
+		}
+		// blows up the characters in the blast radius of the bomb
+		if (!this.bossBomb) {
+			if (!this.monsters.isEmpty()) {
+				this.destroyMonsters();
+			}
+		}
+		// Kill hero
+		this.killHero();
+		// blows up any bombs in the blast radius of the bomb
+		this.destroyBombs();
+		if (this.isDetonatable) {
+			this.bombTile.setPassable(true);
+			this.hero.bombs.remove(this);
+		}
+	}
+
+	public void setSurroundingTiles() {
 		for (int i = 1; i <= this.range; i++) {
 			// x coordinate of the center of the tile above the tile containing
 			// the
@@ -223,35 +253,6 @@ public class Bomb {
 				}
 			}
 		}
-
-		// blows up the tiles which can be destroyed
-		for (Tile tile : this.surroundingTiles) {
-			if (tile.isDestructible()) {
-				tile.setBlownUp(true);
-				if (tile.getPowerUp()) {
-					tile.createPowerUpTile(tile.getPowerTileType());
-				} else {
-					tile.createNewGroundTile();
-				}
-			}
-		}
-
-		// blows up the characters in the blast radius of the bomb
-		if (!this.bossBomb) {
-			if (!this.monsters.isEmpty()) {
-				this.destroyMonsters();
-			}
-		}
-		// Kill hero
-		this.killHero();
-
-		// blows up any bombs in the blast radius of the bomb
-		this.destroyBombs();
-
-		if (this.isDetonatable) {
-			this.bombTile.setPassable(true);
-			this.hero.bombs.remove(this);
-		}
 	}
 
 	/**
@@ -298,7 +299,6 @@ public class Bomb {
 		for (Monster m : this.monsters) {
 			for (Tile tile : this.surroundingTiles) {
 				if (m.checkIfInTile(tile)) {
-//					toRemove.add(m);
 					if (m.getClass().toString().equals("MonsterThree")) {
 						((MonsterThree) m).subLives();
 						if (((MonsterThree) m).getLives() < 1) {

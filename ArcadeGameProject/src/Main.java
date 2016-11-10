@@ -38,7 +38,7 @@ public class Main {
 		Main main = new Main();
 		startButton.addActionListener(new GameSetupListener(main, frame));
 		instrButton.addActionListener(new GameSetupListener(main, frame));
-		frame.setSize(834, 688);
+		frame.setSize(1000, 688);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setResizable(false);
