@@ -7,7 +7,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-public class MonsterThree extends Monster {
+public class MonsterThree extends Monster implements GetTilesFunctions{
 	protected HashMap<String, Tile> surroundingTiles;
 	protected Tile currentTile;
 	protected boolean movingUp;
