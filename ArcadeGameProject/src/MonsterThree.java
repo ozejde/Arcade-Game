@@ -97,6 +97,7 @@ public class MonsterThree extends Monster implements GetTilesFunctions{
 		}
 	}
 
+	@Override
 	public void setSurroundingTiles() {
 		this.currentTile = this.setCurrentTile();
 		// x coordinate of the center of the tile above the tile containing
