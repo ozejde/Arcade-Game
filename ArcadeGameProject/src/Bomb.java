@@ -195,6 +195,7 @@ public class Bomb implements GetTilesFunctions{
 		}
 	}
 
+	@Override
 	public void setSurroundingTiles() {
 		for (int i = 1; i <= this.range; i++) {
 			// x coordinate of the center of the tile above the tile containing
