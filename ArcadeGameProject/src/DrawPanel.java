@@ -203,7 +203,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 	 */
 	public void levelUp() {
 		String fileName = "";
-		if (this.level > 3) {
+		if (this.level > 5) {
 			this.level = 1;
 		} else {
 			this.level = this.level + 1;
@@ -227,7 +227,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 	public void levelDown() {
 		String fileName = "";
 		if (this.level < 2) {
-			this.level = 4;
+			this.level = 6;
 		}
 		else {
 			this.level = this.level - 1;
