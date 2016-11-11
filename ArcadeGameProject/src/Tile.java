@@ -207,21 +207,60 @@ public abstract class Tile {
 		}
 	}
 
+	/**
+	 * 
+	 * Sets the powerup to true or false depending on the parameter.
+	 * 
+	 * @param boolean
+	 * 
+	 */
 	public void setPowerUp(boolean b) {
 		this.powerUp = b;
 	}
 	
+	/**
+	 * 
+	 * Returns true or false depending if there is a powerup or not.
+	 * 
+	 * @return boolean
+	 * 
+	 */
 	public boolean getPowerUp(){
 		return this.powerUp;
 	}
 	
+	/**
+	 * 
+	 * Sets the type of the powerup tile to the string given.
+	 * 
+	 * @param str
+	 * 			type of powerup
+	 * 
+	 */	
 	public void setPowerTileType(String str){
 		this.powerTileType = str;
 	}
 	
+	/**
+	 * 
+	 * Returns the type of the powerup tile.
+	 * 
+	 * @return str
+	 * 			type of powerup
+	 * 
+	 */	
 	public String getPowerTileType(){
 		return this.powerTileType;
 	}
+	
+	/**
+	 * 
+	 * Outputs true if the boss monster can pass through this tile
+	 * and false if the boss cannot.
+	 * 
+	 * @return passableToBoss
+	 * 
+	 */	
 	public boolean getPassableToBoss(){
 		return this.passableToBoss;
 	}
