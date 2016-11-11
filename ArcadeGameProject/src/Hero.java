@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * 
- * Main Hero of the game
+ * Main Hero of the BomberMan game
  *
  * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
  */
@@ -18,6 +18,7 @@ public class Hero extends Character {
 	protected boolean isDetonatable;
 	private double speed;
 	private DrawPanel panel;
+	
 	/**
 	 * 
 	 * Creates a Hero object
@@ -41,18 +42,47 @@ public class Hero extends Character {
 		this.speed = 6;
 	}
 
+	/**
+	 * 
+	 * Gets the list of all monsters currently in the game.
+	 *
+	 * @return monsters
+	 * 
+	 */
 	public ArrayList<Monster> getMonsters() {
 		return this.monsters;
 	}
 
+	/**
+	 * 
+	 * Sets the list of all monsters currently in the game.
+	 *
+	 * @param monsters
+	 * 
+	 */
 	public void setMonsters(ArrayList<Monster> monsters) {
 		this.monsters = monsters;
 	}
 
+	/**
+	 * 
+	 * Outputs true or false if the bomb is a detonatable bomb.
+	 *
+	 * @return isDetonatable
+	 * 
+	 */
 	public boolean isDetonatable() {
 		return this.isDetonatable;
 	}
 
+	/**
+	 * 
+	 * Sets whether or not the bomb is a detonatable bomb based on
+	 * the parameter given.
+	 *
+	 * @param isDetonatable
+	 * 
+	 */
 	public void setDetonatable(boolean isDetonatable) {
 		this.isDetonatable = isDetonatable;
 	}
@@ -63,6 +93,7 @@ public class Hero extends Character {
 	 *
 	 * @param g
 	 *            Graphics object used to draw Hero and Bomb
+	 *            
 	 */
 	public void drawCharacter(Graphics g) {
 		g.setColor(Color.CYAN);
@@ -75,6 +106,7 @@ public class Hero extends Character {
 	 *
 	 * @param direction
 	 *            String of direction Hero will move in
+	 *            
 	 */
 	@SuppressWarnings("incomplete-switch")
 	public void move(String direction) {
@@ -139,7 +171,15 @@ public class Hero extends Character {
 		}
 
 	}
-
+	
+	/**
+	 * 
+	 * Immediatel blows up the bomb in the given position that the hero dropped.
+	 * 
+	 * @param i
+	 * 			position of the bomb in the array of bombs to detonate.
+	 * 
+	 */
 	public void blowUpBomb(int i) {
 		if (this.bombs.get(i).isDetonatable) {
 			this.bombs.get(i).bombTile.setPassable(true);
@@ -147,18 +187,43 @@ public class Hero extends Character {
 		}
 	}
 
+	/**
+	 * 
+	 * Adds a life to the hero's life count.
+	 * 
+	 */
 	public void addLife() {
 		this.lives++;
 	}
 
+	/**
+	 * 
+	 * Removes a life from the hero's life count.
+	 * 
+	 */
 	public void subtractLife() {
 		this.lives--;
 		this.panel.resetPowerups();
 	}
 
+	/**
+	 * 
+	 * Outputs the hero's life count.
+	 * 
+	 * @return lives
+	 * 
+	 */
 	public int getLives() {
 		return this.lives;
 	}
+	
+	/**
+	 * 
+	 * Sets the hero's life count.
+	 * 
+	 * @param lives
+	 * 
+	 */
 	public void setLives(int lives){
 		this.lives = lives;
 	}
@@ -169,12 +234,21 @@ public class Hero extends Character {
 	 *
 	 * @param tiles
 	 *            Arraylist of Tiles in the game
+	 *            
 	 */
 	@Override
 	public void setTiles(ArrayList<Tile> tiles) {
 		this.tiles = tiles;
 	}
 
+	/**
+	 * 
+	 * Checks if the hero has come in contact with a monster.
+	 * 
+	 * @return true or false depending on if the hero has
+	 * 	come in contact with a monster.
+	 * 
+	 */
 	protected boolean checkMonster() {
 		for (Monster m : this.monsters) {
 			if (this.x1 >= m.getX1() && this.x1 <= m.getX2() && (this.y1 >= m.getY1() && this.y1 <= m.getY2())) {
@@ -192,13 +266,31 @@ public class Hero extends Character {
 		return false;
 	}
 
+	/**
+	 * 
+	 * Increases the range of the blast radius of the bomb
+	 * by one.
+	 * 
+	 */
 	public void addRange() {
 		this.range++;
 	}
 
+	/**
+	 * 
+	 * Increases the number of bombs able to be dropped at one
+	 * time by one.
+	 * 
+	 */
 	public void addBombCount() {
 		this.bombCount++;
 	}
+	
+	/**
+	 * 
+	 * Resets the hero back to its originial/initial position.
+	 * 
+	 */
 	@Override
 	public void reset() {
 		setX1(this.startX1);

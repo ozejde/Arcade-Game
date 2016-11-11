@@ -7,6 +7,13 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 
+ * Class for MonsterThree objects, or the boss monster.
+ *
+ * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
+ * 
+ */
 public class MonsterThree extends Monster implements GetTilesFunctions{
 	protected HashMap<String, Tile> surroundingTiles;
 	protected Tile currentTile;
@@ -22,6 +29,17 @@ public class MonsterThree extends Monster implements GetTilesFunctions{
 	protected Hero hero;
 	protected boolean firstTime;
 
+	/**
+	 * 
+	 * Constructs a new MonsterThree object.
+	 * 
+	 * @param j
+	 * 
+	 * @param i
+	 * 
+	 * @param hero
+	 *
+	 */
 	public MonsterThree(int i, int j, Hero hero) {
 		super(i, j);
 		this.setSize(34);
@@ -39,6 +57,13 @@ public class MonsterThree extends Monster implements GetTilesFunctions{
 		this.firstTime = true;
 	}
 
+	/**
+	 * 
+	 * Draws the MonsterThree object.
+	 * 
+	 * @param g
+	 *
+	 */
 	@Override
 	public void drawMonster(Graphics g) {
 		g.setColor(Color.BLACK);
@@ -56,6 +81,11 @@ public class MonsterThree extends Monster implements GetTilesFunctions{
 		}
 	};
 
+	/**
+	 * 
+	 * Moves the MonsterThree object.
+	 *
+	 */
 	@Override
 	public void monsterMove() {
 		if (this.movingUp) {
@@ -97,21 +127,27 @@ public class MonsterThree extends Monster implements GetTilesFunctions{
 		}
 	}
 
+	/**
+	 * 
+	 * Finds and sets the tiles surrounding MonsterThree.
+	 *
+	 */
 	@Override
 	public void setSurroundingTiles() {
 		this.currentTile = this.setCurrentTile();
+		
 		// x coordinate of the center of the tile above the tile containing
-		// the
-		// bomb
+		// the bomb
 		double ux = this.currentTile.getX1() + 24;
+		
 		// y coordinate of the center of the tile above the tile containing
-		// the
-		// bomb
+		// the bomb
 		double uy = this.currentTile.getY1() - 24;
 
 		// x coordinate of the center of the tile to the left the tile
 		// containing the bomb
 		double lx = this.currentTile.getX1() - 24;
+		
 		// y coordinate of the center of the tile to the left the tile
 		// containing the bomb
 		double ly = this.currentTile.getY1() + 24;
@@ -119,17 +155,17 @@ public class MonsterThree extends Monster implements GetTilesFunctions{
 		// x coordinate of the center of the tile to the right the tile
 		// containing the bomb
 		double rx = this.currentTile.getX2() + 24;
+		
 		// y coordinate of the center of the tile to the right the tile
 		// containing the bomb
 		double ry = this.currentTile.getY2() - 24;
 
 		// x coordinate of the center of the tile below the tile containing
-		// the
-		// bomb
+		// the bomb
 		double dx = this.currentTile.getX1() + 24;
+		 
 		// y coordinate of the center of the tile below the tile containing
-		// the
-		// bomb
+		// the bomb
 		double dy = this.currentTile.getY2() + 24;
 
 		Tile tileUp = null;
@@ -138,8 +174,7 @@ public class MonsterThree extends Monster implements GetTilesFunctions{
 		Tile tileDown = null;
 
 		// finds the tiles above, below, to the right, and to the left of
-		// the
-		// tile containing the bomb
+		// the tile containing the bomb
 		for (Tile tile : this.tiles) {
 			if (tile.getX1() <= ux && tile.getX2() >= ux && tile.getY1() <= uy && tile.getY2() >= uy) {
 				tileUp = tile;
@@ -157,6 +192,11 @@ public class MonsterThree extends Monster implements GetTilesFunctions{
 		}
 	}
 
+	/**
+	 * 
+	 * Finds and sets the tile which the MonsterThree object is in.
+	 *
+	 */
 	public Tile setCurrentTile() {
 		for (Tile tile : this.tiles) {
 			if (this.checkIfInTile(tile)) {
@@ -166,6 +206,11 @@ public class MonsterThree extends Monster implements GetTilesFunctions{
 		return null;
 	}
 
+	/**
+	 * 
+	 * Sets a new direction for the MonsterThree object to move in.
+	 *
+	 */
 	public void setNewDirection() {
 		this.isMovingLeft = false;
 		this.isMovingRight = false;
@@ -221,10 +266,22 @@ public class MonsterThree extends Monster implements GetTilesFunctions{
 		}
 	}
 
+	/**
+	 * 
+	 * Gets the number of lives of the MonsterThree object.
+	 * 
+	 * @return lives
+	 *
+	 */
 	public int getLives() {
 		return this.lives;
 	}
 
+	/**
+	 * 
+	 * Removes a life from the MonsterThree object.
+	 *
+	 */
 	public void subLives() {
 		this.lives--;
 	}

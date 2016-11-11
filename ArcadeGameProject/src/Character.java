@@ -269,7 +269,7 @@ abstract class Character {
 	 * Sets the size of the Character.
 	 *
 	 * @param size
-	 * s
+	 * 
 	 */
 	public void setSize(int size) {
 		this.size = size;
