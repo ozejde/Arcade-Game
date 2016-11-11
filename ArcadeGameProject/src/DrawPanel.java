@@ -84,7 +84,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 		labelPanel.add(instrButton);
 		
 		
-		this.powerupPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 40));
+		this.powerupPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 40));
 		this.powerupPanel.setOpaque(false);
 		this.add(this.powerupPanel, BorderLayout.PAGE_END);
 		
