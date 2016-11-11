@@ -11,6 +11,7 @@ import java.util.TimerTask;
  * A black, circular graphic that can destroy BrickWall, dropped when B pressed
  *
  * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
+ * 
  */
 public class Bomb implements GetTilesFunctions{
 	protected double x;
@@ -30,6 +31,23 @@ public class Bomb implements GetTilesFunctions{
 	protected boolean bossBomb = false;
 	protected MonsterThree boss;
 
+	/**
+	 * 
+	 * Creates a new Detonatable Bomb.
+	 *
+	 * @param d
+	 *            x-coordinate
+	 * @param e
+	 *            y-coordinate
+	 * @param tiles
+	 * 
+	 * @param hero
+	 * 
+	 * @param monsters
+	 * 
+	 * @param range
+	 * 
+	 */
 	public Bomb(double d, double e, ArrayList<Tile> tiles, Hero hero, ArrayList<Monster> monsters, double range,
 			boolean isDetonatable) {
 		this.x = d;
@@ -49,7 +67,7 @@ public class Bomb implements GetTilesFunctions{
 
 	/**
 	 * 
-	 * Sets the coordinates of Bomb
+	 * Creates a new Bomb.
 	 *
 	 * @param d
 	 *            x-coordinate
@@ -60,6 +78,8 @@ public class Bomb implements GetTilesFunctions{
 	 * @param hero
 	 * 
 	 * @param monsters
+	 * 
+	 * @param range
 	 * 
 	 */
 	public Bomb(double d, double e, ArrayList<Tile> tiles, Hero hero, ArrayList<Monster> monsters, double range) {
@@ -79,6 +99,23 @@ public class Bomb implements GetTilesFunctions{
 		setBombTile();
 	}
 
+	/**
+	 * 
+	 * Creates a new Boss Bomb, or a bomb dropped by the boss monster.
+	 *
+	 * @param d
+	 *            x-coordinate
+	 * @param e
+	 *            y-coordinate
+	 * @param tiles
+	 * 
+	 * @param hero
+	 * 
+	 * @param monsters
+	 * 
+	 * @param range
+	 * 
+	 */
 	public Bomb(int d, int e, ArrayList<Tile> tiles, Hero hero, int range, boolean bossBomb, MonsterThree boss) {
 		this.x = d;
 		this.y = e;
@@ -103,6 +140,7 @@ public class Bomb implements GetTilesFunctions{
 	 * placed a bomb in for up to two seconds.
 	 *
 	 * @author youngqom. Created Nov 1, 2016.
+	 * 
 	 */
 	class LeaveTimer extends TimerTask {
 		@Override
@@ -117,6 +155,7 @@ public class Bomb implements GetTilesFunctions{
 	 * amount of time has passed.
 	 *
 	 * @author youngqom. Created Nov 1, 2016.
+	 * 
 	 */
 	class Task extends TimerTask {
 
@@ -136,7 +175,7 @@ public class Bomb implements GetTilesFunctions{
 
 	/**
 	 * 
-	 * Draws image of Bomb
+	 * Draws image of Bomb.
 	 * 
 	 * @param graphics
 	 *            Graphics that Bomb is painted onto
@@ -179,14 +218,17 @@ public class Bomb implements GetTilesFunctions{
 				}
 			}
 		}
+		
 		// blows up the characters in the blast radius of the bomb
 		if (!this.bossBomb) {
 			if (!this.monsters.isEmpty()) {
 				this.destroyMonsters();
 			}
 		}
-		// Kill hero
+		
+		// kills the hero if it is in the blast radius of bomb
 		this.killHero();
+		
 		// blows up any bombs in the blast radius of the bomb
 		this.destroyBombs();
 		if (this.isDetonatable) {
@@ -195,21 +237,29 @@ public class Bomb implements GetTilesFunctions{
 		}
 	}
 
+	/**
+	 * 
+	 * Sets up the tiles surrounding the bomb, or the tiles which will be affected
+	 * or destroyed by the bomb blast.
+	 *
+	 * 
+	 */
 	@Override
 	public void setSurroundingTiles() {
 		for (int i = 1; i <= this.range; i++) {
+			
 			// x coordinate of the center of the tile above the tile containing
-			// the
-			// bomb
+			// the bomb
 			double ux = this.bombTile.getX1() + 24;
+			
 			// y coordinate of the center of the tile above the tile containing
-			// the
-			// bomb
+			// the bomb
 			double uy = this.bombTile.getY1() - 24 * i;
 
 			// x coordinate of the center of the tile to the left the tile
 			// containing the bomb
 			double lx = this.bombTile.getX1() - 24 * i;
+			
 			// y coordinate of the center of the tile to the left the tile
 			// containing the bomb
 			double ly = this.bombTile.getY1() + 24;
@@ -217,17 +267,17 @@ public class Bomb implements GetTilesFunctions{
 			// x coordinate of the center of the tile to the right the tile
 			// containing the bomb
 			double rx = this.bombTile.getX2() + 24 * i;
+			
 			// y coordinate of the center of the tile to the right the tile
 			// containing the bomb
 			double ry = this.bombTile.getY2() - 24;
 
 			// x coordinate of the center of the tile below the tile containing
-			// the
-			// bomb
+			// the bomb
 			double dx = this.bombTile.getX1() + 24;
+			
 			// y coordinate of the center of the tile below the tile containing
-			// the
-			// bomb
+			// the bomb
 			double dy = this.bombTile.getY2() + 24 * i;
 
 			Tile tileUp = null;
@@ -236,8 +286,7 @@ public class Bomb implements GetTilesFunctions{
 			Tile tileDown = null;
 
 			// finds the tiles above, below, to the right, and to the left of
-			// the
-			// tile containing the bomb
+			// the tile containing the bomb
 			for (Tile tile : this.tiles) {
 				if (tile.getX1() <= ux && tile.getX2() >= ux && tile.getY1() <= uy && tile.getY2() >= uy) {
 					tileUp = tile;
@@ -315,6 +364,13 @@ public class Bomb implements GetTilesFunctions{
 		this.monsters.removeAll(toRemove);
 	}
 
+	/**
+	 * 
+	 * Checks to see if the hero is within the blast radius of the bomb
+	 * and removes a life from the hero if it is within the blast radius
+	 * 
+	 *
+	 */
 	public void killHero() {
 		for (Tile tile : this.surroundingTiles) {
 			if (this.hero.checkIfInTile(tile)) {
@@ -329,7 +385,6 @@ public class Bomb implements GetTilesFunctions{
 	 * Finds and sets the bombTile which is the tile in which the bomb is
 	 * located.
 	 * 
-	 * @return
 	 *
 	 */
 	public void setBombTile() {

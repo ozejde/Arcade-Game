@@ -1,8 +1,23 @@
 import java.awt.Graphics;
 
+/**
+ * 
+ * Abstract class for Monster objects
+ *
+ * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
+ * 
+ */
 public abstract class Monster extends Character {
 
-
+	/**
+	 * 
+	 * Super constructor which all types of Monsters use.
+	 * 
+	 * @param j
+	 * 
+	 * @param i
+	 *
+	 */
 	public Monster(int i, int j) {
 		super(i, j);
 		this.setdestructible(true);
@@ -10,14 +25,12 @@ public abstract class Monster extends Character {
 
 
 	public void drawMonster(Graphics g) {
-		// TODO Auto-generated method stub.
-
+		//Method to be overridden in subclasses
 	}
 
 
 	public void monsterMove() {
-		// TODO Auto-generated method stub.
-		
+		//Method to be overridden in subclasses
 	}
 
 }
