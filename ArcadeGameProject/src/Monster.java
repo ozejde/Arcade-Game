@@ -24,31 +24,43 @@ public abstract class Monster extends Character {
 		this.setdestructible(true);
 		this.isBoss = false;
 	}
-	
+
 	/**
 	 * 
-	 * A method to draw a Monster to be overridden in subclasses 
-	 * according to the type of monster.
+	 * A method to draw a Monster to be overridden in subclasses according to
+	 * the type of monster.
 	 * 
 	 */
 	public void drawMonster(Graphics g) {
-		//Method to be overridden in subclasses
+		// Method to be overridden in subclasses
 	}
 
 	/**
 	 * 
-	 * A method to move a Monster to be overridden in subclasses 
-	 * according to the type of movement of the monster.
+	 * A method to move a Monster to be overridden in subclasses according to
+	 * the type of movement of the monster.
 	 * 
 	 */
 	public void monsterMove() {
-		//Method to be overridden in subclasses
+		// Method to be overridden in subclasses
 	}
-	
-	public void setIsBoss(boolean boss){
+
+	/**
+	 * 
+	 * Sets isBoss variable
+	 *
+	 * @param boss
+	 */
+	public void setIsBoss(boolean boss) {
 		this.isBoss = boss;
 	}
 
+	/**
+	 * 
+	 * Returns isBoss variable
+	 *
+	 * @return
+	 */
 	public boolean getIsBoss() {
 		return this.isBoss;
 	}
