@@ -5,6 +5,7 @@ import java.util.ArrayList;
  * Abstract class for Character objects
  *
  * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
+ * 
  */
 abstract class Character {
 	protected int size = 36;
@@ -17,9 +18,10 @@ abstract class Character {
 
 	/**
 	 * 
-	 * Constructs a Character class
+	 * Constructs a Character object.
 	 * 
 	 * @param j
+	 * 
 	 * @param i
 	 *
 	 */
@@ -37,15 +39,20 @@ abstract class Character {
 
 	/**
 	 * 
-	 * Returns whether Character is destructible or not
+	 * Returns whether Character is destructible or not.
 	 *
-	 * @return destructible field
+	 * @return boolean destructible field
+	 * 
 	 */
-
 	public boolean isDestructible() {
 		return this.destructible;
 	}
 
+	/**
+	 * 
+	 * Resets the character to its initial/starting position.
+	 * 
+	 */
 	public void reset() {
 		setX1(this.startX1);
 		setX2(this.startX2);
@@ -55,10 +62,11 @@ abstract class Character {
 
 	/**
 	 * 
-	 * Sets destructible field to given boolean
+	 * Sets destructible field to given boolean.
 	 *
 	 * @param destructible
 	 *            Boolean to change destructible to
+	 *            
 	 */
 	public void setdestructible(boolean destructible) {
 		this.destructible = destructible;
@@ -66,9 +74,10 @@ abstract class Character {
 
 	/**
 	 * 
-	 * Returns whether Character is passable or not
+	 * Returns whether Character is passable or not.
 	 *
 	 * @return passable field
+	 * 
 	 */
 	public boolean isPassable() {
 		return this.passable;
@@ -76,10 +85,11 @@ abstract class Character {
 
 	/**
 	 * 
-	 * Sets passable field to given boolean
+	 * Sets passable field to given boolean.
 	 *
 	 * @param passable
 	 *            Boolean to change passable to
+	 *            
 	 */
 	public void setPassable(boolean passable) {
 		this.passable = passable;
@@ -87,9 +97,10 @@ abstract class Character {
 
 	/**
 	 * 
-	 * Checks if moving is possible
+	 * Checks if moving is possible.
 	 *
 	 * @return Boolean of if move is possible
+	 * 
 	 */
 	protected boolean checkMove() {
 		for (Tile tile : this.tiles) {
@@ -125,7 +136,9 @@ abstract class Character {
 	 * Checks if a character is currently in a passed in tile.
 	 *
 	 * @param tile
+	 * 
 	 * @return true or false
+	 * 
 	 */
 	public boolean checkIfInTile(Tile tile) {
 		if (this.x1 + this.offset >= tile.getX1() && this.x1 + this.offset <= tile.getX2()
@@ -149,10 +162,11 @@ abstract class Character {
 
 	/**
 	 * 
-	 * Gets list of Tiles
+	 * Sets the list of Tiles.
 	 *
 	 * @param tiles
 	 *            Arraylist of Tiles in the game
+	 *            
 	 */
 	public void setTiles(ArrayList<Tile> tiles) {
 		this.tiles = tiles;
@@ -160,9 +174,10 @@ abstract class Character {
 
 	/**
 	 * 
-	 * Outputs x-coordinate at upper left-hand corner
+	 * Outputs x-coordinate at upper left-hand corner.
 	 *
 	 * @return x-coordinate at upper left-hand corner
+	 * 
 	 */
 	public double getX1() {
 		return this.x1;
@@ -170,10 +185,11 @@ abstract class Character {
 
 	/**
 	 * 
-	 * Sets x-coordinate at upper left-hand corner
+	 * Sets x-coordinate at upper left-hand corner.
 	 *
 	 * @param startX12
 	 *            new x-coordinate at upper left-hand corner
+	 *            
 	 */
 	public void setX1(double startX12) {
 		this.x1 = startX12;
@@ -181,9 +197,10 @@ abstract class Character {
 
 	/**
 	 * 
-	 * Outputs x-coordinate at lower right-hand corner
+	 * Outputs x-coordinate at lower right-hand corner.
 	 *
 	 * @return x-coordinate at lower right-hand corner
+	 * 
 	 */
 	public double getX2() {
 		return this.x2;
@@ -191,10 +208,11 @@ abstract class Character {
 
 	/**
 	 * 
-	 * sets x-coordinate at lower right-hand corner
+	 * Sets x-coordinate at lower right-hand corner.
 	 *
 	 * @param startX22
 	 *            new x-coordinate at lower right-hand corner
+	 *            
 	 */
 	public void setX2(double startX22) {
 		this.x2 = startX22;
@@ -202,9 +220,10 @@ abstract class Character {
 
 	/**
 	 * 
-	 * Outputs y-coordinate at upper left-hand corner
+	 * Outputs y-coordinate at upper left-hand corner.
 	 *
 	 * @return y-coordinate at upper left-hand corner
+	 * 
 	 */
 	public double getY1() {
 		return this.y1;
@@ -212,10 +231,11 @@ abstract class Character {
 
 	/**
 	 * 
-	 * Sets y-coordinate at upper left-hand corner
+	 * Sets y-coordinate at upper left-hand corner.
 	 *
 	 * @param x1
 	 *            new y-coordinate at upper left-hand corner
+	 *            
 	 */
 	public void setY1(double startY12) {
 		this.y1 = startY12;
@@ -223,9 +243,10 @@ abstract class Character {
 
 	/**
 	 * 
-	 * Outputs y-coordinate at lower right-hand corner
+	 * Outputs y-coordinate at lower right-hand corner.
 	 *
 	 * @return y-coordinate at lower right-hand corner
+	 * 
 	 */
 	public double getY2() {
 		return this.y2;
@@ -233,10 +254,11 @@ abstract class Character {
 
 	/**
 	 * 
-	 * sets y-coordinate at lower right-hand corner
+	 * sets y-coordinate at lower right-hand corner.
 	 *
 	 * @param x2
 	 *            new y-coordinate at lower right-hand corner
+	 *            
 	 */
 	public void setY2(double startY22) {
 		this.y2 = startY22;
@@ -244,9 +266,10 @@ abstract class Character {
 
 	/**
 	 * 
-	 * Sets the size of the Character
+	 * Sets the size of the Character.
 	 *
 	 * @param size
+	 * s
 	 */
 	public void setSize(int size) {
 		this.size = size;
@@ -254,9 +277,10 @@ abstract class Character {
 
 	/**
 	 * 
-	 * Sets the offSet used in checkMove() method
+	 * Sets the offSet used in checkMove() method.
 	 *
 	 * @param d
+	 * 
 	 */
 	public void setOffset(double d) {
 		this.offset = d;

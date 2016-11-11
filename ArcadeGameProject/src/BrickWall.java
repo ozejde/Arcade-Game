@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
  * Wall object that can be removed by Bomb
  *
  * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
+ * 
  */
 public class BrickWall extends Tile {
 
@@ -26,6 +27,7 @@ public class BrickWall extends Tile {
 	 *            x-coordinate of index of BrickWall image
 	 * @param y
 	 *            y-coordinate of index of BrickWall image
+	 *            
 	 */
 	public BrickWall(int x1, int y1, int x2, int y2, BufferedImage tileSheet, int x, int y) {
 		super(x1, y1, x2, y2, tileSheet, x, y);
