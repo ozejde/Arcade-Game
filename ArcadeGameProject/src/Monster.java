@@ -22,13 +22,23 @@ public abstract class Monster extends Character {
 		super(i, j);
 		this.setdestructible(true);
 	}
-
-
+	
+	/**
+	 * 
+	 * A method to draw a Monster to be overridden in subclasses 
+	 * according to the type of monster.
+	 * 
+	 */
 	public void drawMonster(Graphics g) {
 		//Method to be overridden in subclasses
 	}
 
-
+	/**
+	 * 
+	 * A method to move a Monster to be overridden in subclasses 
+	 * according to the type of movement of the monster.
+	 * 
+	 */
 	public void monsterMove() {
 		//Method to be overridden in subclasses
 	}

@@ -10,20 +10,53 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * The main class for your arcade game.
  * 
- * You can design your game any way you like, but make the game start by running
- * main here.
+ * The main class of BomberMan arcade game that runs the game.
  * 
- * Also don't forget to write javadocs for your classes and functions!
- * 
- * @author Buffalo
+ * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
  *
  */
-
 public class Main {
 
+	/**
+	 * 
+	 * The main method of BomberMan arcade game that sets up the
+	 * start panel/menu of the game.
+	 * 
+	 * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
+	 *
+	 */
 	public static void main(String[] args) {
+		Main main = new Main();
+		main.startSetup();
+		//JButton startButton = new JButton("Start Game");
+		//JButton instrButton = new JButton("Instructions");
+
+		//JPanel p = new JPanel();
+		//p.add(startButton);
+		//p.add(instrButton);
+
+		//JFrame frame = new JFrame("Start Game");
+		//frame.add(p, BorderLayout.SOUTH);
+		//frame.add(new JLabel(new ImageIcon("titlepic.png")), BorderLayout.NORTH);
+
+		//Main main = new Main();
+		//startButton.addActionListener(new GameSetupListener(main, frame));
+		//instrButton.addActionListener(new GameSetupListener(main, frame));
+		//frame.setSize(1000, 688);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame.setVisible(true);
+		//frame.setResizable(false);
+	}
+
+	/**
+	 * 
+	 * Sets up the start menu for the BomberMan game.
+	 * 
+	 * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
+	 *
+	 */
+	public void startSetup() {
 		JButton startButton = new JButton("Start Game");
 		JButton instrButton = new JButton("Instructions");
 
@@ -44,29 +77,14 @@ public class Main {
 		frame.setResizable(false);
 
 	}
-
-	public void startSetup() {
-		JButton startButton = new JButton("Start Game");
-		JButton instrButton = new JButton("Instructions");
-
-		JPanel p = new JPanel();
-		p.add(startButton);
-		p.add(instrButton);
-
-		JFrame frame = new JFrame("Start Game");
-		frame.add(p, BorderLayout.SOUTH);
-		frame.add(new JLabel(new ImageIcon("titlepic.png")), BorderLayout.NORTH);
-
-		Main main = new Main();
-		startButton.addActionListener(new GameSetupListener(main, frame));
-		instrButton.addActionListener(new GameSetupListener(main, frame));
-		frame.setSize(834, 688);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-		frame.setResizable(false);
-
-	}
-
+	
+	/**
+	 * 
+	 * Sets up the instruction menu for the BomberMan game.
+	 * 
+	 * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
+	 *
+	 */
 	public void instructSetup() {
 		JFrame frame = new JFrame();
 		frame.setTitle("Bomber Man Instructions");
@@ -120,6 +138,13 @@ public class Main {
 		frame.setResizable(false);
 	}
 
+	/**
+	 * 
+	 * Sets up the actual BomberMan game starting at level one.
+	 * 
+	 * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
+	 *
+	 */
 	public void gameSetup() {
 		JFrame frame = new JFrame();
 		DrawPanel panel = new DrawPanel(this, frame);
@@ -147,5 +172,4 @@ public class Main {
 		frame.setVisible(true);
 		frame.setResizable(false);
 	}
-
 }
