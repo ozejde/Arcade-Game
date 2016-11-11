@@ -12,8 +12,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class BouncingMonster extends Monster {
 	private double velocityX;
 	private double velocityY;
-	private double max = .1;
-	private double min = -.1;
+	private double max = 2;
+	private double min = -2;
+//	private double max = .1;
+//	private double min = -.1;
 
 	/**
 	 * 
