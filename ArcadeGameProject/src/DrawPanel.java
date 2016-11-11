@@ -15,9 +15,10 @@ import javax.swing.JPanel;
  * Creates and draws the game objects
  *
  * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
+ * 
  * @param <booleanIsPaused>
+ * 
  */
-
 @SuppressWarnings("serial")
 public class DrawPanel<booleanIsPaused> extends JPanel {
 	protected TileLayer layer;
@@ -38,6 +39,10 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 	/**
 	 * 
 	 * Creates a DrawPanel with repaint timer
+	 * 
+	 * @param main
+	 * 
+	 * @param frame
 	 *
 	 */
 	public DrawPanel(Main main, JFrame frame) {
@@ -93,10 +98,6 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 		this.powerupPanel.add(this.increaseLabel);
 		this.powerupPanel.add(this.addLabel);
 		
-		
-		
-		
-
 		this.setFocusable(true);
 
 		new Thread(new Runnable() {
@@ -173,7 +174,6 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 								}
 							}
 							
-							
 							if (DrawPanel.this.keyLis.u) {
 								DrawPanel.this.keyLis.u = false;
 								DrawPanel.this.levelUp();
@@ -197,7 +197,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 	/**
 	 * 
 	 * Switches to a higher level, or loops back to first level if last level is
-	 * reached
+	 * reached.
 	 *
 	 */
 	public void levelUp() {
@@ -220,7 +220,7 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 	/**
 	 * 
 	 * Switches to a lower level, or loops back to last level if first level is
-	 * reached
+	 * reached.
 	 *
 	 */
 	public void levelDown() {
@@ -243,7 +243,9 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 	}
 
 	/**
-	 * Paints the objects onto the screen
+	 * 
+	 * Paints the objects onto the screen.
+	 * 
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
@@ -252,14 +254,31 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 
 	}
 
+	/**
+	 * 
+	 * Sets the focusable to true.
+	 * 
+	 */
 	public void setFocusable() {
 		this.setFocusable(true);
 	}
 
+	/**
+	 * 
+	 * Returns true if the game is paused and false if it is not.
+	 * 
+	 * @return boolean
+	 * 
+	 */
 	public boolean getPaused() {
 		return this.keyLis.getPaused();
 	}
 	
+	/**
+	 * 
+	 * Resets the powerup display back to the hero not having any powerups.
+	 * 
+	 */
 	public void resetPowerups(){
 		this.addLabel.setText("");
 		this.moreLabel.setText("");
@@ -267,6 +286,4 @@ public class DrawPanel<booleanIsPaused> extends JPanel {
 		this.increaseLabel.setText("");
 		this.powerups.clear();
 	}
-	
-	
 }

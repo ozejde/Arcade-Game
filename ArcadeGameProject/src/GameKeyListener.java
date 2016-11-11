@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
  * KeyListener subclass that handles keyboard input
  *
  * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
+ * 
  */
 public class GameKeyListener implements KeyListener {
 
@@ -30,6 +31,7 @@ public class GameKeyListener implements KeyListener {
 	 *            Hero of the game
 	 * @param drawPanel
 	 *            DrawPanel of the game
+	 *            
 	 */
 	public GameKeyListener(Hero hero, DrawPanel drawPanel) {
 		this.hero = hero;
@@ -41,6 +43,7 @@ public class GameKeyListener implements KeyListener {
 	 * Outputs whether U is pressed or not
 	 *
 	 * @return Boolean if U is pressed
+	 * 
 	 */
 	public boolean getU() {
 		return u;
@@ -51,6 +54,7 @@ public class GameKeyListener implements KeyListener {
 	 * Outputs whether D is pressed or not
 	 *
 	 * @return Boolean if D is pressed
+	 * 
 	 */
 	public boolean getD() {
 		return d;
@@ -116,7 +120,9 @@ public class GameKeyListener implements KeyListener {
 	}
 
 	/**
-	 * Changes key Boolean to false to represent the button not being pressed
+	 * 
+	 * Changes key Boolean to false to represent the button not being pressed.
+	 * 
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
@@ -124,12 +130,20 @@ public class GameKeyListener implements KeyListener {
 		update();
 	}
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-	}
-
+	/**
+	 * 
+	 * Returns true or false depending on if the game is paused or not.
+	 * 
+	 * @return p
+	 * 			true if the game is paused or false if it is not
+	 * 
+	 */
 	public boolean getPaused() {
 		return this.p;
 	}
-
+	
+	@Override
+	public void keyTyped(KeyEvent e) {
+		//
+	}
 }
