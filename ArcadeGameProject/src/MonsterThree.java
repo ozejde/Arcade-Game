@@ -24,10 +24,10 @@ public class MonsterThree extends Monster implements GetTilesFunctions{
 	protected int backup = 3;
 	protected double speed = .15;
 	private String previousTrue;
-	private int lives = 2;
 	protected ArrayList<Bomb> bombs;
 	protected Hero hero;
 	protected boolean firstTime;
+	protected ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
 	/**
 	 * 
@@ -50,11 +50,11 @@ public class MonsterThree extends Monster implements GetTilesFunctions{
 		this.movingUp = false;
 		this.movingDown = true;
 		this.previousTrue = "down";
-		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-		executor.scheduleAtFixedRate(this.bombRunnable, 0, 5, TimeUnit.SECONDS);
+		this.executor.scheduleAtFixedRate(this.bombRunnable, 0, 5, TimeUnit.SECONDS);
 		this.bombs = new ArrayList<>();
 		this.hero = hero;
 		this.firstTime = true;
+		this.setIsBoss(true);
 	}
 
 	/**
@@ -73,11 +73,10 @@ public class MonsterThree extends Monster implements GetTilesFunctions{
 	Runnable bombRunnable = new Runnable() {
 		@Override
 		public void run() {
-			System.out.println("Dropped Bomb before (or was supposed to)");
+			System.out.println("Dropped Bomb");
 			Tile tempTile = MonsterThree.this.setCurrentTile();
 			MonsterThree.this.bombs.add(new Bomb((tempTile.getX1()), tempTile.getY1(), MonsterThree.this.tiles,
 					MonsterThree.this.hero, 1, true, MonsterThree.this));
-			System.out.println("Dropped Bomb after (or was supposed to)");
 		}
 	};
 
@@ -266,24 +265,7 @@ public class MonsterThree extends Monster implements GetTilesFunctions{
 		}
 	}
 
-	/**
-	 * 
-	 * Gets the number of lives of the MonsterThree object.
-	 * 
-	 * @return lives
-	 *
-	 */
-	public int getLives() {
-		return this.lives;
-	}
 
-	/**
-	 * 
-	 * Removes a life from the MonsterThree object.
-	 *
-	 */
-	public void subLives() {
-		this.lives--;
-	}
+
 
 }

@@ -99,7 +99,6 @@ public class GameKeyListener implements KeyListener {
 			this.u = true;
 			break;
 		case KeyEvent.VK_P:
-//			System.out.println("Current P value: " + this.p);
 			if (this.p) {
 				this.p = false;
 			} else {
