@@ -8,6 +8,7 @@ import java.awt.Graphics;
  * 
  */
 public abstract class Monster extends Character {
+	private boolean isBoss;
 
 	/**
 	 * 
@@ -21,6 +22,7 @@ public abstract class Monster extends Character {
 	public Monster(int i, int j) {
 		super(i, j);
 		this.setdestructible(true);
+		this.isBoss = false;
 	}
 	
 	/**
@@ -41,6 +43,14 @@ public abstract class Monster extends Character {
 	 */
 	public void monsterMove() {
 		//Method to be overridden in subclasses
+	}
+	
+	public void setIsBoss(boolean boss){
+		this.isBoss = boss;
+	}
+
+	public boolean getIsBoss() {
+		return this.isBoss;
 	}
 
 }

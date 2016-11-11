@@ -13,7 +13,7 @@ import java.util.TimerTask;
  * @author ejdeoz, youngqom, petersmt. Created Oct 27, 2016.
  * 
  */
-public class Bomb implements GetTilesFunctions{
+public class Bomb implements GetTilesFunctions {
 	protected double x;
 	protected double y;
 	protected ArrayList<Tile> tiles;
@@ -349,11 +349,9 @@ public class Bomb implements GetTilesFunctions{
 		for (Monster m : this.monsters) {
 			for (Tile tile : this.surroundingTiles) {
 				if (m.checkIfInTile(tile)) {
-					if (m.getClass().toString().equals("MonsterThree")) {
-						((MonsterThree) m).subLives();
-						if (((MonsterThree) m).getLives() < 1) {
-							toRemove.add(m);
-						}
+					if (m.getIsBoss()) {
+						toRemove.add(m);
+						((MonsterThree) m).executor.shutdown();
 					} else {
 						toRemove.add(m);
 					}
@@ -362,6 +360,7 @@ public class Bomb implements GetTilesFunctions{
 			}
 		}
 		this.monsters.removeAll(toRemove);
+
 	}
 
 	/**
