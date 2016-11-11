@@ -21,8 +21,10 @@ public class MonsterThree extends Monster implements GetTilesFunctions{
 	protected boolean movingDown;
 	protected boolean isMovingRight;
 	protected boolean isMovingLeft;
-	protected int backup = 3;
-	protected double speed = .15;
+//	protected int backup = 3;
+//	protected double speed = .15;
+	protected int backup = 4;
+	protected double speed = 3;
 	private String previousTrue;
 	protected ArrayList<Bomb> bombs;
 	protected Hero hero;

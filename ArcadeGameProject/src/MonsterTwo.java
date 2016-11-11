@@ -10,6 +10,8 @@ import java.awt.Graphics;
  */
 public class MonsterTwo extends Monster {
 	private boolean isMovingRight;
+//	protected double speed = .1;
+	protected double speed = 1.5;
 	
 	/**
 	 * 
@@ -47,19 +49,19 @@ public class MonsterTwo extends Monster {
 	@Override
 	public void monsterMove(){
 		if (this.isMovingRight) {
-			this.setX1(getX1() - .1);
-			this.setX2(getX2() - .1);
+			this.setX1(getX1() - this.speed);
+			this.setX2(getX2() - this.speed);
 			if (!this.checkMove()) {
-				this.setX1(getX1() + .1);
-				this.setX2(getX2() + .1);
+				this.setX1(getX1() + this.speed);
+				this.setX2(getX2() + this.speed);
 				this.isMovingRight = false;
 			}
 		} else {
-			this.setX1(getX1() + .1);
-			this.setX2(getX2() + .1);
+			this.setX1(getX1() + this.speed);
+			this.setX2(getX2() + this.speed);
 			if (!this.checkMove()) {
-				this.setX1(getX1() - .1);
-				this.setX2(getX2() - .1);
+				this.setX1(getX1() - this.speed);
+				this.setX2(getX2() - this.speed);
 				this.isMovingRight = true;
 			}
 		}
